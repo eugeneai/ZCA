@@ -1215,13 +1215,15 @@ Interface, ZMI), ну и первым способом, программно, р
 Шаблон проектирования `Adapter`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The adapter concept in Zope Component Architecture and the classic
-`adapter pattern` as described in Design Patterns book are very
-similar.  But the intent of ZCA adapter usage is more wider than the
-`adapter pattern` itself.  The intent of `adapter pattern` is to
-convert the interface of a class into another interface clients
-expect.  This allows classes work together that couldn't otherwise
-because of incompatible interfaces.  But in the `motivation` section
+Концепция использования адаптеров в Zope Component Architecture и в
+применении шаблона `Adapter` в классической книге "Шаблоны
+проектирования" являются очень схожими.  Но приемы использования
+адаптеров в ZCA обладают большей гибкостью и широтой применения по
+сравнению с классическим шаблоном.  Шаблон `Adapter` задает лишь
+преобразование некоторого класса в какой-то другой интерфейс, который
+ожидает некоторый сервис от экземпляров данного класса.  Шаблон
+позволяет разным классам взаимодействовать друг с другом, даже если
+они до этого не могли это делать из-за несовместимости их интерфейсов.   But in the `motivation` section
 of Design Patterns book, GoF says: "Often the adapter is responsible
 for functionality the adapted class doesn't provide".  ZCA adapter has
 more focus on adding functionality than creating a new interface for
