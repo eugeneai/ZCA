@@ -1223,35 +1223,43 @@ Interface, ZMI), ну и первым способом, программно, р
 преобразование некоторого класса в какой-то другой интерфейс, который
 ожидает некоторый сервис от экземпляров данного класса.  Шаблон
 позволяет разным классам взаимодействовать друг с другом, даже если
-они до этого не могли это делать из-за несовместимости их интерфейсов.   But in the `motivation` section
-of Design Patterns book, GoF says: "Often the adapter is responsible
-for functionality the adapted class doesn't provide".  ZCA adapter has
-more focus on adding functionality than creating a new interface for
-an adapted object (adaptee).  ZCA adapter lets adapter classes extend
-functionality by adding methods.  (It would be interesting to note
-that `Adapter` was known as `Feature` in earlier stage of ZCA
-design. ) [#feature]_
+они до этого не могли это делать из-за несовместимости их интерфейсов.
+В подразделе `Мотивация` книги "Шаблоны проектирования" авторы пишут:
+"Часто адаптер отвечает за функциональность, которую не может
+предоставить адаптируемый класс".  Адаптеры ZCA фокусируются больше
+как раз на реализации новых функций, чем просто создание нового
+интерфейса для адаптируемого объекта.  При этом адаптер в ZCA
+расширяет функциональность за счет новых методов.  Будет, наверное,
+интересным заметить, что `Adapter` в ранних версиях дизайна проекта
+ZCA назывался `Feature`. [#feature]_
 
-.. [#feature] Thread discussing renaming of `Feature` to `Adapter`:
+.. [#feature] Дискуссия по переименованию `Feature` в `Adapter` в
+              списке рассылки:
    http://mail.zope.org/pipermail/zope3-dev/2001-December/000008.html
 
-The above paragraph has a quote from Gang of Four book, it ends like
-this: " ...adapted class doesn't provide".  But in the next sentence I
-used "adapted object" instead of "adapted class", because GoF
-describes about two variants of adapters based on implementations.
-The first one is called `class adapter` and the other one is called
-`object adapter`.  A class adapter uses multiple inheritance to adapt
-one interface to another, on the other hand an object adapter relies
-on object composition.  ZCA adapter is following object adapter
-pattern, which use delegation as a mechanism for composition.  GoF's
-second principle of object-oriented design goes like this: "Favor
-object composition over class inheritance".  For more details about
-this subject please read Design Patterns book.
+Упомянутая в предыдущем абзаце цитата из книги Банды четырех
+заканчивается следующими словами: " ... которую не может предоставить
+адаптируемый класс".  Но в следующем предложении абзаца использовано
+словосочетание "адаптируемого объекта" вместо "адаптируемого класса",
+так как авторы книги на самом деле пишут про два варианта адаптеров, в
+зависимости от их реализации.  Первый вариант - это "Адаптер класса",
+а другой - "Адаптер объекта".  Адаптер классов использует
+множественное наследование для адаптации одного интерфейса к другому,
+с другой стороны, адаптер объекта опирается на композицию объектов.
+Адаптеры ZCA согласно книге Банды четырех следуют принципу адаптеру
+объекта, который использует делегирование (агрегирование) в качестве
+механизма композиции.  Второй принцип объектно-ориентированного
+дизайна согласно Банде четырех выражается следующим образом:
+"Предпочитайте объектную композицию наследованию классов".  Если
+хотите более детально познакомиться с приемами адаптации, прочтите
+книгу "Шаблоны проектирования".
 
-The major attraction of ZCA adapter are the explicit interface for
-components and the component registry.  ZCA adapter components are
-registered in component registry and looked up by client objects using
-interface and name when required.
+Самой привлекательной стороной адаптеров ZCA - это явное использование
+интерфейсов, в виде специальных объектов Python, во время исполнения
+программы, а также реестра компонент.  Адаптеры ZCA регистрируются в
+реестре компонент, через который клиентские объекты, затем, могут к
+ним получить доступ, опять же при помощи интерфейсов и механизмов
+поименования.
 
 Utility
 -------
