@@ -1102,35 +1102,43 @@ Interface, ZMI), ну и первым способом, программно, р
 Запрос адаптера в реестре
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Запрос и выполнение зарегистрированной компоненты из реестра компонент осуществляется при помощи двух функций из пакета ``zope.component``. Первая функция называется ``getAdapter``, а другая - ``queryAdapter``.  Обе функции принимают одни и те же параметры.  Функция ``getAdapter`` создает исключительную ситуацию ``ComponentLookupError``, если поиск компоненты в реестре завершился неудачей, а функция ``queryAdapter`` в этом же случае возвратит  `None`.
+Доступ к зарегистрированной компоненте из реестра компонент
+осуществляется при помощи двух функций из пакета ``zope.component``.
+Первая функция называется ``getAdapter``, а другая - ``queryAdapter``.
+Обе функции принимают одни и те же параметры и возвращают требуемую
+компоненту, если таковая была зарегистрирована.  Eсли поиск компоненты
+в реестре завершился неудачей, то ``getAdapter`` создает
+исключительную ситуацию ``ComponentLookupError``, ``queryAdapter``
+просто возвратит `None`.
 
 Импортирование этих функций выполняется следующим образом::
 
   >>> from zope.component import getAdapter
   >>> from zope.component import queryAdapter
 
-В предыдущем разделе приведен пример регистрации компоненты для адаптируемого объекта `guest`, который обеспечивает интерфейс
-object (adaptee) which provides `IDesk` interface with name as
-'ng'.  In the first section of this chapter, you have created a guest
-object named `jack` .
+В следующем примере нам понадобиться поименованная компонента для
+адаптируемого объекта `guest`, который обеспечивает интерфейс `IDesk`.
+Компонента была определена и зарегистрирована под именем 'ng' в
+предыдущем разделе.  Объект `guest` с именем `jack` определен в первом
+разделе этой главы.
 
-This is how you can retrieve a component which adapts the interface of
-`jack` object (`IGuest`) and provides `IDesk` interface also with
-name as 'ng'.  Here both ``getAdapter`` and ``queryAdapter`` works
-similarly::
+Пример демонстрирует, как можно получать доступ к поименованной ('ng')
+компоненте, адаптирующей интерфейс (`IGuest`) объекта `jack` и
+обеспечивающей интерфейс `IDesk`.  Здесь функции ``getAdapter`` и
+``queryAdapter`` исполняются одинаково::
 
   >>> getAdapter(jack, IDesk, 'ng') #doctest: +ELLIPSIS
   <FrontDeskNG object at ...>
   >>> queryAdapter(jack, IDesk, 'ng') #doctest: +ELLIPSIS
   <FrontDeskNG object at ...>
 
-As you can see, the first argument should be adaptee then, the
-interface which should be provided by component and last the name of
-adapter component.
-
-If you try to lookup the component with an name not used for
-registration but for same adaptee and interface, the lookup will fail.
-Here is how the two methods works in such a case::
+В вызове функции первый аргумент - адаптируемый объект, второй -
+интерфейс, к которому необходимо этот объект адаптировать, и
+последний - идентификатор адаптера.  Если попытаться получить доступ с
+идентификатором, который не использовался ранее при регистрации
+адаптеров таких же объектам к такому же интерфейсу, то по понятным
+причинам это завершиться неудачей.  Теперь работе наших функций будет
+заметна разница::
 
   >>> getAdapter(jack, IDesk, 'not-exists') #doctest: +ELLIPSIS
   Traceback (most recent call last):
@@ -1141,14 +1149,14 @@ Here is how the two methods works in such a case::
   >>> reg is None
   True
 
-As you can see above, ``getAdapter`` raised a ``ComponentLookupError``
-exception, but ``queryAdapter`` returned `None` when lookup failed.
-
-The third argument, the name of registration, is optional.  If the
-third argument is not given it will default to empty string ('').
-Since there is no component registered with an empty string,
-``getAdapter`` will raise ``ComponentLookupError`` .  Similarly
-``queryAdapter`` will return `None`, see yourself how it works::
+Видно, что в результате неудачного доступа в ``getAdapter`` возникло
+исключение ``ComponentLookupError``, но ``queryAdapter`` мирно вернул
+`None`.  Если при получении доступа к компоненте не использовать ее
+идентификатор, это означает, что он будет равен пустой строке.  И если
+компоненты без идентификатора не было зарегистрировано, то получить
+такой доступ тоже невозможно.  Как и прежде в ``getAdapter`` возникнет
+исключение ``ComponentLookupError``, а ``queryAdapter`` вернет
+`None`.  Вот пример такого неудачного доступа::
 
   >>> getAdapter(jack, IDesk) #doctest: +ELLIPSIS
   Traceback (most recent call last):
@@ -1158,29 +1166,32 @@ Since there is no component registered with an empty string,
   >>> reg is None
   True
 
-In this section you have learned how to register a simple adapter and
-how to retrieve it from component registry.  These kind of adapters is
-called single adapter, because it adapts only one adaptee.  If an
-adapter adapts more that one adaptee, then it is called multi
-adapter.
+В этом разделе продемонстрировано как регистрируются простые адаптеры,
+и как потом получать к ним доступ при помощи реестра компонент.
+Простые адаптеры называются единичными адаптерами, так как адаптируют
+только один объект.  Если компонента адаптирует более одного объекта,
+то она называется мультиадаптером.
 
-Retrieving adapter using interface
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Adapters can be directly retrieved using interfaces, but it will only
-work for non-named single adapters.  The first argument is the adaptee
-and the second argument is a keyword argument.  If adapter lookup
-fails, second argument will be returned.
+Получение доступа к адаптеру с использованием интерфейса
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Получить доступ к адаптеру можно, используя только интерфейс.  Этот
+метод работает только для единичных непоименованных адаптеров.  Первый
+аргумент - адаптируемый объект, второй аргумент, ключевое слово, -
+объект, который возвращается, если доступ к компоненте оказывается
+неудачным.
 
   >>> IDesk(jack, alternate='default-output')
   'default-output'
 
-  Keyword name can be omitted:
+  Второй аргумент можно задавать и не в формате ключевого слова:
 
   >>> IDesk(jack, 'default-output')
   'default-output'
 
-  If second argument is not given, it will raise `TypeError`:
+  Если второй аргумент совсем не задан, то неудачная попытка доступа
+  порождает исключение `TypeError`:
 
   >>> IDesk(jack) #doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
   Traceback (most recent call last):
@@ -1189,19 +1200,20 @@ fails, second argument will be returned.
     <Guest object at ...>,
     <InterfaceClass __builtin__.IDesk>)
 
-  Here `FrontDeskNG` is registered without name:
+  Зарегистрируем `FrontDeskNG` как непоименованный адаптер:
 
   >>> gsm.registerAdapter(FrontDeskNG)
 
-  Now the adapter lookup should succeed:
+  Теперь доступ должен быть удачно получен:
 
   >>> IDesk(jack, 'default-output') #doctest: +ELLIPSIS
   <FrontDeskNG object at ...>
 
-For simple cases, you may use interface to get adapter components.
+В простых ситуациях можно спокойно использовать интерфейсы для
+получения доступа к компонентам-адаптерам.
 
-Adapter pattern
-~~~~~~~~~~~~~~~
+Шаблон проектирования `Adapter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The adapter concept in Zope Component Architecture and the classic
 `adapter pattern` as described in Design Patterns book are very
