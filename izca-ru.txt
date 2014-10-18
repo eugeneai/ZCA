@@ -1261,28 +1261,33 @@ ZCA назывался `Feature`. [#feature]_
 ним получить доступ, опять же при помощи интерфейсов и механизмов
 поименования.
 
-Utility
+Утилиты
 -------
 
 
 
-Introduction
-~~~~~~~~~~~~
+Введение
+~~~~~~~~
 
-Now you know the concept of interface, adapter and component registry.
-Sometimes it would be useful to register an object which is not
-adapting anything.  Database connection, XML parser, object returning
-unique Ids etc. are examples of these kinds of objects.  These kind of
-components provided by the ZCA are called ``utility`` components.
+Вы уже знакомы с концепциями "интерфейс"", "адаптер" и "реестр
+компонент".  Иногда удобно регистрировать и отдельные объекты, которые
+ничего не адаптируют.  Примерами таких объектов выступают соединения с
+базами данных, трансляторы XML, объекты, порождающие уникальные
+идентификаторы.  Компоненты такого вида, существование которых
+поддерживает ZCA, называются компонентами-``утилитами``.
 
-Utilities are just objects that provide an interface and that are
-looked up by an interface and a name.  This approach creates a global
-registry by which instances can be registered and accessed by
-different parts of your application, with no need to pass the
-instances around as parameters.
+Утилиты - это просто объекты, которые обеспечивают некоторый
+интерфейс, и к которым модули программ получают доступ по этим
+интерфейсам и регистрационным именам.  Такой подход, с пользованием
+глобального реестра, позволяет регистрировать различные объекты и
+получать к ним доступ из различных частей программы, и при этом нет
+необходимости передавать эти объекты между модулями программы
+каким-либо специальным образом.
 
-You need not to register all component instances like this.  Only
-register components which you want to make replaceable.
+В программе нет необходимости регистрировать все глобальные объекты,
+смысл регистрации состоит в том, чтобы создать механизмы замены одних
+объектов, реализующих некоторый сервис, на другие, которые делают это
+как-то по-другому.
 
 Simple utility
 ~~~~~~~~~~~~~~
