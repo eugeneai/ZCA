@@ -1384,13 +1384,13 @@ ZCA назывался `Feature`. [#feature]_
 именами.  Функции получения доступа к адаптерам `getAdapter` и
 `queryAdapter` функционируют аналогично.
 
-Factory
+Фабрики
 ~~~~~~~
 
-A ``Factory`` is a utility component which provides ``IFactory``
-interface.
+Компоненты, называемые `фабриками` (``Factory``), - это утилиты,
+обеспечивающие интерфейс ``IFactory``.
 
-To create a factory, first define the interface of the object::
+Чтобы создать фабрику, сначала необходимо определить интерфейс объекта::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -1399,9 +1399,9 @@ To create a factory, first define the interface of the object::
   >>> class IDatabase(Interface):
   ...
   ...     def getConnection():
-  ...         """Return connection object"""
+  ...         """Вернуть объект - соединение с базой данных"""
 
-Here is fake implementation of `IDatabase` interface::
+Вот пример заглушки, реализующей интерфейс `IDatabase`::
 
   >>> class FakeDb(object):
   ...
@@ -1410,13 +1410,14 @@ Here is fake implementation of `IDatabase` interface::
   ...     def getConnection(self):
   ...         return "connection"
 
-You can create a factory using ``zope.component.factory.Factory``::
+Теперь можно создать фабрику при помощи
+``zope.component.factory.Factory``::
 
   >>> from zope.component.factory import Factory
 
   >>> factory = Factory(FakeDb, 'FakeDb')
 
-Now you can register it like this::
+Регистрируем фабрику::
 
   >>> from zope.component import getGlobalSiteManager
   >>> gsm = getGlobalSiteManager()
@@ -1424,13 +1425,13 @@ Now you can register it like this::
   >>> from zope.component.interfaces import IFactory
   >>> gsm.registerUtility(factory, IFactory, 'fakedb')
 
-To use the factory, you may do it like this::
+Для получения доступа, можно использовать следующий код::
 
   >>> from zope.component import queryUtility
   >>> queryUtility(IFactory, 'fakedb')() #doctest: +ELLIPSIS
   <FakeDb object at ...>
 
-There is a shortcut to use factory::
+Кроме того, можно еще и удобную сокращенную версию запроса доступа::
 
   >>> from zope.component import createObject
   >>> createObject('fakedb') #doctest: +ELLIPSIS
