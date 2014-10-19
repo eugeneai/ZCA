@@ -1292,10 +1292,11 @@ ZCA назывался `Feature`. [#feature]_
 Простые утилиты
 ~~~~~~~~~~~~~~~
 
-A utility can be registered with a name or without a name.  A utility
-registered with a name is called named utility, which you will see in
-the next section.  Before implementing the utility, as usual, define
-its interface.  Here is a `greeter` interface::
+Утилиты могут быть зарегистрированы поименованными или нет.  Пример
+поименованной утилиты рассмотрим в следующем разделе.  Перед тем, как
+реализовать утилиту, как обычно, определим ее интерфейс.  Следующий
+программный код определяет интерфейс `greeter` утилиты, которая будет
+приветствовать постояльцев::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -1303,21 +1304,22 @@ its interface.  Here is a `greeter` interface::
   >>> class IGreeter(Interface):
   ...
   ...     def greet(name):
-  ...         """Say hello"""
+  ...         """Поприветствовать"""
 
-Like an adapter a utility may have more than one implementation.  Here
-is a possible implementation of the above interface::
+Как и для адаптеров, для утилиты можно реализовать несколькими
+способами.  Это классическая реализация при помощи класса::
 
   >>> class Greeter(object):
   ...
   ...     implements(IGreeter)
   ...
   ...     def greet(self, name):
-  ...         return "Hello " + name
+  ...         return "Здравствуйте, " + name
 
-The actual utility will be an instance of this class.  To use this
-utility, you have to register it, later you can query it using the ZCA
-API.  You can register an instance of this class (`utility`) using
+На самом деле утилита - это экземпляр класса `Greeter`.  Чтобы
+утилитой можно было пользоваться, необходимо ее зарегистрировать.  Для
+этого пользуется также API ZCA.  Экземпляр класса, утилита
+(`utility`), регистрируется при помощи метода реестра компонент
 ``registerUtility``::
 
   >>> from zope.component import getGlobalSiteManager
@@ -1326,61 +1328,61 @@ API.  You can register an instance of this class (`utility`) using
   >>> greet = Greeter()
   >>> gsm.registerUtility(greet, IGreeter)
 
-In this example you registered the utility as providing the `IGreeter`
-interface.  You can look the interface up with either `queryUtility`
-or `getUtility`::
+В этом примере утилита зарегистрирована как компонента, обеспечивающая
+интерфейс `IGreeter`.  Доступ к утилите можно получить по запросу ее
+интерфейса при помощи функций `queryUtility` или `getUtility`::
 
   >>> from zope.component import queryUtility
   >>> from zope.component import getUtility
 
   >>> queryUtility(IGreeter).greet('Jack')
-  'Hello Jack'
+  'Здравствуйте, Jack'
 
   >>> getUtility(IGreeter).greet('Jack')
-  'Hello Jack'
+  'Здравствуйте, Jack'
 
-As you can see, adapters are normally classes, but utilities are
-normally instances of classes.  Only once you are creating the
-instance of a utility class, but adapter instances are dynamically
-created whenever you query for it.
+Теперь видно, что по аналогии с адаптерами, которые являются обычно
+классами, утилиты являются обычно экземплярами классов.  Поэтому
+экземпляры утилит создаются единожды, а экземпляры адаптеров - всякий
+раз, как кто-то желает получить к ним доступ.
 
-Named utility
-~~~~~~~~~~~~~
+Поименованные утилиты
+~~~~~~~~~~~~~~~~~~~~~
 
-When registering a utility component, like adapter, you can use a
-name.  As mentioned in the previous section, a utility registered with
-a particular name is called named utility.
+При регистрации компоненты-утилиты, как и адаптера, можно давать им
+имена.  Утилита, зарегистрированная под каким-либо именем, называется
+поименованной утилитой.
 
-This is how you can register the `greeter` utility with a name::
+Приведем пример регистрации поименованной утилиты `greeter`::
 
   >>> greet = Greeter()
   >>> gsm.registerUtility(greet, IGreeter, 'new')
 
-In this example you registered the utility with a name as providing
-the `IGreeter` interface.  You can look up the interface with either
-`queryUtility` or `getUtility`::
+Экземпляр `greet` зарегистрирован как утилита, обеспечивающая
+интерфейс `IGreeter`, под именем `new`.  Теперь можно получить к ней
+доступ одной из функций `queryUtility` или `getUtility`::
 
   >>> from zope.component import queryUtility
   >>> from zope.component import getUtility
 
   >>> queryUtility(IGreeter, 'new').greet('Jill')
-  'Hello Jill'
+  'Здравствуйте, Jill'
 
   >>> getUtility(IGreeter, 'new').greet('Jill')
-  'Hello Jill'
+  'Здравствуйте, Jill'
 
-As you can see here, while querying you have to use the `name` as
-second argument.
+Заметим, что для получения доступа необходимо использовать имя `name`
+во втором аргументе функций.
 
-Calling `getUtility` function without a name (second argument) is
-equivalent to calling with an empty string as the name.  Because, the
-default value for second (keyword) argument is an empty string.  Then,
-component lookup mechanism will try to find the component with name as
-empty string, and it will fail.  When component lookup fails it will
-raise ``ComponentLookupError`` exception.  Remember, it will not
-return some random component registered with some other name.  The
-adapter look up functions, `getAdapter` and `queryAdapter` also works
-similarly.
+Вызов функции `getUtility` без имени (второй аргумент) эквивалентно
+вызову этой функции с пустой строкой в качестве второго аргумента, так
+как это - значение по умолчанию.  Механизм обеспечения доступа
+пытается найти компоненту, чье имя - пустая строка, но его попытка
+завершается неуспехом.  Если компонента не найдена, то механизм
+создает исключение ``ComponentLookupError``.  Механизм не будет вам
+возвращать каки-то другие компоненты, зарегистрированные под другими
+именами.  Функции получения доступа к адаптерам `getAdapter` и
+`queryAdapter` функционируют аналогично.
 
 Factory
 ~~~~~~~
@@ -5105,5 +5107,5 @@ Example::
 ..
 
    Local Variables:
-   major-mode: rst-mode
+   eval: (rst-mode)
    End:
