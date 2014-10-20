@@ -1437,18 +1437,21 @@ ZCA назывался `Feature`. [#feature]_
   >>> createObject('fakedb') #doctest: +ELLIPSIS
   <FakeDb object at ...>
 
-Advanced adapters
------------------
+Дополнительные возможности адаптеров
+------------------------------------
 
-This chapter discuss some advanced adapters like multi adapter,
-subscription adapter and handler.
+В этом разделе рассмотрим дополнительные возможности использования
+адаптеров, в частности, использование `мультиадаптеров` (`multi
+adapter`), `адаптеров-подписчиков` (`subscription adapter`) и
+`обработчиков` (`handler`).
 
-Multi adapter
-~~~~~~~~~~~~~
+Мультиадаптеры
+~~~~~~~~~~~~~~
 
-A simple adapter normally adapts only one object, but an adapter may
-adapt more than one object.  If an adapter adapts more than one
-objects, it is called `multi-adapter`.
+Простые адаптеры адаптируют только один объект, но, в принципе,
+компоненты могут адаптировать и несколько объектов.  Если компонента
+адаптирует больше одного объекта, кто она называется `мультиадаптер`
+(`multi-adapter`).
 
 ::
 
@@ -1498,16 +1501,20 @@ objects, it is called `multi-adapter`.
   >>> myfunctionality.two #doctest: +ELLIPSIS
   <Two object at ...>
 
-Subscription adapter
-~~~~~~~~~~~~~~~~~~~~
+Адаптеры-подписчики
+~~~~~~~~~~~~~~~~~~~
 
-Unlike regular adapters, subscription adapters are used when we want
-all of the adapters that adapt an object to a particular interface.
-Subscription adapter is also known as `subscriber`.
+В отличие от обычных адаптеров, адаптеры-подписчики, еще их называют
+просто `подписчиками`, используются, если есть необходимость
+реализовать возможность выбора некоторого списка достаточно однотипных
+компонент-адаптеров, адаптирующих объект к интерфейсу.  Полученный
+список адаптеров, затем, можно поэлементно перебрать и выполнить одну
+и ту же процедуру в каждом адаптере-подписчике.  Результаты волнения
+процедур каким-либо образом объединяются и используются.
 
-Consider a validation problem.  We have objects and we want to assess
-whether they meet some sort of standards.  We define a validation
-interface::
+Рассмотрим задачу верификации объектов.  Дан набор объектов, и нам
+требуется оценить их соответствие некоторым требованиям.  Определим
+интерфейс верификатора::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import Attribute
@@ -1516,14 +1523,14 @@ interface::
   >>> class IValidate(Interface):
   ...
   ...     def validate(ob):
-  ...         """Determine whether the object is valid
+  ...         """Определить соответствие объекта стандарту
   ...
-  ...         Return a string describing a validation problem.
-  ...         An empty string is returned to indicate that the
-  ...         object is valid.
+  ...         Возвращает строку, характеризующую отклонение от
+  ...         стандарта. Пустая строка обозначает, что объект
+  ...         успешно прошел верификацию.
   ...         """
 
-Perhaps we have documents::
+Определим объекты-документы::
 
   >>> class IDocument(Interface):
   ...
@@ -1537,9 +1544,9 @@ Perhaps we have documents::
   ...     def __init__(self, summary, body):
   ...         self.summary, self.body = summary, body
 
-Now, we may want to specify various validation rules for
-documents. For example, we might require that the summary be a single
-line::
+Теперь можно определить разные правила верификации документов.
+Например, можно потребовать, чтобы комспект-резюме документа был
+текстом из одной строки::
 
   >>> from zope.component import adapts
 
@@ -1553,11 +1560,12 @@ line::
   ...
   ...     def validate(self):
   ...         if '\n' in self.doc.summary:
-  ...             return 'Summary should only have one line'
+  ...             return 'Резюме должно состоять только из одной строки текста'
   ...         else:
   ...             return ''
 
-Or we might require the body to be at least 1000 characters in length::
+Можно потребовать, чтобы основной текст документа состоял ка минимум
+из 1000 символов::
 
   >>> class AdequateLength(object):
   ...
@@ -1569,11 +1577,11 @@ Or we might require the body to be at least 1000 characters in length::
   ...
   ...     def validate(self):
   ...         if len(self.doc.body) < 1000:
-  ...             return 'too short'
+  ...             return 'слишком короткий'
   ...         else:
   ...             return ''
 
-We can register these as subscription adapters::
+Теперь надо зарегистрировать эти адаптеры-подписчики::
 
   >>> from zope.component import getGlobalSiteManager
   >>> gsm = getGlobalSiteManager()
@@ -1581,58 +1589,62 @@ We can register these as subscription adapters::
   >>> gsm.registerSubscriptionAdapter(SingleLineSummary)
   >>> gsm.registerSubscriptionAdapter(AdequateLength)
 
-We can then use the subscribers to validate objects::
+И теперь зарегистрированные подписчики можно использовать для
+верификации объектов::
 
   >>> from zope.component import subscribers
 
-  >>> doc = Document("A\nDocument", "blah")
+  >>> doc = Document("A Document", "lorum")
   >>> [adapter.validate()
   ...  for adapter in subscribers([doc], IValidate)
   ...  if adapter.validate()]
-  ['Summary should only have one line', 'too short']
+  ['Резюме должно состоять только из одной строки текста', 'слишком короткий']
 
-  >>> doc = Document("A\nDocument", "blah" * 1000)
+  >>> doc = Document("A Document", "ipsum" * 1000)
   >>> [adapter.validate()
   ...  for adapter in subscribers([doc], IValidate)
   ...  if adapter.validate()]
-  ['Summary should only have one line']
+  ['Резюме должно состоять только из одной строки текста']
 
-  >>> doc = Document("A Document", "blah")
+  >>> doc = Document("A Document", "dolor")
   >>> [adapter.validate()
   ...  for adapter in subscribers([doc], IValidate)
   ...  if adapter.validate()]
-  ['too short']
+  ['слишком короткий']
 
-Handler
-~~~~~~~
+Обработчики
+~~~~~~~~~~~
 
-Handlers are subscription adapter factories that don't produce
-anything.  They do all of their work when called.  Handlers are
-typically used to handle events.  Handlers are also known as event
-subscribers or event subscription adapters.
+Обработчики - это фабрики адаптеров-подписчиков, которые ничего не
+возвращают.  Они выполняют свою работу, как только были запущены.
+Основной вид использования обработчиков - это реализация реакции на
+события.  Обработчики по своей сути являются подписчиками на события,
+и их иногда называют `адаптеры, подписанные на события`.
 
-Event subscribers are different from other subscription adapters in
-that the caller of event subscribers doesn't expect to interact with
-them in any direct way.  For example, an event publisher doesn't
-expect to get any return value.  Because subscribers don't need to
-provide an API to their callers, it is more natural to define them
-with functions, rather than classes.  For example, in a
-document-management system, we might want to record creation times for
-documents::
+Подписчики на события отличаются от других адаптеров-подписчиков тем,
+что объект, вызывающий обработчика, не ожидает от него никакого
+прямого взаимодействия.  Например, объект, инициирующий событие не
+ожидает от обработчиков этого события каких-либо значений в ответ.
+Подписчикам нет необходимости обеспечивать какой-либо API для
+вызвавших их компонентов, поэтому более естественно реализовывать
+подписчики при помощи функций, а не классов.  В системе управления
+контентом, например, можно автоматизировать добавление времени
+создания документа в виде поля этого документа::
 
   >>> import datetime
 
   >>> def documentCreated(event):
   ...     event.doc.created = datetime.datetime.utcnow()
 
-In this example, we have a function that takes an event and performs
-some processing.  It doesn't actually return anything.  This is a
-special case of a subscription adapter that adapts an event to
-nothing.  All of the work is done when the adapter "factory" is
-called.  We call subscribers that don't actually create anything
-"handlers".  There are special APIs for registering and calling them.
+Здесь определена функция, которая получает событие (`event`) и
+выполняет процедуру обработки данных.  Результат, как видите, не
+возвращается.  Обработчики - это частные случаи подписчиков, которые
+адаптируют события к "ничто".  Вся работа выполняется, когда этот
+адаптер-"фабрика" был вызван.  Для регистрации обработчиков в ZCA APIs
+используются специальные функции.
 
-To register the subscriber above, we define a document-created event::
+Чтобы продемонстрировать регистрацию и использование вышеупомянутого
+обработчика, сначала создадим событие `документ-создан` (`document-created`)::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import Attribute
@@ -1640,7 +1652,7 @@ To register the subscriber above, we define a document-created event::
 
   >>> class IDocumentCreated(Interface):
   ...
-  ...     doc = Attribute("The document that was created")
+  ...     doc = Attribute("Документ, который был создан")
 
   >>> class DocumentCreated(object):
   ...
@@ -1649,10 +1661,7 @@ To register the subscriber above, we define a document-created event::
   ...     def __init__(self, doc):
   ...         self.doc = doc
 
-We'll also change our handler definition to::
-
-  >>> def documentCreated(event):
-  ...     event.doc.created = datetime.datetime.utcnow()
+Мы также немного дополним текст нашего обработчика::
 
   >>> from zope.component import adapter
 
@@ -1660,17 +1669,19 @@ We'll also change our handler definition to::
   ... def documentCreated(event):
   ...     event.doc.created = datetime.datetime.utcnow()
 
-This marks the handler as an adapter of `IDocumentCreated` events.
+Добавленная конструкция помечает обработчик интерфейсом
+`IDocumentCreated` компоненты-события `DocumentCreated`.
 
-Now we'll register the handler::
+Теперь необходимо обработчик зарегистрировать::
 
   >>> from zope.component import getGlobalSiteManager
   >>> gsm = getGlobalSiteManager()
 
   >>> gsm.registerHandler(documentCreated)
 
-Now, we can create an event and use the `handle` function to call
-handlers registered for the event::
+Теперь можно создать компоненту-событие и инициировать его обработку
+функцией `handle`, которая вызовет все зарегистрированные обработчики
+для данного события::
 
   >>> from zope.component import handle
 
