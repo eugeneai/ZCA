@@ -1689,33 +1689,38 @@ adapter`), `адаптеров-подписчиков` (`subscription adapter`) 
   >>> doc.created.__class__.__name__
   'datetime'
 
-ZCA usage in Zope
------------------
+Как ZCA используется в Zope
+---------------------------
 
-Zope Component Architecture is used in both Zope 3 and Zope 2.  This
-chapter will go through usage of the ZCA in Zope.
+Компонентная архитектура Zope используется как в Zope 3 и более новых
+версиях, так и в Zope 2.  В этом разделе предложен обзор применения
+ZCA в Zope.
 
 ZCML
 ~~~~
 
-The **Zope Configuration Markup Language (ZCML)** is an XML based
-configuration system for registration of components.  So, instead of
-using Python API for registration, you can use ZCML.  But to use
-ZCML, you will be required to install more dependency packages.
+Язык **Zope Configuration Markup Language (ZCML)** (Язык разметки для
+конфигурирования Zope) - это язык задания конфигурации программной
+системе, базирующийся на стандарте XML.  Вместо того, чтобы
+использовать API Python для регистрации компонент, можно использовать
+язык ZCML.  Но для этого сначала надо установить несколько пакетов, от
+которых зависит функционирование средств этого языка.
 
-You can install ``zope.component`` with ZCML support using
-easy_install like this::
+Необходимые зависимости догружаются во время установки пакета
+``zope.component`` в варианте с поддержкой ZCML.  Загрузка пакетов
+выполняется утилитой командной строки easy_install следующим образом::
 
   $ easy_install "zope.component [zcml]"
 
-A ZCML file should start with ``configure`` directive with
-appropriate namespace declaration::
+Всякий файл конфигурации программ и регистрации компонент ZCML должен
+начиняться с директивы (тега) ``configure`` с соответствующей
+декларацией пространства имен::
 
   <configure xmlns="http://namespaces.zope.org/zope">
   ...
   </configure>
 
-The `adapter` directive can be used to register adapters::
+Директива `adapter` предназначена для регистрации адаптеров::
 
   <adapter
       factory=".company.EmployeeSalary"
@@ -1723,31 +1728,31 @@ The `adapter` directive can be used to register adapters::
       for=".interfaces.IEmployee"
       />
 
-The `provides` and `for` attributes are optional, provided you have
-declared it in the implementation::
+Атрибуты `provides` и `for` являются необязательными, если необходимая
+информация представлена в реализации::
 
   <adapter
       factory=".company.EmployeeSalary"
       />
 
-If you want to register the component as a named adapter, you can use
-the `name` attribute::
+Для того, чтобы зарегистрировать компоненту как поименованный адаптер
+надо использовать атрибут `name`::
 
   <adapter
       factory=".company.EmployeeSalary"
       name="salary"
       />
 
-A utility can be registered using `utility` directive.  To register
-an utility::
+Утилиты регистрируются директивой `utility`.  Для этого используется
+следующая конструкция::
 
   <utility
       component=".database.connection"
       provides=".interfaces.IConnection"
       />
 
-The `provides` attribute is optional, provided you have declared it in
-the implementation::
+Атрибут `provides` не является обязательным, если необходимая
+информация представлена в реализации::
 
   <configure xmlns="http://namespaces.zope.org/zope">
 
@@ -1755,27 +1760,29 @@ the implementation::
       component=".database.connection"
       />
 
-If you want to register the component as a named utility, you can use
-the `name` attribute::
+Поименованные утилиты регистрируются также, только необходимо
+использовать атрибут `name`::
 
   <utility
       component=".database.connection"
       name="db_connection"
       />
 
-Instead of directly using the component, you can also give a factory::
+Вместо регистрации утилиты как объекта (экземпляра) можно
+зарегистрировать его фабрику::
 
   <utility
       factory=".database.Connection"
       />
 
-Overrides
+Замещения
 ~~~~~~~~~
 
-When you register components using Python API (``register*`` methods),
-the last registered component will replace previously registered
-component, if both are registered with same type of arguments.  For
-example, consider this example::
+При регистрации компонент методами ``register*`` API Python
+реализуется следующее правило: компонента, которая была
+зарегистрирована последней заменяет (замещает) собой ранее зарегистрированную
+компоненту, если они обе зарегистрированы с одним и тем же набором
+аргументов функций-регистраторов.  Рассмотрим следующий пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -1820,29 +1827,33 @@ example, consider this example::
   >>> getAdapter(a, IP) #doctest: +ELLIPSIS
   <AP object at ...>
 
-If you register another adapter, the existing one will be replaced::
+Теперь, если зарегистрировать еще один адаптер, то уже существующий
+будет заменен::
 
   >>> gsm.registerAdapter(AP2)
 
   >>> getAdapter(a, IP) #doctest: +ELLIPSIS
   <AP2 object at ...>
 
-But when registering components using ZCML, the second registration
-will raise a conflict error.  This is a hint for you, otherwise there
-is a chance for overriding registration by mistake.  This may lead to
-hard to track bugs in your system.  So, using ZCML is a win for the
-application.
+Но вот, если регистрировать компоненты при помощи ZCML, то вторая
+регистрация создаст конфликт, что проявится в виде исключения.  Этот
+принцип позволяет контролировать ситуации, когда нужный
+зарегистрированный адаптер по ошибке замещается каким-то другим.  В
+результате удается избегать необходимости отслеживать ошибки в работе
+проектируемой программной системы.  Получается, что использование ZCML
+способствует даже упрощению разработки.
 
-Sometimes you will be required to override existing registration.
-ZCML provides ``includeOverrides`` directive for this.  Using this,
-you can write your overrides in a separate file::
+Иногда, все-таки, необходимо заменять существующие регистрации.  Для
+этого в ZCML есть директива ``includeOverrides``.  Используя эту
+директиву можно указывать, что в отдельном файле (атрибут `file`)
+находятся регистрации, замещающие собой имеющиеся::
 
   <includeOverrides file="overrides.zcml" />
 
-NameChooser
-~~~~~~~~~~~
+Flfgnth NameChooser
+~~~~~~~~~~~~~~~~~~~
 
-Location: `zope.app.container.contained.NameChooser`
+Пакет: `zope.app.container.contained.NameChooser`
 
 This is an adapter for choosing a unique name for an object inside a
 container.
