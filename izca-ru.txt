@@ -1594,13 +1594,13 @@ adapter`), `адаптеров-подписчиков` (`subscription adapter`) 
 
   >>> from zope.component import subscribers
 
-  >>> doc = Document("A Document", "lorum")
+  >>> doc = Document("A\nDocument", "lorum")
   >>> [adapter.validate()
   ...  for adapter in subscribers([doc], IValidate)
   ...  if adapter.validate()]
   ['Резюме должно состоять только из одной строки текста', 'слишком короткий']
 
-  >>> doc = Document("A Document", "ipsum" * 1000)
+  >>> doc = Document("A\nDocument", "ipsum" * 1000)
   >>> [adapter.validate()
   ...  for adapter in subscribers([doc], IValidate)
   ...  if adapter.validate()]
