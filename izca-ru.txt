@@ -1935,17 +1935,18 @@ ZCML
 осуществляется поиск корневого объекта и как это реализовано: почти в
 каждом объекте-контейнере есть метод ``getPhysicalRoot``.
 
-DefaultSized
-~~~~~~~~~~~~
+Адаптер DefaultSized
+~~~~~~~~~~~~~~~~~~~~
 
-Location: ``zope.size.DefaultSized``
+Пакет: ``zope.size.DefaultSized``
 
-This adapter is just a default implementation of ``ISized`` interface.
-This adapter is registered for all kind of objects.  If you want to
-register this adapter for a particular interface, then you have to
-override this registration for your implementation.
+Этот адаптер - просто реализация интерфейса ``ISized`` по умолчанию.
+Адаптер "знает" как адаптировать все виды объектов,
+т.е. зарегистрирован как адаптер всех объектов.  Если вам потребуется
+зарегистрировать этот адаптер для какого-либо интерфейса, то придется
+уже существующую регистрацию замещать новой.
 
-The registration of adapter is like this::
+Регистрация этого адаптера в Zope сделана следующим образом::
 
   <adapter
       for="*"
@@ -1954,59 +1955,63 @@ The registration of adapter is like this::
       permission="zope.View"
       />
 
-As you can see, the adaptee interface is `*`, so it can adapt any kind
-of objects.
+Здесь видно, что адаптируемый интерфейс задан как `*`,
+т.е. `DefaultSized` адаптирует любые разновидности объектов.
 
-The ``ISized`` is a simple interface with two method contracts::
+Интерфейс ``ISized`` очень прост и включает спецификации всего двух методов::
 
   class ISized(Interface):
 
       def sizeForSorting():
-          """Returns a tuple (basic_unit, amount)
+          """Возвращает двойку (basic_unit, amount).
 
-          Used for sorting among different kinds of sized objects.
-          'amount' need only be sortable among things that share the
-          same basic unit."""
+          Используется для сортировки разнородных объектов,
+          характеризующихся некоторым размером. Значение 'amount'
+          требуется только для сортировки объектов с одной и той же
+          единицей измерения 'basic_unit'."""
 
       def sizeForDisplay():
-          """Returns a string giving the size.
+          """Возвращает строку, представляющую размер объекта.
           """
 
-You can see another ``ISized`` adapter registered for ``IZPTPage`` in
-``zope.app.zptpage`` package.
+Пример специально зарегистрированного адаптера ``ISized`` для
+интерфейса ``IZPTPage`` можно посмотреть в пакете ``zope.app.zptpage``.
 
-ZopeVersionUtility
-~~~~~~~~~~~~~~~~~~
+Утилита ZopeVersionUtility
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Location: ``zope.app.applicationcontrol.ZopeVersionUtility``
+Пакет: ``zope.app.applicationcontrol.ZopeVersionUtility``
 
-This utility gives version of the running Zope.
+Утилита сообщает версию выполняющегося процесса Zope.
 
-The registration goes like this::
+Регистрация выполняется следующим образом::
 
   <utility
       component=".zopeversion.ZopeVersionUtility"
       provides=".interfaces.IZopeVersion" />
 
-The interface provided, ``IZopeVersion``, has only one method named
-``getZopeVersion``.  This method return a string containing the Zope
-version (possibly including SVN information).
+Интерфейс, который обеспечивает эта утилита, называется
+``IZopeVersion``, он специфицирует только один метод, называемый
+``getZopeVersion``.  Этот метод возвращает строку, характеризующую
+версию программного обеспечения среды Zope, включая всевозможную
+информацию, например, версию исходного кода в репозитарии Subversion.
 
-The default implementation, ``ZopeVersionUtility``, get version info
-from a file ``version.txt`` in `zope/app` directory.  If Zope is
-running from subversion checkout, it will show the latest revision
-number.  If none of the above works it will set it to:
-`Development/Unknown`.
+Реализация утилиты по умолчанию, ``ZopeVersionUtility``, получает
+информацию о версии Zope из файла ``version.txt`` в директории
+`zope/app`.  Если система Zope была запущена в слепке (checkout)
+сервера Subversion, то утилита покажет последний номер ревизии.  Если
+ни того ни другого источника информации не удалось найти, утилита
+вернет строку `Development/Unknown`.
 
-Case study
-----------
+Пример приложения
+-----------------
 
 .. note::
 
-  This chapter is not yet completed.  Please send your suggestions !
+  Эта часть не еще не завершена.  Автор принимает предложения к ее развитию !
 
-Introduction
-~~~~~~~~~~~~
+Введение
+~~~~~~~~
 
 This chapter demonstrates creating a desktop application using PyGTK
 GUI library and the ZCA.  This application also use two different
