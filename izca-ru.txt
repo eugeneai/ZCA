@@ -1876,60 +1876,64 @@ ZCML
 наследовать от данных классов их функции для создания собственных
 классов-контейнеров.  Если бы разработчики ранее не реализовали
 интерфейс ``INameChooser`` и адаптер ``NameChooser``, тогда вам
-пришлось бы вновь создавать их функции для каждой реализации отдельно.
+пришлось бы вновь создавать их для каждой реализации отдельно.
 
 Адаптер LocationPhysicallyLocatable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Пакет: ``zope.location.traversing.LocationPhysicallyLocatable``
 
-This adapter is frequently used in Zope 3 applications, but
-normally it is called through an API in ``zope.traversing.api``.
-(Some old code even use ``zope.app.zapi`` functions, which is
-again one more indirection)
+Этот адаптер достаточно часто используется при программировании
+приложений в среде Zope 3, но вызывается обычно при помощи
+специального API в пакете ``zope.traversing.api``.  (Редкий старый код
+до сих пор использует функции ``zope.app.zapi``, которые добавляют еще
+один слой косвенных вызовов для этого адаптера)
 
-The registration of adapter is like this::
+Регистрация данного адаптера выполняется следующим образом::
 
   <adapter
       factory="zope.location.traversing.LocationPhysicallyLocatable"
       />
 
-The interface provided and adaptee interface is given in the
-implementation.
-
-Here is the beginning of implementation::
+Интерфейс, который обеспечивает компонента и адаптируемый интерфейс
+задаются в реализации, начало которой выглядит вот так::
 
   class LocationPhysicallyLocatable(object):
-      """Provide location information for location objects
+      """Обеспечить информацию о местоположении объектов
       """
       zope.component.adapts(ILocation)
       zope.interface.implements(IPhysicallyLocatable)
       ...
 
-Normally, almost all persistent objects in Zope 3 application
-will be providing the ``ILocation`` interface.  This interface
-has only two attribute, ``__parent__`` and ``__name__``.  The
-``__parent__`` is the parent in the location hierarchy.  And
-``__name__`` is the name within the parent.
+Как правило, все объекты, хранимые в базах данных, в приложении Zope 3
+обеспечивают интерфейс ``ILocation``.  У этого интерфейса есть только
+два атрибута, ``__parent__`` и ``__name__``.  Атрибут ``__parent__``
+соответствует родительскому узлу в иерархии местоположений, а
+``__name__`` - это название объекта, которое уникально среди множества
+объектов с одним родительским узлом.
 
-The ``IPhysicallyLocatable`` interface has four methods:
-``getRoot``, ``getPath``, ``getName``, and ``getNearestSite``.
+Интерфейс ``IPhysicallyLocatable`` содержит четыре метода:
+``getRoot``, ``getPath``, ``getName``, и ``getNearestSite``.
 
-- ``getRoot`` function will return the physical root object.
+- ``getRoot`` - функция, которая возвращает объект, соответствующий
+  корневому узлу.
 
-- ``getPath`` return the physical path to the object as a
-  string.
+- ``getPath`` возвращает физический путь к объекту в виде строки.
 
-- ``getName`` return the last segment of the physical path.
+- ``getName`` возвращает последний сегмент физического пути.
 
-- ``getNearestSite`` return the site the object is contained
-  in.  If the object is a site, the object itself is returned.
+- ``getNearestSite`` возвращает объект-сайт, в котором содержится
+  адаптируемый объект, как правило это регистратор компонент,
+  привязанный к конкретному сайту (интернет-приложению, реализованному
+  на одном сервере Zope 3); если он сам является сайтом, то сам он и
+  возвращается.
 
-If you learn Zope 3, you can see that these are the important
-things which you required very often.  To understand the beauty
-of this system, you must see how Zope 2 actually get the physical
-root object and how it is implemented.  There is a method called
-``getPhysicalRoot`` virtually for all container objects.
+Если вы решите заняться изучением среды Zope 3, вы увидите, что
+компоненты, о которых идет сейчас речь, являются важными сущностями, и
+они используются очень и очень часто.  Для осознания красоты такого
+подхода вам необходимо будет познакомиться, как в системе Zope 2
+осуществляется поиск корневого объекта и как это реализовано: почти в
+каждом объекте-контейнере есть метод ``getPhysicalRoot``.
 
 DefaultSized
 ~~~~~~~~~~~~
