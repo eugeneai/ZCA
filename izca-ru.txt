@@ -2013,14 +2013,17 @@ ZCML
 Введение
 ~~~~~~~~
 
-This chapter demonstrates creating a desktop application using PyGTK
-GUI library and the ZCA.  This application also use two different
-kinds of data persistence mechanisms, one object database (ZODB) & and
-another relational database (SQLite).  However, practically, only one
-storage can be used for a particular installation.  The reason for
-using two different persistence mechanisms is to demonstrate how to
-use the ZCA to glue components.  Majority of the code in this
-application is related to PyGTK.
+В этом разделе мы продемонстрируем проектирование оконного приложения,
+используя библиотеку PyGTK для реализации интерфейса пользователя
+совместно с ZCA.  Приложение будет использовать два различных
+механизма постоянного хранения объектов.  Первый - это
+объектно-ориентированная база данных ZODB, а вторая - реляционная база
+данных SQLite.  Однако, при установке конкретного приложения только
+одна база данных будет использоваться.  Причина использования двух
+механизмов постоянного хранения объектов - продемонстрировать
+как ZCA собирает компоненты и связывает их в единое приложение.  В
+сходном коде приложения преобладает реализация интерфейса пользователя
+на основе библиотеки PyGTK.
 
 As the application grows you may use the ZCA components wherever you
 want pluggability or extensibility.  Use plain Python objects directly
