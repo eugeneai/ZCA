@@ -2084,24 +2084,27 @@ http://www.muthukadan.net/downloads/zcalib.tar.bz2
 .. image:: circulationwindow.png
    :align: center
 
-Overview of PyGTK code
-~~~~~~~~~~~~~~~~~~~~~~
+Обзор кода PyGTK
+~~~~~~~~~~~~~~~~
 
-As you can see in the code, most of the code are related to PyGTK.
-The code structure is very similar for different windows.  The windows
-of this application are designed using Glade GUI builder.  You should
-give proper names for widgets you are going to use from code.  In the
-main window, all menu entries has names like: circulation, catalog,
-member, quit & about.
+Почти все приложение - это программный код, использующий PyGTK.
+Структура программ реализации всех окон схожа, общий вид окон и
+приложения разрабатываются при помощи дизайнера оконных интерфейсов
+Glade GUI builder.  Чтобы использовать разработанный интерфейс в
+программном коде необходимо основным элементам управления задать
+названия.  В главном меню все пункты поименованы следующим образом:
+"circulation", "catalog", "member", "quit" и "about".
 
-The ``gtk.glade.XML`` class is used to parse glade file, this will
-create GUI widget objects.  This is how to parse and access objects::
+Класс ``gtk.glade.XML`` используется для трансляции и интерпретации
+файлов glade, в результате его деятельности создаются элементы
+управления интерфейса пользователя.  Вот пример трансляции и получения
+доступа к элементу управления::
 
   import gtk.glade
   xmlobj = gtk.glade.XML('/path/to/file.glade')
   widget = xmlobj.get_widget('widget_name')
 
-In the mainwindow.py, you can see code like this::
+В модуле mainwindow.py находится код, подобный следующему::
 
   curdir = os.path.abspath(os.path.dirname(__file__))
   xml = os.path.join(curdir, 'glade', 'mainwindow.glade')
@@ -2109,8 +2112,9 @@ In the mainwindow.py, you can see code like this::
 
   self.mainwindow = xmlobj.get_widget('mainwindow')
 
-The name of main window widget is `mainwindow`.  Similarly, other
-widgets are retrieved like this::
+Название элемента управления, соответствующего главному окну, -
+`mainwindow`.  Аналогичным образом можно получать доступ и к другим
+элементам управления::
 
   circulation = xmlobj.get_widget('circulation')
   member = xmlobj.get_widget('member')
@@ -2118,7 +2122,7 @@ widgets are retrieved like this::
   catalog = xmlobj.get_widget('catalog')
   about = xmlobj.get_widget('about')
 
-Then, these widgets are connected for some events::
+Затем с элементами управления связываются обработчики возникающих событий::
 
   self.mainwindow.connect('delete_event', self.delete_event)
   quit.connect('activate', self.delete_event)
@@ -2127,24 +2131,25 @@ Then, these widgets are connected for some events::
   catalog.connect('activate', self.on_catalog_activate)
   about.connect('activate', self.on_about_activate)
 
-The `delete_event` is the event when the window is closing using the
-window close button.  The `activate` event is emitted when the menu is
-selected.  The widgets are connected to some callback functions for
-some events.
+Событие `delete_event` возникает, когда пользователь пытается закрыть
+окно при помощи кнопки закрытия окна.  Событие `activate`
+инициируется, когда пользователь выбрал какой-либо пункт меню.  В
+качестве обработчиков событий выступают функции, вызываемые в момент
+возникновения события.
 
-You can see from the above code that, main window is connected to
-`on_delete_event` method for `delete_event`.  The `quit` widget is
-also connected to same method for `activate` event::
+В приведенном фрагменте кода видно, что событие `delete_event`
+главного окна соединено с методом `on_delete_event`.  Событие
+`activate` элемента `quit` также соединено с этим же методом::
 
     def on_delete_event(self, *args):
         gtk.main_quit()
 
-The callback function just call `main_quit` function
+Функция `on_delete_event` просто вызывает функцию `main_quit`.
 
-The code
-~~~~~~~~
+Исходный код приложения
+~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the `zcalib.py`::
+Модуль `zcalib.py`::
 
   import registry
   import mainwindow
