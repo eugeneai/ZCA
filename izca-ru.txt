@@ -2044,44 +2044,42 @@ ZCML
 Исходный код готового приложения находится по следующему адресу:
 http://www.muthukadan.net/downloads/zcalib.tar.bz2
 
-Use cases
-~~~~~~~~~
+Функции приложения
+~~~~~~~~~~~~~~~~~~
 
-The application we are going to discuss here is a library management
-system with minimal features.  The requirements can be summarized like
-this:
+Приложение, от котором идет речь - это система управления библиотекой
+с некоторым минимальным набором функций.  Основные требования к
+приложению пусть будут такие:
 
-- Add members with a unique number and name.
+- Добавление читателей, идентифицируя их уникальным номером и именем.
 
-- Add books with barcode, author & title
+- Добавление книг, помечая их баркодом, и указывая автора и название.
 
-- Issue books
+- Выдача книг на руки читателям.
 
-- Return books
+- Учет книг, возвращенных читателями.
 
-
-The application can be designed in such a way that major features can
-be accessed from a single window.  The main window for accessing all
-these features can be designed like this:
+Дизайн интерфейса пользователя сделаем таким, чтобы основные функции
+были доступны из одного окна.  Основное окно пусть будет следующего вида:
 
 .. image:: mainwindow.png
    :align: center
 
-From member window, user should be able to manage members.  So, it
-should be possible to *add*, *update* and *delete* members as shown
-in the below picture:
+Также будет специальное окно для управления читателями.  Оно должно
+реализовывать *добавление*, *обновление* данных читателя и *удаление*
+читателя как показано на рисунке:
 
 .. image:: memberwindow.png
    :align: center
 
-Similar to member window, the catalog window allows user to *add*,
-*edit* and *delete* books:
+Аналогично предыдущему, окно управления базой данных книг должно
+позволять *добавлять*, *редактировать* данные и *удалять* книги:
 
 .. image:: catalogwindow.png
    :align: center
 
-The circulation window should have the facility for issuing and
-returning books:
+Окно управления книжным фондом должно реализовывать функции *выдачи* и
+*возврата* книг читателями:
 
 .. image:: circulationwindow.png
    :align: center
