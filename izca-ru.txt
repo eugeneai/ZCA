@@ -2025,19 +2025,23 @@ ZCML
 сходном коде приложения преобладает реализация интерфейса пользователя
 на основе библиотеки PyGTK.
 
-As the application grows you may use the ZCA components wherever you
-want pluggability or extensibility.  Use plain Python objects directly
-where you do not required pluggability or extensibility.
+При разработке больших приложений удобно использовать ZCA, так как он
+при обеспечении управляемости процессом разаботки комплексных
+приложений обеспечивает возможность расширения набора функций
+приложения, встраивания и замену (pluggablity) компонент.
+Непосредственное использование объектов Python может и не обеспечить
+такого свойства вашей разработке.
 
-There is no difference in using ZCA for web or desktop or any other
-kind of application or framework.  It is better to follow a
-convention for the location from where you are going to register
-components.  This application use a convention, which can be extended
-by putting registration of similar components in separate modules and
-later import them from main registration module.  In this application
-the main component registration module is `register.py`.
+Вообще ZCA может с одинаковым успехом использоваться как для
+разработки ВЕБ-, так и для оконных и других приложений или сред
+разработки (frameworks).  В каждом приложении необходимо определиться
+с принципом организации регистрации компонент: в каком модуле какие
+компоненты будут регистрироваться.  В данном приложении принято
+указывать функции регистрации компонент в отдельных модулях, и, затем, через импорт
+этих модулей производить собственно регистрацию.  Главный
+регистрирующий модуль компоненты - `register.py`.
 
-Source code of this application can be downloaded from:
+Исходный код готового приложения находится по следующему адресу:
 http://www.muthukadan.net/downloads/zcalib.tar.bz2
 
 Use cases
