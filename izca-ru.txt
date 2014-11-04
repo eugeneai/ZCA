@@ -2678,8 +2678,8 @@ Conclusions
 
 
 
-Reference
----------
+Справочник
+----------
 
 
 
@@ -2688,11 +2688,11 @@ adaptedBy
 
 Функция возвращает перечень интерфейсов, адаптируемых объектом.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `adaptedBy(object)`
+- Сигнатура: `adaptedBy(object)`
 
-Example::
+Пример::
 
   >>> from zope.interface import implements
   >>> from zope.component import adapts
@@ -2712,15 +2712,16 @@ Example::
 adapter
 ~~~~~~~
 
-Adapters can be any callable object, you can use the `adapter`
-decorator to declare that a callable object adapts some interfaces (or
-classes)
+Адаптерами выступают любые вызываемые (callable) объекты.  Существует
+специальный декоратор `adapter`, который позволяет декларировать
+вызываемые объекты как адаптеры, адаптирующие заданные интерфейсы (или
+классы).
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `adapter(*interfaces)`
+- Спецификация: `adapter(*interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -2759,13 +2760,13 @@ Example::
 adapts
 ~~~~~~
 
-This function helps to declare adapter classes.
+Функция, которая определяет класс как адаптер.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `adapts(*interfaces)`
+- Спецификация: `adapts(*interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import implements
   >>> from zope.component import adapts
@@ -2793,11 +2794,11 @@ Declare interfaces declared directly for an object.  The arguments
 after the object are one or more interfaces.  The interfaces given are
 added to the interfaces previously declared for the object.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `alsoProvides(object, *interfaces)`
+- Спецификация: `alsoProvides(object, *interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -2833,13 +2834,13 @@ Attribute
 
 Using this class, you can define normal attributes in an interface.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `Attribute(name, doc='')`
+- Спецификация: `Attribute(name, doc='')`
 
 - See also: `Interface`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -2856,11 +2857,11 @@ Declare additional interfaces implemented for instances of a class.
 The arguments after the class are one or more interfaces.  The
 interfaces given are added to any interfaces previously declared.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `classImplements(cls, *interfaces)`
+- Спецификация: `classImplements(cls, *interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -2899,11 +2900,11 @@ Declare the only interfaces implemented by instances of a class.  The
 arguments after the class are one or more interfaces.  The interfaces
 given replace any previous declarations.
 
- - Location: ``zope.interface``
+ - Модуль: ``zope.interface``
 
- - Signature: `classImplementsOnly(cls, *interfaces)`
+ - Спецификация: `classImplementsOnly(cls, *interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -2943,11 +2944,11 @@ that class will provide the interface implemented by that class.  But
 if you want a class to be provided by an interface, you can declare it
 using ``classProvides`` function.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `classProvides(*interfaces)`
+- Спецификация: `classProvides(*interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -2973,7 +2974,7 @@ ComponentLookupError
 
 This is the exception raised when a component lookup fails.
 
-Example::
+Пример::
 
   >>> class IPerson(Interface):
   ...
@@ -2999,11 +3000,11 @@ looked up in a location other than the current site.  (Of course, this
 means that it is impossible to pass a keyword argument named "context"
 to the factory.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `createObject(factory_name, *args, **kwargs)`
+- Спецификация: `createObject(factory_name, *args, **kwargs)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3046,11 +3047,11 @@ directlyProvidedBy
 This function will return the interfaces directly provided by the
 given object.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `directlyProvidedBy(object)`
+- Спецификация: `directlyProvidedBy(object)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3093,11 +3094,11 @@ Declare interfaces declared directly for an object.  The arguments
 after the object are one or more interfaces.  The interfaces given
 replace interfaces previously declared for the object.
 
- - Location: ``zope.interface``
+ - Модуль: ``zope.interface``
 
- - Signature: `directlyProvides(object, *interfaces)`
+ - Спецификация: `directlyProvides(object, *interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3158,11 +3159,11 @@ Get a named adapter to an interface for an object.  Returns an adapter
 that can adapt object to interface.  If a matching adapter cannot be
 found, raises ``ComponentLookupError`` .
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `getAdapter(object, interface=Interface, name=u'', context=None)`
+- Спецификация: `getAdapter(object, interface=Interface, name=u'', context=None)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3221,13 +3222,13 @@ getAdapterInContext
 Instead of this function, use `context` argument of `getAdapter`_
 function.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `getAdapterInContext(object, interface, context)`
+- Спецификация: `getAdapterInContext(object, interface, context)`
 
 - See also: `queryAdapterInContext`_
 
-Example::
+Пример::
 
   >>> from zope.component.globalregistry import BaseGlobalComponents
   >>> from zope.component import IComponentLookup
@@ -3302,11 +3303,11 @@ Look for all matching adapters to a provided interface for objects.
 Return a list of adapters that match. If an adapter is named, only the
 most specific adapter of a given name is returned.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `getAdapters(objects, provided, context=None)`
+- Спецификация: `getAdapters(objects, provided, context=None)`
 
-Example::
+Пример::
 
   >>> from zope.interface import implements
   >>> from zope.component import adapts
@@ -3346,11 +3347,11 @@ Return all registered utilities for an interface.  This includes
 overridden utilities.  The returned value is an iterable of utility
 instances.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `getAllUtilitiesRegisteredFor(interface)`
+- Спецификация: `getAllUtilitiesRegisteredFor(interface)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -3383,11 +3384,11 @@ getFactoriesFor
 Return a tuple (name, factory) of registered factories that create
 objects which implement the given interface.
 
- - Location: ``zope.component``
+ - Модуль: ``zope.component``
 
- - Signature: `getFactoriesFor(interface, context=None)`
+ - Спецификация: `getFactoriesFor(interface, context=None)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3428,11 +3429,11 @@ given name that is nearest to the context, and returns the interface
 or interface tuple that object instances created by the named factory
 will implement.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `getFactoryInterfaces(name, context=None)`
+- Спецификация: `getFactoryInterfaces(name, context=None)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3471,11 +3472,11 @@ getGlobalSiteManager
 Return the global site manager.  This function should never fail and
 always return an object that provides `IGlobalSiteManager`
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `getGlobalSiteManager()`
+- Спецификация: `getGlobalSiteManager()`
 
-Example::
+Пример::
 
   >>> from zope.component import getGlobalSiteManager
   >>> from zope.component import globalSiteManager
@@ -3493,14 +3494,14 @@ consisting of an empty string is reserved for unnamed adapters. The
 unnamed adapter methods will often call the named adapter methods with
 an empty string for a name.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `getMultiAdapter(objects, interface=Interface, name='',
+- Спецификация: `getMultiAdapter(objects, interface=Interface, name='',
   context=None)`
 
 - See also: `queryMultiAdapter`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -3557,9 +3558,9 @@ Get the nearest site manager in the given context.  If `context` is
 `IComponentLookup` can be found.  If no adapter is found, a
 `ComponentLookupError` is raised.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `getSiteManager(context=None)`
+- Спецификация: `getSiteManager(context=None)`
 
 Example 1::
 
@@ -3597,11 +3598,11 @@ getUtilitiesFor
 Look up the registered utilities that provide an interface.  Returns
 an iterable of name-utility pairs.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `getUtilitiesFor(interface)`
+- Спецификация: `getUtilitiesFor(interface)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -3635,11 +3636,11 @@ Get the utility that provides interface.  Returns the nearest utility
 to the context that implements the specified interface.  If one is not
 found, raises ``ComponentLookupError``.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `getUtility(interface, name='', context=None)`
+- Спецификация: `getUtility(interface, name='', context=None)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -3674,11 +3675,11 @@ subscription adapter factories that don't produce anything.  They do
 all of their work when called.  Handlers are typically used to handle
 events.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `handle(*objects)`
+- Спецификация: `handle(*objects)`
 
-Example::
+Пример::
 
   >>> import datetime
 
@@ -3725,9 +3726,9 @@ implementedBy
 
 Return the interfaces implemented for a class' instances.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `implementedBy(class_)`
+- Спецификация: `implementedBy(class_)`
 
 Example 1::
 
@@ -3782,11 +3783,11 @@ Create a decorator for declaring interfaces implemented by a factory.
 A callable is returned that makes an implements declaration on objects
 passed to it.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `implementer(*interfaces)`
+- Спецификация: `implementer(*interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import implementer
   >>> class IFoo(Interface):
@@ -3810,11 +3811,11 @@ interfaces.  The interfaces given are added to any interfaces
 previously declared.  Previous declarations include declarations for
 base classes unless implementsOnly was used.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `implements(*interfaces)`
+- Спецификация: `implements(*interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3846,11 +3847,11 @@ function is called in a class definition.  The arguments are one or
 more interfaces.  Previous declarations including declarations for
 base classes are overridden.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `implementsOnly(*interfaces)`
+- Спецификация: `implementsOnly(*interfaces)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3891,9 +3892,9 @@ Interface
 Using this class, you can define an interface.  To define an
 interface, just inherit from ``Interface`` class.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `Interface(name, doc='')`
+- Спецификация: `Interface(name, doc='')`
 
 Example 1::
 
@@ -3928,9 +3929,9 @@ error to call this function more than once in a module definition.
 This function is provided for convenience.  It provides a more
 convenient way to call ``directlyProvides`` for a module.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `moduleProvides(*interfaces)`
+- Спецификация: `moduleProvides(*interfaces)`
 
 - See also: `directlyProvides`_
 
@@ -3949,11 +3950,11 @@ noLongerProvides
 Remove an interface from the list of an object's directly provided
 interfaces.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `noLongerProvides(object, interface)`
+- Спецификация: `noLongerProvides(object, interface)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -4019,9 +4020,9 @@ Test whether the interface is implemented by the object.  Return true
 if the object asserts that it implements the interface, including
 asserting that it implements an extended interface.
 
-- Location: ``zope.interface``
+- Модуль: ``zope.interface``
 
-- Signature: `providedBy(object)`
+- Спецификация: `providedBy(object)`
 
 Example 1::
 
@@ -4081,12 +4082,12 @@ Look for a named adapter to an interface for an object.  Returns an
 adapter that can adapt object to interface.  If a matching adapter
 cannot be found, returns the default.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `queryAdapter(object, interface=Interface, name=u'',
+- Спецификация: `queryAdapter(object, interface=Interface, name=u'',
   default=None, context=None)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -4161,14 +4162,14 @@ with the requested interface.  If the method returns a non-None value,
 that value will be returned. Otherwise, if the object already
 implements the interface, the object will be returned.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `queryAdapterInContext(object, interface, context,
+- Спецификация: `queryAdapterInContext(object, interface, context,
   default=None)`
 
 - See also: `getAdapterInContext`_
 
-Example::
+Пример::
 
   >>> from zope.component.globalregistry import BaseGlobalComponents
   >>> from zope.component import IComponentLookup
@@ -4246,14 +4247,14 @@ an empty string is reserved for unnamed adapters.  The unnamed adapter
 methods will often call the named adapter methods with an empty string
 for a name.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `queryMultiAdapter(objects, interface=Interface,
+- Спецификация: `queryMultiAdapter(objects, interface=Interface,
   name=u'', default=None, context=None)`
 
 - See also: `getMultiAdapter`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -4307,11 +4308,11 @@ queryUtility
 This function is used to look up a utility that provides an interface.
 If one is not found, returns default.
 
-- Location: ``zope.component``
+- Модуль: ``zope.component``
 
-- Signature: `queryUtility(interface, name='', default=None)`
+- Спецификация: `queryUtility(interface, name='', default=None)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -4343,14 +4344,14 @@ registerAdapter
 
 This function is used to register an adapter factory.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `registerAdapter(factory, required=None, provided=None,
+- Спецификация: `registerAdapter(factory, required=None, provided=None,
   name=u'', info=u'')`
 
 - See also: `unregisterAdapter`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -4411,11 +4412,11 @@ registeredAdapters
 Return an iterable of `IAdapterRegistrations`.  These registrations
 describe the current adapter registrations in the object.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `registeredAdapters()`
+- Спецификация: `registeredAdapters()`
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -4476,11 +4477,11 @@ registeredHandlers
 Return an iterable of `IHandlerRegistrations`.  These registrations
 describe the current handler registrations in the object.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `registeredHandlers()`
+- Спецификация: `registeredHandlers()`
 
-Example::
+Пример::
 
   >>> import datetime
 
@@ -4532,11 +4533,11 @@ Return an iterable of `ISubscriptionAdapterRegistrations`.  These
 registrations describe the current subscription adapter registrations
 in the object.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `registeredSubscriptionAdapters()`
+- Спецификация: `registeredSubscriptionAdapters()`
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import Attribute
@@ -4592,11 +4593,11 @@ This function return an iterable of `IUtilityRegistrations`.  These
 registrations describe the current utility registrations in the
 object.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `registeredUtilities()`
+- Спецификация: `registeredUtilities()`
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -4629,16 +4630,16 @@ This function is used to register a handler.  A handler is a
 subscriber that doesn't compute an adapter but performs some function
 when called.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `registerHandler(handler, required=None, name=u'', info='')`
+- Спецификация: `registerHandler(handler, required=None, name=u'', info='')`
 
 - See also: `unregisterHandler`_
 
 Note: In the current implementation of ``zope.component`` doesn't
 support `name` attribute.
 
-Example::
+Пример::
 
   >>> import datetime
 
@@ -4685,14 +4686,14 @@ registerSubscriptionAdapter
 
 This function is used to register a subscriber factory.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `registerSubscriptionAdapter(factory, required=None,
+- Спецификация: `registerSubscriptionAdapter(factory, required=None,
   provides=None, name=u'', info='')`
 
 - See also: `unregisterSubscriptionAdapter`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import Attribute
@@ -4742,14 +4743,14 @@ registerUtility
 
 This function is used to register a utility.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `registerUtility(component, provided=None, name=u'',
+- Спецификация: `registerUtility(component, provided=None, name=u'',
   info=u'')`
 
 - See also: `unregisterUtility`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -4778,11 +4779,11 @@ This function is used to get subscribers.  Subscribers are returned
 that provide the provided interface and that depend on and are
 computed from the sequence of required objects.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `subscribers(required, provided, context=None)`
+- Спецификация: `subscribers(required, provided, context=None)`
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import Attribute
@@ -4869,14 +4870,14 @@ component is None and there is no component registered, or if the
 given component is not None and is not registered, then the function
 returns False, otherwise it returns True.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `unregisterAdapter(factory=None, required=None,
+- Спецификация: `unregisterAdapter(factory=None, required=None,
   provided=None, name=u'')`
 
 - See also: `registerAdapter`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -4949,14 +4950,14 @@ subscriber that doesn't compute an adapter but performs some function
 when called.  A boolean is returned indicating whether the registry
 was changed.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `unregisterHandler(handler=None, required=None,
+- Спецификация: `unregisterHandler(handler=None, required=None,
   name=u'')`
 
 - See also: `registerHandler`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import Attribute
@@ -5022,14 +5023,14 @@ component is None and there is no component registered, or if the
 given component is not None and is not registered, then the function
 returns False, otherwise it returns True.
 
-- Location: ``zope.component - IComponentRegistry``
+- Модуль: ``zope.component - IComponentRegistry``
 
-- Signature: `unregisterSubscriptionAdapter(factory=None,
+- Спецификация: `unregisterSubscriptionAdapter(factory=None,
   required=None, provides=None, name=u'')`
 
 - See also: `registerSubscriptionAdapter`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import Attribute
@@ -5112,7 +5113,7 @@ unregisterUtility
 
 - Смотри также: `registerUtility`_
 
-Example::
+Пример::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
