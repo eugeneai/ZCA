@@ -2853,9 +2853,10 @@ Attribute
 classImplements
 ~~~~~~~~~~~~~~~
 
-Declare additional interfaces implemented for instances of a class.
-The arguments after the class are one or more interfaces.  The
-interfaces given are added to any interfaces previously declared.
+Задает дополнительные интерфейсы классы, которые он в системе будет
+реализовывать.  Перечень аргументов, следующих за классом -
+декларируемые интерфейсы, которые добавляются к списку ранее
+декларированных интерфейсов.
 
 - Модуль: ``zope.interface``
 
@@ -2870,11 +2871,11 @@ interfaces given are added to any interfaces previously declared.
 
   >>> class IPerson(Interface):
   ...
-  ...     name = Attribute("Name of person")
+  ...     name = Attribute("Имя человека")
 
-  >>> class IStudent(Interface):
+  >>> class IStudent(IPerson):
   ...
-  ...     college = Attribute("Name of college")
+  ...     college = Attribute("Название колледжа")
 
   >>> class Person(object):
   ...
@@ -2883,22 +2884,22 @@ interfaces given are added to any interfaces previously declared.
   ...     college = u""
 
   >>> classImplements(Person, IStudent)
-  >>> jack = Person()
-  >>> jack.name = "Jack"
-  >>> jack.college = "New College"
+  >>> ganes = Person()
+  >>> ganes.name = "Баролби Гейнс"
+  >>> ganes.college = "Саус-хермондский институт технологий"
 
-  You can test it like this:
+  Результат тестируется следующим образом:
 
   >>> from zope.interface import providedBy
-  >>> IStudent in providedBy(jack)
+  >>> IStudent in providedBy(ganes)
   True
 
 classImplementsOnly
 ~~~~~~~~~~~~~~~~~~~
 
-Declare the only interfaces implemented by instances of a class.  The
-arguments after the class are one or more interfaces.  The interfaces
-given replace any previous declarations.
+Задает классу набор реализуемых им интерфейсов.  Перечень аргументов
+после класса - задаваемые интерфейсы.  Ранее декларированные
+интерфейсы заменяются данным перечнем.
 
  - Модуль: ``zope.interface``
 
@@ -2928,7 +2929,7 @@ given replace any previous declarations.
   >>> jack = Person()
   >>> jack.college = "New College"
 
-  You can test it like this:
+  Результат тестируется следующим образом:
 
   >>> from zope.interface import providedBy
   >>> IPerson in providedBy(jack)
