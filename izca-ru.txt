@@ -2162,12 +2162,14 @@ Glade GUI builder.  Чтобы использовать разработанны
           import sys
           sys.exit(1)
 
-Here, two modules are imported `registry` and `mainwindow`.  Then,
-registry is initialized and mainwindow's `main` function is called.
-If user is trying to exit application using `Ctrl+C`, system will exit
-normally, that's why we catched `KeyboardInterrupt` exception.
+В тексте импортируются модули `registry` и `mainwindow`.  Затем модуль
+`registry` инициализируется и вызывается функция `main` модуля
+`mainwindow`.  Если пользователь попытается завершить программу при
+помощи комбинации клавиш `Ctrl+C`, программа закончит свое исполнение.
+Чтобы не дать ей так везти себя перехватим исключение
+`KeyboardInterrupt`.
 
-This is the `registry.py`::
+Модуль `registry.py`::
 
   import sys
   from zope.component import getGlobalSiteManager
@@ -2241,16 +2243,16 @@ This is the `registry.py`::
       else:
           initialize_odb()
 
-Look at the `initialize` function which we are calling from the main
-module, `zcalib.py`.  The `initialize` function first check which db
-to use, relational database (RDB) or object database (ODB) and this
-checking is done at `check_use_relational_db` function.  If `-r`
-option is given at command line, it will call `initialize_rdb`
-otherwise, `initialize_odb`.  If the RDB function is called, it will
-setup all components related to RDB.  On the other hand, if the ODB
-function is called, it will setup all components related to ODB.
+Обратите внимание на функцию `initialize`, которая вызывается в
+главном модуле `zcalib.py`.  Функция сначала проверяет, какую базу
+данных надо использовать: реляционную (RDB) или объектную (ODB).
+Проверка осуществляется в функции `check_use_relational_db`.  Если в
+командной строке задать опцию `-r`, будет запущена `initialize_rdb`,
+иначе - `initialize_odb`.  Если выбрана RDB, то будут установлены
+компоненты, реализующие механизм  RDB.  В обратном случае - компоненты
+для ODB.
 
-Here is the `mainwindow.py`::
+Модуль `mainwindow.py`::
 
   import os
   import gtk
@@ -2306,10 +2308,10 @@ Here is the `mainwindow.py`::
       gtk.main()
 
 
-The `main` function here creates an instance of `MainWindow` class,
-which will initialize all widgets.
+Функция `main` создает экземпляр класса `MainWindow`, который
+инициализирует все элементы управления.
 
-Here is the `memberwindow.py`::
+Модуль `memberwindow.py`::
 
   import os
   import gtk
@@ -2425,7 +2427,7 @@ Here is the `memberwindow.py`::
 
   memberwindow = MemberWindow()
 
-Here is the `components.py`::
+Модуль `components.py`::
 
   from zope.interface import implements
 
@@ -2455,7 +2457,7 @@ Here is the `components.py`::
       book = Book()
       member = Member()
 
-Here is the `interfaces.py`::
+Модуль `interfaces.py`::
 
   from zope.interface import Interface
   from zope.interface import Attribute
@@ -2524,7 +2526,7 @@ Here is the `interfaces.py`::
       def delete():
           pass
 
-Here is the `member.py`::
+Модуль `member.py`::
 
   from zope.interface import implements
   from zope.component import getUtility
@@ -2684,7 +2686,7 @@ Reference
 adaptedBy
 ~~~~~~~~~
 
-This function helps to find the adapted interfaces.
+Функция возвращает перечень интерфейсов, адаптируемых объектом.
 
 - Location: ``zope.component``
 
