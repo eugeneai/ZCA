@@ -2790,9 +2790,9 @@ adapts
 alsoProvides
 ~~~~~~~~~~~~
 
-Declare interfaces declared directly for an object.  The arguments
-after the object are one or more interfaces.  The interfaces given are
-added to the interfaces previously declared for the object.
+Задает объекту перечень интерфейсов, которые он оснащает, в дополнение
+к ранее декларированным.  Параметры функции, следующие за объектом, -
+перечень интерфейсов (один или больше).
 
 - Модуль: ``zope.interface``
 
@@ -2832,13 +2832,13 @@ added to the interfaces previously declared for the object.
 Attribute
 ~~~~~~~~~
 
-Using this class, you can define normal attributes in an interface.
+Класс, предназначенный для определения атрибутов в интерфейсе.
 
 - Модуль: ``zope.interface``
 
 - Спецификация: `Attribute(name, doc='')`
 
-- See also: `Interface`_
+- Смотри также: `Interface`_
 
 Пример::
 
@@ -3226,7 +3226,7 @@ function.
 
 - Спецификация: `getAdapterInContext(object, interface, context)`
 
-- See also: `queryAdapterInContext`_
+- Смотри также: `queryAdapterInContext`_
 
 Пример::
 
@@ -3499,7 +3499,7 @@ an empty string for a name.
 - Спецификация: `getMultiAdapter(objects, interface=Interface, name='',
   context=None)`
 
-- See also: `queryMultiAdapter`_
+- Смотри также: `queryMultiAdapter`_
 
 Пример::
 
@@ -3933,7 +3933,7 @@ convenient way to call ``directlyProvides`` for a module.
 
 - Спецификация: `moduleProvides(*interfaces)`
 
-- See also: `directlyProvides`_
+- Смотри также: `directlyProvides`_
 
 You can see an example usage in `zope.component` source itself.  The
 `__init__.py` file has a statement like this::
@@ -4167,7 +4167,7 @@ implements the interface, the object will be returned.
 - Спецификация: `queryAdapterInContext(object, interface, context,
   default=None)`
 
-- See also: `getAdapterInContext`_
+- Смотри также: `getAdapterInContext`_
 
 Пример::
 
@@ -4252,7 +4252,7 @@ for a name.
 - Спецификация: `queryMultiAdapter(objects, interface=Interface,
   name=u'', default=None, context=None)`
 
-- See also: `getMultiAdapter`_
+- Смотри также: `getMultiAdapter`_
 
 Пример::
 
@@ -4349,7 +4349,7 @@ This function is used to register an adapter factory.
 - Спецификация: `registerAdapter(factory, required=None, provided=None,
   name=u'', info=u'')`
 
-- See also: `unregisterAdapter`_
+- Смотри также: `unregisterAdapter`_
 
 Пример::
 
@@ -4634,7 +4634,7 @@ when called.
 
 - Спецификация: `registerHandler(handler, required=None, name=u'', info='')`
 
-- See also: `unregisterHandler`_
+- Смотри также: `unregisterHandler`_
 
 Note: In the current implementation of ``zope.component`` doesn't
 support `name` attribute.
@@ -4691,7 +4691,7 @@ This function is used to register a subscriber factory.
 - Спецификация: `registerSubscriptionAdapter(factory, required=None,
   provides=None, name=u'', info='')`
 
-- See also: `unregisterSubscriptionAdapter`_
+- Смотри также: `unregisterSubscriptionAdapter`_
 
 Пример::
 
@@ -4748,7 +4748,7 @@ This function is used to register a utility.
 - Спецификация: `registerUtility(component, provided=None, name=u'',
   info=u'')`
 
-- See also: `unregisterUtility`_
+- Смотри также: `unregisterUtility`_
 
 Пример::
 
@@ -4875,7 +4875,7 @@ returns False, otherwise it returns True.
 - Спецификация: `unregisterAdapter(factory=None, required=None,
   provided=None, name=u'')`
 
-- See also: `registerAdapter`_
+- Смотри также: `registerAdapter`_
 
 Пример::
 
@@ -4955,7 +4955,7 @@ was changed.
 - Спецификация: `unregisterHandler(handler=None, required=None,
   name=u'')`
 
-- See also: `registerHandler`_
+- Смотри также: `registerHandler`_
 
 Пример::
 
@@ -5028,7 +5028,7 @@ returns False, otherwise it returns True.
 - Спецификация: `unregisterSubscriptionAdapter(factory=None,
   required=None, provides=None, name=u'')`
 
-- See also: `registerSubscriptionAdapter`_
+- Смотри также: `registerSubscriptionAdapter`_
 
 Пример::
 
