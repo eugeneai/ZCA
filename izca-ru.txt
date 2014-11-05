@@ -3572,7 +3572,7 @@ getSiteManager
 
 - Спецификация: `getSiteManager(context=None)`
 
-Example 1::
+Пример 1::
 
   >>> from zope.component.globalregistry import BaseGlobalComponents
   >>> from zope.component import IComponentLookup
@@ -3593,7 +3593,7 @@ Example 1::
   >>> lsm is sm
   True
 
-Example 2::
+Пример 2::
 
   >>> from zope.component import getGlobalSiteManager
   >>> gsm = getGlobalSiteManager()
@@ -3605,8 +3605,8 @@ Example 2::
 getUtilitiesFor
 ~~~~~~~~~~~~~~~
 
-Look up the registered utilities that provide an interface.  Returns
-an iterable of name-utility pairs.
+Осуществляет поиск зарегистрированных утилит, которые оснащают
+заданный интерфейс.  Возвращает список двоек (name, utility).
 
 - Модуль: ``zope.component``
 
@@ -3642,9 +3642,9 @@ an iterable of name-utility pairs.
 getUtility
 ~~~~~~~~~~
 
-Get the utility that provides interface.  Returns the nearest utility
-to the context that implements the specified interface.  If one is not
-found, raises ``ComponentLookupError``.
+Возвращает утилиту, которая оснащает заданный интерфейс.  Возвращает
+утилиту, которая находится в ближайшем из контекстов.  Если такой
+утилиты не удается найти, то создается исключение ``ComponentLookupError``.
 
 - Модуль: ``zope.component``
 
@@ -3680,10 +3680,11 @@ found, raises ``ComponentLookupError``.
 handle
 ~~~~~~
 
-Call all of the handlers for the given objects.  Handlers are
-subscription adapter factories that don't produce anything.  They do
-all of their work when called.  Handlers are typically used to handle
-events.
+Запускает все обработчики (handlers) для заданных объектов.
+Обработчики - это фабрики адаптеров-подписчиков (subscription
+adapter), которые ничего не возвращают.  Они просто выполняют
+некоторую процедуру.  Обработчики обычно используются для реализации
+реакции на событие.
 
 - Модуль: ``zope.component``
 
@@ -3734,13 +3735,13 @@ events.
 implementedBy
 ~~~~~~~~~~~~~
 
-Return the interfaces implemented for a class' instances.
+Возвращает перечень интерфейсов, реализуемых заданным классом.
 
 - Модуль: ``zope.interface``
 
 - Спецификация: `implementedBy(class_)`
 
-Example 1::
+Пример 1::
 
   >>> from zope.interface import Interface
   >>> from zope.interface import implements
@@ -3760,7 +3761,7 @@ Example 1::
   >>> implementedBy(Greeter)
   <implementedBy __builtin__.Greeter>
 
-Example 2::
+Пример 2::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3789,9 +3790,10 @@ Example 2::
 implementer
 ~~~~~~~~~~~
 
-Create a decorator for declaring interfaces implemented by a factory.
-A callable is returned that makes an implements declaration on objects
-passed to it.
+Создает декоратор (decorator) для задания интерфейса, реализуемого
+фабрикой.  Возвращает исполняемый объект (callable), которые
+представляет собой такую фабрику, обрамляющую объект, переданный
+декоратору в качестве параметра.
 
 - Модуль: ``zope.interface``
 
@@ -3815,11 +3817,13 @@ passed to it.
 implements
 ~~~~~~~~~~
 
-Declare interfaces implemented by instances of a class This function
-is called in a class definition.  The arguments are one or more
-interfaces.  The interfaces given are added to any interfaces
-previously declared.  Previous declarations include declarations for
-base classes unless implementsOnly was used.
+Функция вызывается внутри определения класса.  Функция задает перечень
+интерфейсов, которые класс намеревается реализовать.  Реализуемые
+интерфейсы задаются в качестве параметров функции.  Заданные
+интерфейсы добавляются ранее декларированным, включая интерфейсы, получаемые
+при наследовании.  Функция `implementsOnly` используется для задания
+перечня интерфейсов, при этом унаследованные и ранее декларированные
+интерфейсы заменяются.
 
 - Модуль: ``zope.interface``
 
@@ -3852,10 +3856,10 @@ base classes unless implementsOnly was used.
 implementsOnly
 ~~~~~~~~~~~~~~
 
-Declare the only interfaces implemented by instances of a class.  This
-function is called in a class definition.  The arguments are one or
-more interfaces.  Previous declarations including declarations for
-base classes are overridden.
+Задает перечень интерфейсов, реализуемых классом, при этом ранее
+сделанные и унаследованные декларации интерфейсов отменяются
+(overridden).  Эта функция выполняется в процессе определения класса.
+Аргументы функции - декларируемые интерфейсы.
 
 - Модуль: ``zope.interface``
 
@@ -3899,14 +3903,15 @@ base classes are overridden.
 Interface
 ~~~~~~~~~
 
-Using this class, you can define an interface.  To define an
-interface, just inherit from ``Interface`` class.
+При помощи данного класса задаются интерфейсы. Интерфейсы - это особые
+классы Python.  Чтобы определить класс-интерфейс надо просто
+унаследовать ``Interface``.
 
 - Модуль: ``zope.interface``
 
 - Спецификация: `Interface(name, doc='')`
 
-Example 1::
+Пример 1::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -3917,7 +3922,7 @@ Example 1::
   ...     email = Attribute("Email Address")
 
 
-Example 2::
+Пример 2::
 
   >>> from zope.interface import Interface
 
@@ -3929,15 +3934,14 @@ Example 2::
 moduleProvides
 ~~~~~~~~~~~~~~
 
-Declare interfaces provided by a module.  This function is used in a
-module definition.  The arguments are one or more interfaces.  The
-given interfaces are used to create the module's direct-object
-interface specification.  An error will be raised if the module
-already has an interface specification.  In other words, it is an
-error to call this function more than once in a module definition.
+Определить модуль Python как объект, оснащающий заданный интерфейс.
+Функция используется в тексте определения модуля.  Аргументы - один
+или несколько интерфейсов.  Исключительная ситуация создается в
+случае, если в модуле уже ранее встречалась такая декларация.  Другими
+словами, в модуле декларация интерфейсов должна быть только одна.
 
-This function is provided for convenience.  It provides a more
-convenient way to call ``directlyProvides`` for a module.
+Функция `moduleProvides` - это удобный вариант функции
+``directlyProvides``, применяемой к объекту-модулю.
 
 - Модуль: ``zope.interface``
 
@@ -3945,14 +3949,14 @@ convenient way to call ``directlyProvides`` for a module.
 
 - Смотри также: `directlyProvides`_
 
-You can see an example usage in `zope.component` source itself.  The
-`__init__.py` file has a statement like this::
+В исходном коде модуля `zope.component` эта функция применяется, а
+именно, в файле `__init__.py` есть следующие операторы::
 
   moduleProvides(IComponentArchitecture,
                  IComponentRegistrationConvenience)
 
-So, the `zope.component` provides two interfaces:
-`IComponentArchitecture` and `IComponentRegistrationConvenience`.
+Таким образом, `zope.component` оснащает два интерфейса::
+`IComponentArchitecture` и `IComponentRegistrationConvenience`.
 
 noLongerProvides
 ~~~~~~~~~~~~~~~~
