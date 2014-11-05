@@ -2673,8 +2673,8 @@ ZODB
 
 
 
-Conclusions
-~~~~~~~~~~~
+Заключение
+~~~~~~~~~~
 
 
 
@@ -2686,7 +2686,8 @@ Conclusions
 adaptedBy
 ~~~~~~~~~
 
-Функция возвращает перечень интерфейсов, адаптируемых объектом.
+Функция возвращает перечень интерфейсов, адаптируемых
+объектом-адаптером.
 
 - Модуль: ``zope.component``
 
@@ -2940,10 +2941,9 @@ classImplementsOnly
 classProvides
 ~~~~~~~~~~~~~
 
-Normally if a class implements a particular interface, the instance of
-that class will provide the interface implemented by that class.  But
-if you want a class to be provided by an interface, you can declare it
-using ``classProvides`` function.
+Обычно если класс реализует определенный интерфейс, то его экземпляры
+оснащают этот интерфейс.  Но когда надо, чтобы именно класс оснащал
+некоторый интерфейс, то это реализуется функцией ``classProvides``.
 
 - Модуль: ``zope.interface``
 
@@ -2964,7 +2964,7 @@ using ``classProvides`` function.
   ...     classProvides(IPerson)
   ...     name = u"Jack"
 
-  You can test it like this:
+  Результат тестируется следующим образом:
 
   >>> from zope.interface import providedBy
   >>> IPerson in providedBy(Person)
@@ -2973,7 +2973,7 @@ using ``classProvides`` function.
 ComponentLookupError
 ~~~~~~~~~~~~~~~~~~~~
 
-This is the exception raised when a component lookup fails.
+Исключение, которое инициируется, если поиск компоненты не удался.
 
 Пример::
 
@@ -2990,16 +2990,17 @@ This is the exception raised when a component lookup fails.
 createObject
 ~~~~~~~~~~~~
 
-Create an object using a factory.
+Создает объект, используя фабрику.
 
-Finds the named factory in the current site and calls it with the
-given arguments.  If a matching factory cannot be found raises
-``ComponentLookupError``.  Returns the created object.
+Производит поиск поименованной фабрики в текущем регистраторе
+компонент (менеджере сайта) и запускает ее с заданными аргументами.
+Если такой фабрики не удается найти, инициируется исключение
+``ComponentLookupError``.  Возвращает созданный объект.
 
-A context keyword argument can be provided to cause the factory to be
-looked up in a location other than the current site.  (Of course, this
-means that it is impossible to pass a keyword argument named "context"
-to the factory.
+При помощи ключевого слова `context` в аргументе функции позволяет
+задавать контекст, где следует искать фабрику, если не в текущем
+регистраторе.  Ограничения технологии не позволяют передавать аргумент
+по ключу "context" как аргумент фабрики.
 
 - Модуль: ``zope.component``
 
@@ -3040,13 +3041,13 @@ to the factory.
 Declaration
 ~~~~~~~~~~~
 
-Need not to use directly.
+Непосредственно не запускается.
 
 directlyProvidedBy
 ~~~~~~~~~~~~~~~~~~
 
-This function will return the interfaces directly provided by the
-given object.
+Возвращает список интерфейсов, которые непосредственно оснащаются
+объектом, переданным в параметре.
 
 - Модуль: ``zope.interface``
 
@@ -3091,9 +3092,10 @@ given object.
 directlyProvides
 ~~~~~~~~~~~~~~~~
 
-Declare interfaces declared directly for an object.  The arguments
-after the object are one or more interfaces.  The interfaces given
-replace interfaces previously declared for the object.
+Непосредственно задает перечень интерфейсов, оснащаемых объектом.
+Аргументы, непосредственно следующие за объектом - перечень
+декларируемых интерфейсов.  Заданные интерфейсы заменяют
+декларированные ранее.
 
  - Модуль: ``zope.interface``
 
@@ -3156,9 +3158,9 @@ replace interfaces previously declared for the object.
 getAdapter
 ~~~~~~~~~~
 
-Get a named adapter to an interface for an object.  Returns an adapter
-that can adapt object to interface.  If a matching adapter cannot be
-found, raises ``ComponentLookupError`` .
+Возвращает поименованный адаптер к заданному интерфейсу для заданного
+объекта.  Если подходящего адаптера не получается найти, создается
+исключительная ситуация ``ComponentLookupError``.
 
 - Модуль: ``zope.interface``
 
@@ -3220,8 +3222,7 @@ found, raises ``ComponentLookupError`` .
 getAdapterInContext
 ~~~~~~~~~~~~~~~~~~~
 
-Instead of this function, use `context` argument of `getAdapter`_
-function.
+Вместо этой функции следует использовать аргумент `context` функции `getAdapter`_.
 
 - Модуль: ``zope.component``
 
@@ -3300,9 +3301,10 @@ function.
 getAdapters
 ~~~~~~~~~~~
 
-Look for all matching adapters to a provided interface for objects.
-Return a list of adapters that match. If an adapter is named, only the
-most specific adapter of a given name is returned.
+Осуществляет поиск всех подходящих адаптеров к заданному интерфейсу и
+заданным объектам.  Возвращает список адаптеров.  Если в списке есть
+поименованный адаптер, то выдается наиболее специфический адаптер с
+заданным именем.
 
 - Модуль: ``zope.component``
 
@@ -3344,9 +3346,9 @@ most specific adapter of a given name is returned.
 getAllUtilitiesRegisteredFor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Return all registered utilities for an interface.  This includes
-overridden utilities.  The returned value is an iterable of utility
-instances.
+Возвращает все зарегистрированные утилиты для заданного интерфейса, в
+том числе и те, которые были заменены (overridden).  По возвращаемому
+значению можно осуществлять итерацию, где каждый элемент - это утилита.
 
 - Модуль: ``zope.component``
 
@@ -3382,8 +3384,8 @@ instances.
 getFactoriesFor
 ~~~~~~~~~~~~~~~
 
-Return a tuple (name, factory) of registered factories that create
-objects which implement the given interface.
+Возвращает список двоек (name, factory) зарегистрированных фабрик
+классов, реализующих заданный интерфейс.
 
  - Модуль: ``zope.component``
 
@@ -3425,10 +3427,11 @@ objects which implement the given interface.
 getFactoryInterfaces
 ~~~~~~~~~~~~~~~~~~~~
 
-Get interfaces implemented by a factory.  Finds the factory of the
-given name that is nearest to the context, and returns the interface
-or interface tuple that object instances created by the named factory
-will implement.
+Возвращает перечень интерфейсов, реализуемых фабрикой.  Производит
+поиск по заданному имени фабрики, которая находится в ближайшем
+контексте, затем возвращает либо ее интерфейс, либо n-ку (tuple)
+интерфейсов, которые будут оснащать объекты, создаваемые данной
+фабрикой.
 
 - Модуль: ``zope.component``
 
@@ -3470,8 +3473,10 @@ will implement.
 getGlobalSiteManager
 ~~~~~~~~~~~~~~~~~~~~
 
-Return the global site manager.  This function should never fail and
-always return an object that provides `IGlobalSiteManager`
+Функция возвращает глобальный регистратор компонент (глобальный
+менеджер сайта).  Эта функция не должна а принципе при выполнении
+терпеть неуспех.  Возвращаемый объект оснащает интерфейс
+`IGlobalSiteManager`
 
 - Модуль: ``zope.component``
 
@@ -3488,12 +3493,14 @@ always return an object that provides `IGlobalSiteManager`
 getMultiAdapter
 ~~~~~~~~~~~~~~~
 
-Look for a multi-adapter to an interface for an objects.  Returns a
-multi-adapter that can adapt objects to interface.  If a matching
-adapter cannot be found, raises ComponentLookupError.  The name
-consisting of an empty string is reserved for unnamed adapters. The
-unnamed adapter methods will often call the named adapter methods with
-an empty string for a name.
+Осуществляет поиск мультиадаптера (multi-adapter) к заданному
+интерфейсу и набору адаптируемых объектов.  Возвращает мультиадаптер,
+который способен адаптировать эти объекты к указанному интерфейсу.
+Если такого адаптера найти не удается, то создается исключение
+`ComponentLookupError`.  Пустое имя адаптера зарезервировано для
+непоименнованных адаптеров.  Функции, реализующие поиск
+непоименнованных адаптеров, - это функции поиска адаптеров, где в
+качестве имени адаптера задается пустая строка.
 
 - Модуль: ``zope.component``
 
@@ -3553,11 +3560,13 @@ an empty string for a name.
 getSiteManager
 ~~~~~~~~~~~~~~
 
-Get the nearest site manager in the given context.  If `context` is
-`None`, return the global site manager.  If the `context` is not
-`None`, it is expected that an adapter from the `context` to
-`IComponentLookup` can be found.  If no adapter is found, a
-`ComponentLookupError` is raised.
+Возвращает регистратор компонент (менеджер сайта), который является
+наиближайщем в заданном контексте. Если параметр `context` равен
+`None`, то возвращается глобальный регистратор.  Если параметр
+`context` не равен `None`, то предполагается, что найдется какой-либо
+адаптер из `context`-а `IComponentLookup`.  Если же найти такой
+адаптер на самом деле не удалось, создается исключение
+`ComponentLookupError`.
 
 - Модуль: ``zope.component``
 
