@@ -3961,8 +3961,8 @@ moduleProvides
 noLongerProvides
 ~~~~~~~~~~~~~~~~
 
-Remove an interface from the list of an object's directly provided
-interfaces.
+Исключить заданный интерфейс из списка интерфейсов, оснащаемых
+объектом.
 
 - Модуль: ``zope.interface``
 
@@ -4010,35 +4010,38 @@ interfaces.
 provideAdapter
 ~~~~~~~~~~~~~~
 
-It is recommended to use `registerAdapter`_ .
+Вместо этой функции рекомендовано к использованию функция
+`registerAdapter`_ .
 
 provideHandler
 ~~~~~~~~~~~~~~
 
-It is recommended to use `registerHandler`_ .
+Вместо этой функции рекомендовано к использованию функция
+`registerHandler`_ .
 
 provideSubscriptionAdapter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It is recommended to use `registerSubscriptionAdapter`_ .
+Вместо этой функции рекомендовано к использованию функция `registerSubscriptionAdapter`_ .
 
 provideUtility
 ~~~~~~~~~~~~~~
 
-It is recommended to use `registerUtility`_ .
+Вместо этой функции рекомендовано к использованию функция
+`registerUtility`_ .
 
 providedBy
 ~~~~~~~~~~
 
-Test whether the interface is implemented by the object.  Return true
-if the object asserts that it implements the interface, including
-asserting that it implements an extended interface.
+Функция проверят, оснащает ли интерфейс заданный объект.  Возврящается
+`истина`, если ZCA допускает, что это так, в том числе, если объект
+оснащает расширенный интерфейс.
 
 - Модуль: ``zope.interface``
 
 - Спецификация: `providedBy(object)`
 
-Example 1::
+Пример 1::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -4056,13 +4059,13 @@ Example 1::
   >>> jack = Person()
   >>> jack.name = "Jack"
 
-  You can test it like this:
+  Результат проверяется следующим образом:
 
   >>> from zope.interface import providedBy
   >>> IPerson in providedBy(jack)
   True
 
-Example 2::
+Пример 2::
 
   >>> from zope.interface import Attribute
   >>> from zope.interface import Interface
@@ -4084,7 +4087,8 @@ Example 2::
   >>> jack = Person()
   >>> jack.name = "Jack"
 
-  To get a list of all interfaces provided by that object::
+  Следующий код позволяет получить полный перечень интерфейсов,
+  оснащаемых объектом::
 
   >>> [x.__name__ for x in providedBy(jack)]
   ['IPerson', 'ISpecial']
@@ -4092,9 +4096,9 @@ Example 2::
 queryAdapter
 ~~~~~~~~~~~~
 
-Look for a named adapter to an interface for an object.  Returns an
-adapter that can adapt object to interface.  If a matching adapter
-cannot be found, returns the default.
+Производит поиск адаптера к заданному интерфейсу для заданного
+объекта.  Возвращает подходящий адаптер, если такого адаптера нет, то
+возвратить значение, заданное параметром `default`.
 
 - Модуль: ``zope.component``
 
@@ -4157,24 +4161,28 @@ cannot be found, returns the default.
 queryAdapterInContext
 ~~~~~~~~~~~~~~~~~~~~~
 
-Look for a special adapter to an interface for an object.
+Осуществляет поиск адаптера специального вида к заданному интерфейсу
+для заданного объекта.
 
-NOTE: This method should only be used if a custom context needs to be
-provided to provide custom component lookup. Otherwise, call the
-interface, as in::
+NOTE: Этот метод должен вызываться только в специальных случаях, когда
+по каким-либо причинам следует изменить обычный механизм получения
+доступа к компонентам.  Иначе следует применять функцию `interface`,
+как в этом примере::
 
   interface(object, default)
 
-Returns an adapter that can adapt object to interface.  If a matching
-adapter cannot be found, returns the default.
+Функция возвращает адаптер, который способен адаптировать заданный
+объект к заданному интерфейсу.  Если такого адаптера не удается найти,
+то возвращается значение, переданное в параметре `default`.
 
-Context is adapted to IServiceService, and this adapter's 'Adapters'
-service is used.
+Контекст адаптируется к интерфейсу IServiceService, полученный адаптер
+используется как сервис.
 
-If the object has a __conform__ method, this method will be called
-with the requested interface.  If the method returns a non-None value,
-that value will be returned. Otherwise, if the object already
-implements the interface, the object will be returned.
+Если объект, переданный в параметр, включает метод `__conform__`, этот
+метод вызывается с запрашиваемым интерфейсом в качестве параметра.
+Если метод возвращает значение, отличное от `None`, это значение
+и возвращается.  Иначе, если объект и так реализует заданный
+интерфейс, то он сам и будет возвращен.
 
 - Модуль: ``zope.component``
 
@@ -4254,12 +4262,14 @@ implements the interface, the object will be returned.
 queryMultiAdapter
 ~~~~~~~~~~~~~~~~~
 
-Look for a multi-adapter to an interface for objects.  Returns a
-multi-adapter that can adapt objects to interface.  If a matching
-adapter cannot be found, returns the default.  The name consisting of
-an empty string is reserved for unnamed adapters.  The unnamed adapter
-methods will often call the named adapter methods with an empty string
-for a name.
+Осуществляет поиск мультиадаптера (multi-adapter) к заданному
+интерфейсу и набору адаптируемых объектов.  Возвращает мультиадаптер,
+который способен адаптировать эти объекты к указанному интерфейсу.
+Если такого адаптера найти не удается, возвращается значение,
+переданное в параметре `default`.  Пустое имя адаптера зарезервировано
+для непоименнованных адаптеров.  Функции, реализующие поиск
+непоименнованных адаптеров, - это функции поиска адаптеров, где в
+качестве имени адаптера задается пустая строка.
 
 - Модуль: ``zope.component``
 
@@ -4319,8 +4329,9 @@ for a name.
 queryUtility
 ~~~~~~~~~~~~
 
-This function is used to look up a utility that provides an interface.
-If one is not found, returns default.
+Функция используется для поиска утилиты, которая оснащает заданный
+интерфейс.  Если такой утилиты не удается найти, то возвращается
+значение, переданное в параметре `default`.
 
 - Модуль: ``zope.component``
 
@@ -4356,7 +4367,7 @@ If one is not found, returns default.
 registerAdapter
 ~~~~~~~~~~~~~~~
 
-This function is used to register an adapter factory.
+Эта функция используется для регистрации фабрики адаптеров.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4415,7 +4426,7 @@ This function is used to register an adapter factory.
   >>> gsm.registerAdapter(FrontDeskNG,
   ...                     (IGuest,), IDesk, 'ng')
 
-  You can test it like this:
+  Результат тестируется следующим образом:
 
   >>> queryAdapter(jack, IDesk, 'ng') #doctest: +ELLIPSIS
   <FrontDeskNG object at ...>
@@ -4423,8 +4434,8 @@ This function is used to register an adapter factory.
 registeredAdapters
 ~~~~~~~~~~~~~~~~~~
 
-Return an iterable of `IAdapterRegistrations`.  These registrations
-describe the current adapter registrations in the object.
+Возвращает генератор `IAdapterRegistrations`, элементы которого
+описывают существующие зарегистрированные фабрики адаптеров.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4488,8 +4499,8 @@ describe the current adapter registrations in the object.
 registeredHandlers
 ~~~~~~~~~~~~~~~~~~
 
-Return an iterable of `IHandlerRegistrations`.  These registrations
-describe the current handler registrations in the object.
+Возвращает генератор `IHandlerRegistrations`, элементы которого
+описывают зарегистрированные обработчики.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4543,9 +4554,8 @@ describe the current handler registrations in the object.
 registeredSubscriptionAdapters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Return an iterable of `ISubscriptionAdapterRegistrations`.  These
-registrations describe the current subscription adapter registrations
-in the object.
+Возвращает генератор `ISubscriptionAdapterRegistrations`, элементы
+которого описывают зарегистрированные адаптеры-подписчики.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4603,9 +4613,8 @@ in the object.
 registeredUtilities
 ~~~~~~~~~~~~~~~~~~~
 
-This function return an iterable of `IUtilityRegistrations`.  These
-registrations describe the current utility registrations in the
-object.
+Эта функция возвращает генератор `IUtilityRegistrations`, элементы
+которого описывают зарегистрированные утилиты.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4640,9 +4649,9 @@ object.
 registerHandler
 ~~~~~~~~~~~~~~~
 
-This function is used to register a handler.  A handler is a
-subscriber that doesn't compute an adapter but performs some function
-when called.
+Функция позволяет регистрировать обработчики (handlers). Обработчик -
+это адаптер-подписчик (subscription adapter), который ничего не
+возвращает, только выполняет заданную процедуру.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4650,8 +4659,8 @@ when called.
 
 - Смотри также: `unregisterHandler`_
 
-Note: In the current implementation of ``zope.component`` doesn't
-support `name` attribute.
+Замечание: В современной реализации модуля ``zope.component`` пока нет
+поддержки поименованных подписчиков.
 
 Пример::
 
@@ -4698,7 +4707,8 @@ support `name` attribute.
 registerSubscriptionAdapter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This function is used to register a subscriber factory.
+Функция используется для регистрации фабрики адаптеров-подписчиков
+(subscription adapter).
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4755,7 +4765,7 @@ This function is used to register a subscriber factory.
 registerUtility
 ~~~~~~~~~~~~~~~
 
-This function is used to register a utility.
+Функция позволяет зарегистрировать утилиту.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4789,9 +4799,10 @@ This function is used to register a utility.
 subscribers
 ~~~~~~~~~~~
 
-This function is used to get subscribers.  Subscribers are returned
-that provide the provided interface and that depend on and are
-computed from the sequence of required objects.
+Функция позволяет получить перечень подписчиков (subscription
+adapter).  Элементы перечня оснащают заданный интерфейс, и от которого
+они к тому же зависят.  Перечень также определяется списком заданных
+объектов, переданных в функцию в качестве первого параметра.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4878,11 +4889,11 @@ computed from the sequence of required objects.
 unregisterAdapter
 ~~~~~~~~~~~~~~~~~
 
-This function is used to unregister an adapter factory.  A boolean is
-returned indicating whether the registry was changed.  If the given
-component is None and there is no component registered, or if the
-given component is not None and is not registered, then the function
-returns False, otherwise it returns True.
+Функция используется для отмены регистрации фабрики адаптеров.
+Возвращается значение типа `boolean`. Если после выполнения операции
+состояние регистратора изменилось, то возвращается `истина`.  Значение
+`ложь` возвращается, если параметр равен `None` или компонента не было
+зарегистрирована.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -4941,17 +4952,17 @@ returns False, otherwise it returns True.
   >>> gsm.registerAdapter(FrontDeskNG,
   ...                     (IGuest,), IDesk, 'ng6')
 
-  You can test it like this:
+  Результат проверяется следующим образом:
 
   >>> queryAdapter(jack, IDesk, 'ng6') #doctest: +ELLIPSIS
   <FrontDeskNG object at ...>
 
-  Now unregister:
+  Теперь отменяем регистрацию:
 
   >>> gsm.unregisterAdapter(FrontDeskNG, name='ng6')
   True
 
-  After unregistration:
+  После отмены регистрации имеем:
 
   >>> print queryAdapter(jack, IDesk, 'ng6')
   None
@@ -4959,10 +4970,8 @@ returns False, otherwise it returns True.
 unregisterHandler
 ~~~~~~~~~~~~~~~~~
 
-This function is used for unregistering a handler.  A handler is a
-subscriber that doesn't compute an adapter but performs some function
-when called.  A boolean is returned indicating whether the registry
-was changed.
+Функция отменяет регистрацию обработчика (handler). Возвращается значение типа `boolean`. Если после выполнения операции
+состояние регистратора изменилось, то возвращается `истина`.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -5031,11 +5040,10 @@ was changed.
 unregisterSubscriptionAdapter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This function is used to unregister a subscriber factory.  A boolean
-is returned indicating whether the registry was changed.  If the given
-component is None and there is no component registered, or if the
-given component is not None and is not registered, then the function
-returns False, otherwise it returns True.
+
+Функция используется для отмены регистрации фабрики подписчиков
+(subscription adapter).  Возвращается значение типа `boolean`. Если
+после выполнения операции состояние регистратора изменилось, то возвращается `истина`.
 
 - Модуль: ``zope.component - IComponentRegistry``
 
@@ -5112,17 +5120,16 @@ returns False, otherwise it returns True.
 unregisterUtility
 ~~~~~~~~~~~~~~~~~
 
-[Переписать на русский!!!]Эта функция используется для отмены регичтрации утилиты.  Функция
-возвращает логическое значение, в зависимости от того, произошло
-изменение реестра или нет.  Если значение параметра `component` - None и
-ранее не было зарегистрировано никаких компонент, или же если
-сзначение этого параметна не None и такой компоненты ранее не было
-зарегистрировано, то функция возвращает False. В других случаях
-функция возвращает True.
 
-- Расположение: ``zope.component - IComponentRegistry``
+Функция используется для отмены регистрации утилиты. Возвращается
+значение типа `boolean`. Если после выполнения операции состояние
+регистратора изменилось, то возвращается `истина`.  Значение `ложь`
+возвращается, если параметр равен `None` или утилита не была
+зарегистрирована.
 
-- Сигнатура: `unregisterUtility(component=None, provided=None,
+- Модуль: ``zope.component - IComponentRegistry``
+
+- Спецификация: `unregisterUtility(component=None, provided=None,
   name=u'')`
 
 - Смотри также: `registerUtility`_
@@ -5157,7 +5164,7 @@ unregisterUtility
   >>> gsm.unregisterUtility(greet)
   True
 
-  После отмены регистрации:
+  После отмены регистрации имеем:
 
   >>> print queryUtility(IGreeter)
   None
