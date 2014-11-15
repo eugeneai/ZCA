@@ -62,7 +62,7 @@ debería llamarse la `Arquitectura de Componentes de Python`.
 Hay dos paquetes principales relacionados con la arquitectura de
 componentes de Zope:
 
-  - ``zope.interface`` utilizado para definir la interfaz de un 
+  - ``zope.interface`` utilizado para definir la interfaz de un
     componente.
 
   - ``zope.component`` se encarga de registrar y recuperar
@@ -258,7 +258,7 @@ para ejecutar el código de este libro.
 
 
 Un ejemplo
----------
+----------
 
 
 Introducción
@@ -646,7 +646,7 @@ otros conceptos. El primero es `proveer`y el otro es `implementar`-
 Los objetos proveen interfaces y las clases implementan interfaces.
 En otras palabras, objetos proveen las interfaces que sus clases
 implementan. En el ejemplo anterior ``anfitrion`` (objeto) provee
-``IAnfitrion`` (interfaz) y ``Anfitrion`` (clase) implementa 
+``IAnfitrion`` (interfaz) y ``Anfitrion`` (clase) implementa
 ``IAnfitrion`` (interfaz). Un objeto puede proveer más de una
 interfaz y tambíen una clase puede implementar más de una interfaz.
 Los objetos también pueden proveer intefaces directamente, además
@@ -936,7 +936,7 @@ de sitios global::
   ...                     (IHuesped,), IRegistrador, 'ng')
 
 Para obtener el administrador de sitios global, tienes que llamar
-a la función ``getGlobalSiteManager`` disponible en el paquete 
+a la función ``getGlobalSiteManager`` disponible en el paquete
 ``zope.component``. En realidad, el administrador de sitios global
 está disponible como un atributo (``globalSiteManager``) del
 paquete ``zope.component``. Asi que puedes usar directamente el
@@ -961,7 +961,7 @@ así::
   >>> gsm.registerAdapter(RegistradorHuespedNG, name='ng')
 
 Hay unas API antiguas para hacer el registro, que debes evitar. Las
-funciones antiguas empiezan por `provide`, por ejemplo, 
+funciones antiguas empiezan por `provide`, por ejemplo,
 ``provideAdapter``, ``provideUtility``, etc. Cuando desarrollas
 una aplicación Zope 3 puedes usar el lenguaje de marcas de
 configuración de Zope (ZCML) para registrar componentes. En Zope 3,
@@ -1732,7 +1732,7 @@ El registro del adaptador es así::
       factory=".contained.NameChooser"
       />
 
-A partir del registro, puedes ver que el adaptado es un 
+A partir del registro, puedes ver que el adaptado es un
 ``IWriteContainer`` y el adaptador ofrece ``INameChooser``.
 
 Este adaptador ofrece una funcionalidad muy útil para los programadores
@@ -1753,7 +1753,7 @@ Situación:
 
 Este adaptador se usa a menudo en las aplicaciones Zope 3, pero
 normalmente se llama a través de una API en ``zope.traversing.api``.
-(Hay código antiguo que incluso usa las funciones de 
+(Hay código antiguo que incluso usa las funciones de
 ``zope.app.zapi``, que es una indirección más).
 
 El registro del adaptador es así::
@@ -1777,7 +1777,7 @@ Aquí tenemos el inicio de la implementación::
 Normalmente, casi todos los objetos persistentes en las aplicaciones
 Zope 3 ofrecerán la interfaz ``ILocation``. Esta interfaz sólo tiene
 dos atributos, ``__parent__`` y ``__name__``. El ``__parent__`` es
-el padre en la jerarquía de localización. Y ``__name__`` es el 
+el padre en la jerarquía de localización. Y ``__name__`` es el
 nombre dentro del padre.
 
 La interfaz ``IPhysicallyLocatable`` tiene cuatro métodos:
