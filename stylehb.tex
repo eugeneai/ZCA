@@ -1,0 +1,213 @@
+% latex include file for docutils latex writer
+% --------------------------------------------
+%
+% CVS: $Id: style.tex,v 1.1 2004/01/23 21:17:32 faassen Exp $
+%
+% This is included at the end of the latex header in the generated file,
+% to allow overwriting defaults, although this could get hairy.
+% Generated files should process well standalone too, LaTeX might give a
+% message about a missing file.
+
+% donot indent first line of paragraph.
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{5pt plus 2pt minus 1pt}
+
+% sloppy
+% ------
+% Less strict (opposite to default fussy) space size between words. Therefore
+% less hyphenation.
+%\sloppy
+
+% fonts
+% -----
+% times for pdf generation, gives smaller pdf files.
+%
+% But in standard postscript fonts: courier and times/helvetica do not fit.
+% Maybe use pslatex.
+%\usepackage{times}
+
+% pagestyle
+% ---------
+% headings might put section titles in the page heading, but not if
+% the table of contents is done by docutils.
+% If pagestyle{headings} is used, \geometry{headheight=10pt,headsep=1pt}
+% should be set too.
+%\pagestyle{plain}
+%
+% or use fancyhdr (untested !)
+%% \usepackage{fancyhdr}
+%% \pagestyle{fancy}
+%% \addtolength{\headheight}{\baselineskip}
+%% \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+%% \renewcommand{\subsectionmark}[1]{\markright{#1}}
+%% \fancyhf{}
+%% \fancyhead[LE,RO]{\bfseries\textsf{\thepage}}
+%% \fancyhead[LO]{\textsf{\footnotesize\rightmark}}
+%% \fancyhead[RE]{\textsc{\textsf{\footnotesize\leftmark}}}
+%\fancyfoot[LE,RO]{\bfseries\textsf{\scriptsize Docutils}}
+%\fancyfoot[RE,LO]{\textsf{\scriptsize\today}}
+
+% geometry
+% --------
+% = papersizes and margins
+%\geometry{a4paper,twoside,tmargin=1.5cm,
+%          headheight=1cm,headsep=0.75cm}
+
+% Do section number display
+% -------------------------
+%\makeatletter
+%\def\@seccntformat#1{}
+%\makeatother
+% no numbers in toc
+%\renewcommand{\numberline}[1]{}
+
+
+% change maketitle
+% ----------------
+%\renewcommand{\maketitle}{
+%  \begin{titlepage}
+%    \begin{center}
+%    \textsf{TITLE \@title} \\
+%	Date: \today
+%    \end{center}
+%  \end{titlepage}
+%}
+% \usepackage[final]{graphicx}
+\graphicspath{{./pics/}{./paropt/pics/}}
+\usepackage[usenames]{xcolor}
+\usepackage{enumitem}
+\usepackage[final]{minted}
+%\usemintedstyle{emacs}
+\usemintedstyle{tango}
+%\usemintedstyle{trac} % better (more bold faces}
+%\usemintedstyle{manni} % pastel colors
+%\usemintedstyle{bw}
+\definecolor{mintedbg}{rgb}{0.95,0.95,0.95}
+\setminted{breaklines=true,fontsize=\small,funcnamehighlighting=true,python3=true}
+
+%\newminted{prolog}
+\protect\newminted[proexp]{text}{style=bw}
+
+% Main style definition
+% ---------------------
+% ISU standard handbook.
+%\usepackage[times,fancybot,firamono]{subook} % looks less good than inconsolata
+\usepackage[times,fancybot,inconsolata]{subook} % Looks Good
+%\usepackage[times]{subook}
+
+%\setcitestyle{}
+
+% Заменить в коде кой-что на математические формулы
+% http://www.tug.org/texlive/Contents/live/texmf-dist/doc/latex/base/alltt.pdf
+
+% Требования к оформлению Типографии ИГУ
+% http://lawinstitut.ru/ru/about/services/izdatelstvo/trebovaniya.html
+%
+
+% ISU standard monograph (less restrictive and more artistic)
+% \usepackage[monograph,mag,times,smalltitles,fancybot,listbib,ptfonts,microtyping]{subook}
+
+% Some artistism for monograph
+% ----------------------------
+%\makeatletter{}
+%\renewcommand\su@chapter@font{\sffamily\sfcpshape\bfseries}
+%\renewcommand\su@chapter@font@size{\LARGE}
+%\makeatother{}
+%\floatname{algorithm}{Процедура}
+%\renewcommand{\listalgorithmname}{Список процедур}
+%\renewcommand\cftsecnumwidth{5ex}
+%\tolerance=5000
+%\renewcommand{\chaptername}{Глава}
+%\usepackage[final]{hyperref}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,arrows.meta,shapes}
+\usetikzlibrary{shadows}
+\newcommand*\keystroke[1]{%
+  \tikz[baseline=(key.base)]
+    \node[%
+      draw,
+      fill=white,
+      drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+      rectangle,
+      rounded corners=4pt,
+      inner sep=1pt,
+      line width=0.7pt,
+      font=\footnotesize\sffamily
+    ](key) {~#1~\strut}%
+  ;%
+}
+
+\long\def\rem#1{}
+%\def\AR{{\em Прим.~авторов~пособия}}
+\def\emphbib#1{#1}
+\newenvironment{questions}{\subsubsection*{Вопросы для самопроверки}\begin{enumerate}\itemsep0pt minus 0.3pt\parskip0pt plus 0.3pt}{\end{enumerate}}
+
+\newtheorem{example}{Пример}[chapter]
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=true,           % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={Компьютерные науки, часть 4},    % title
+    pdfauthor={Евгений Александрович Черкашин},     % author
+    pdfsubject={Методическое пособие},   % subject of the document
+    pdfcreator={EMACS-24.4:AuCTeX},   % creator of the document
+    pdfproducer={LuaLaTeX}, % producer of the document
+    pdfkeywords={Искусственный интеллект} {Логическое
+      программирование} {Планирование действий} {Удовлетворение
+      ограничений} {Компьютерная алгебра} {Принцип максимума} {Оптимальное управление}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=[rgb]{0 0.4 0.1},          % color of internal links (black)
+    citecolor=blue,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=[rgb]{0.3 0.0 0.3}           % color of external links
+}
+
+%\renewcommand{\headrulewidth}{1pt}
+
+\clubpenalty=3000
+\widowpenalty=3000
+%\brokenpenalty=10000
+%\floatingpenalty=10000
+
+%% \setdefaultlanguage{russian}
+%% \setmainlanguage{russian}
+%% \setotherlanguage{english}
+
+%\newenvironment{mygroup}{}{}
+
+\renewcommand\baselinestretch{1.5} % FIXME Какой интервал тут реально получится?
+\newcommand{\eeng}[1]{\emph{\foreignlanguage{english}{#1}}}
+
+\definecolor{rclr}{rgb}{0.5,0.1,0.1}
+\definecolor{eclr}{rgb}{0,0.5,0.5}
+\colorlet{acolor}{blue}
+\colorlet{rcolor}{red}
+\definecolor{ncolor}{rgb}{0.5,0.5,0.1}
+\newcommand{\aaa}[2][acolor]{\noindent\textcolor{eclr}%
+{+\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
+\newcommand{\rrr}[2][rcolor]{\noindent%
+\textcolor{eclr}{-\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
+\newcommand{\nnn}[2][ncolor]{\noindent%
+\textcolor{eclr}{!\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
+\newcommand{\goforth}[1]{$\,\hookrightarrow$\pageref{#1}}
+
+% \begin{figure}
+%   \centering
+%   \def\svgwidth{\columnwidth}
+%   \includesvg{image}
+% \end{figure}
+
+\parskip=0pt plus 0.3pt
+\renewcommand{\chaptername}{} % for ISU Handbooks
+\renewcommand{\refname}{Рекомендуемая литература} % ... also
+\renewcommand{\bibname}{\refname}
