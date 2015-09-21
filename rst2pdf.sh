@@ -26,6 +26,11 @@ rm -fr zca-??.*
 # pdflatex zca-ru.tex
 
 # Russian translation adopred to handbook processing
-rst2latex2 --use-latex-docinfo --use-latex-toc --stylesheet=stylehb.tex --documentclass=extbook --output-encoding=utf8 --documentoptions=14pt,a4paper,openany,twoside,final --toc-entry-backlinks --footnote-backlinks --no-section-numbering --strip-comments --use-latex-citations --attribution=none --use-latex-abstract izca-ru.txt > zca-hb-ru.tex
+rst2latex2 --use-latex-docinfo --use-latex-toc --stylesheet=stylehb.tex \
+           --documentclass=extbook --output-encoding=utf8 \
+           --documentoptions=14pt,a4paper,openany,twoside,final --toc-entry-backlinks \
+           --footnote-backlinks --no-section-numbering --strip-comments \
+           --use-latex-citations --attribution=none --use-latex-abstract \
+           izca-ru.txt > zca-hb-ru.tex
 lualatex --shell-escape zca-hb-ru.tex
 lualatex --shell-escape zca-hb-ru.tex
