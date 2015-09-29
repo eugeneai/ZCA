@@ -239,7 +239,7 @@
 
 %особие соответствует требованиям ФГОС-3
 
-В пособии представлены материалы лекций и задания лабораторных работ по курсу <<Сетевые операционные системы>> Института кибернетики им.~Е.~И.~Попова Иркутского государственного технического университета, тема  «Компонентное проектирование распределенных систем», направление подготовки магистра~-- 09.04.01.  Задача курса состоит в развитии навыков проектирования сложных программных комплексов на основе формального описания его компонент, их регистрации в репозитории компонент, конфигурировании программной системы.  
+В пособии представлены материалы лекций и задания лабораторных работ по курсу <<Сетевые операционные системы>> Института кибернетики им.~Е.~И.~Попова Иркутского государственного технического университета, тема  «Компонентное проектирование распределенных систем», направление подготовки магистра~-- 09.04.01.  Задача курса состоит в развитии навыков проектирования сложных программных комплексов на основе формального описания его компонент, их регистрации в репозитории компонент, конфигурировании программной системы.
 
 Предполагаемая аудитория пособия: студенты, магистранты, аспиранты и молодые специалисты инженерных специальностей, связанных с программированием распределенных систем, серверов, сетей распределенной обработки информации, прикладных пакетов. Материал пособия адаптируем к курсам <<Технологии программирования>>, <<Открытые системы>>.
 
@@ -2677,6 +2677,268 @@ class~ISized(Interface):\\
 ни того ни другого источника информации не удалось найти, утилита
 вернет строку \DUroletitlereference{Development/Unknown}.
 
+\section{Адаптеры--<<заместители>>}
+\label{sec:proxyadapters}
+
+Практически в любом приложении предполагается наличие системы пользователей и ролей, где каждой роли назначается набор функций, допустимых к исполнению.  Например, руководитель предприятия получает доступ к результатам анализа финансового состояния предприятия.  Специалист-аналитик проводит этот анализ на основе данных базы данных предприятия, а работники имеют право вводить данные в базу данных согласно структуру предприятия.  При этом множества функций, выполняемых пользователями (ролями), как правило, не пересекаются.  Такое разделение позволяет уменьшить количество ошибок в базе данных и структуре документооборота на предприятии.
+
+В рамках компонентной модели система ролей реализуется при помощи адаптеров\ldots{}
+
+\subsection{Распределенные приложения}
+\label{sec:distributedapps}
+
+Иногда бывает так, что ресурсов одной рабочей станции достаточно для реализации всех необходимых функций программной системы.... Для этого необходимо выделять отдельные процессы и переносить их на другие рабочие станции.  Типичным примером являются сервера баз данных.  Серьезный сервер баз данных требует определенных характеристик аппаратного обеспечения сервера, структуры файловой системы, свойств операционной системы и т.п.
+
+Другим примером, когда необходимо выделять функции в отдельные процессы, выступает процесс интеграции разрабатываемой программной системы со сторонними приложениями.  ...
+
+Здесь мы рассмотрим пример выделения компоненты в отдельный процесс...
+
+\subsection{Протокол и библиотеки XML-RPC}
+\label{sec:xmlrpc}
+
+RPC stands for Remote Procedure Call. As its name indicates, it is a mechanism to call a procedure or a function available on a remote computer. RPC is a much older technology than the Web. Effectively, RPC gives developers a mechanism for defining interfaces that can be called over a network. These interfaces can be as simple as a single function call or as complex as a large API.
+What is XML-RPC ?
+
+XML-RPC is among the simplest and most foolproof web service approaches that makes it easy for computers to call procedures on other computers.
+
+    XML-RPC permits programs to make function or procedure calls across a network.
+
+    XML-RPC uses the HTTP protocol to pass information from a client computer to a server computer.
+
+    XML-RPC uses a small XML vocabulary to describe the nature of requests and responses.
+
+    XML-RPC client specifies a procedure name and parameters in the XML request, and the server returns either a fault or a response in the XML response.
+
+    XML-RPC parameters are a simple list of types and content - structs and arrays are the most complex types available.
+
+    XML-RPC has no notion of objects and no mechanism for including information that uses other XML vocabulary.
+
+    With XML-RPC and web services, however, the Web becomes a collection of procedural connections where computers exchange information along tightly bound paths.
+
+    XML-RPC emerged in early 1998; it was published by UserLand Software and initially implemented in their Frontier product.
+
+Why XML-RPC ?
+
+If you need to integrate multiple computing environments, but don't need to share complex data structures directly, you will find that XML-RPC lets you establish communications quickly and easily.
+
+Even if you work within a single environment, you may find that the RPC approach makes it easy to connect programs that have different data models or processing expectations and that it can provide easy access to reusable logic.
+
+    XML-RPC is an excellent tool for establishing a wide variety of connections between computers.
+
+    XML-RPC offers integrators an opportunity to use a standard vocabulary and approach for exchanging information.
+
+    XML-RPC's most obvious field of application is connecting different kinds of environments, allowing Java to talk with Perl, Python, ASP, and so on.
+
+XML-RPC Technical Overview
+
+XML-RPC consists of three relatively small parts:
+
+    XML-RPC data model : A set of types for use in passing parameters, return values, and faults (error messages).
+
+    XML-RPC request structures : An HTTP POST request containing method and parameter information.
+
+    XML-RPC response structures : An HTTP response that contains return values or fault information.
+
+We will study all these three components in the next three chapters.
+
+\newpage
+\subsection{Реализация распределенного приложения}
+\label{sec:distrimpl}
+
+
+
+\chapter{Интерфейсы пользователя}
+
+Как и любую другую программная компонента интерфейс пользователя тоже имеет смысл разрабатывать как компоненту приложения.  Естественно здесь есть свои особенности.
+
+\section{Шаблон проектирования Model-View-Controller}
+\label{sec:MVC}
+
+The Model-View-Control (MVC) pattern, originally formulated in the late 1970s, is a software architecture pattern built on the basis of keeping the presentation of data separate from the methods that interact with the data. In theory, a well-developed MVC system should allow a front-end developer and a back-end developer to work on the same system without interfering, sharing, or editing files either party is working on.
+
+Even though MVC was originally designed for personal computing, it has been adapted and is widely used by web developers due to its emphasis on separation of concerns, and thus indirectly, reusable code. The pattern encourages the development of modular systems, allowing developers to quickly update, add, or even remove functionality.
+
+In this article, I will go the basic principles of MVC, a run through the definition of the pattern and a quick example of MVC in PHP. This is definitely a read for anyone who has never coding with MVC before or those wanting to brush up on previous MVC development skills.
+Understanding MVC
+
+The pattern’s title is a collation of its three core parts: Model, View, and Controller. A visual representation of a complete and correct MVC pattern looks like the following diagram:
+
+MVC Process
+
+The image shows the single flow layout of data, how it’s passed between each component, and finally how the relationship between each component works.
+Model
+
+The Model is the name given to the permanent storage of the data used in the overall design. It must allow access for the data to be viewed, or collected and written to, and is the bridge between the View component and the Controller component in the overall pattern.
+
+One important aspect of the Model is that it’s technically “blind” – by this I mean the model has no connection or knowledge of what happens to the data when it is passed to the View or Controller components. It neither calls nor seeks a response from the other parts; its sole purpose is to process data into its permanent storage or seek and prepare data to be passed along to the other parts.
+
+The Model, however, cannot simply be summed up as a database, or a gateway to another system which handles the data process. The Model must act as a gatekeeper to the data itself, asking no questions but accepting all requests which comes its way. Often the most complex part of the MVC system, the Model component is also the pinnacle of the whole system since without it there isn’t a connection between the Controller and the View.
+View
+
+The View is where data, requested from the Model, is viewed and its final output is determined. Traditionally in web apps built using MVC, the View is the part of the system where the HTML is generated and displayed. The View also ignites reactions from the user, who then goes on to interact with the Controller. The basic example of this is a button generated by a View, which a user clicks and triggers an action in the Controller.
+
+There are some misconceptions held about View components, particularly by web developers using the MVC pattern to build their application. For example, many mistake the View as having no connection whatsoever to the Model and that all of the data displayed by the View is passed from the Controller. In reality, this flow disregards the theory behind the MVC pattern completely. Fabio Cevasco’s article The CakePHP Framework: Your First Bite demonstrates this confused approach to MVC in the CakePHP framework, an example of the many non-traditional MVC PHP frameworks available:
+
+    “It is important to note that in order to correctly apply the MVC architecture, there must be no interaction between models and views: all the logic is handled by controllers“
+
+Furthermore, the description of Views as a template file is inaccurate. However, as Tom Butler points out, this is not one person’s fault but a multitude of errors by a multitude of developers which result in developers learning MVC incorrectly. They then go on to educate others incorrectly. The View is really much more than just a template, however modern MVC inspired frameworks have bastardised the view almost to the point that no one really cares whether or not a framework actually adheres to the correct MVC pattern or not.
+
+It’s also important to remember that the View part is never given data by the Controller. As I mentioned when discussing the Model, there is no direct relationship between the View and the Controller without the Model in between them.
+Controller
+
+The final component of the triad is the Controller. Its job is to handle data that the user inputs or submits, and update the Model accordingly. The Controller’s life blood is the user; without user interactions, the Controller has no purpose. It is the only part of the pattern the user should be interacting with.
+
+The Controller can be summed up simply as a collector of information, which then passes it on to the Model to be organized for storage, and does not contain any logic other than that needed to collect the input. The Controller is also only connected to a single View and to a single Model, making it a one way data flow system, with handshakes and signoffs at each point of data exchange.
+
+It’s important to remember the Controller is only given tasks to perform when the user interacts with the View first, and that each Controller function is a trigger, set off by the user’s interaction with the View. The most common mistake made by developers is confusing the Controller for a gateway, and ultimately assigning it functions and responsibilities that the View should have (this is normally a result of the same developer confusing the View component simply as a template). Additionally, it’s a common mistake to give the Controller functions that give it the sole responsibility of crunching, passing, and processing data from the Model to the View, whereas in the MVC pattern this relationship should be kept between the Model and the View.
+MVC in PHP
+
+It is possible to write a web application in PHP whose architecture is based on the MVC pattern. Let’s start with a bare bones example:
+
+
+We have our project started with some very basic classes for each part of the pattern. Now we need to set up the relationships between them:
+
+
+As you can see in the example above, we don’t have any Controller-specific functionality because we don’t have any user interactions defined with our application. The View holds all of the functionality as the example is purely for display purposes.
+
+Let’s now expand the example to show how we would add functionality to the controller, thereby adding interactivity to the application:
+
+
+We’ve enhanced the application with some basic functionality. Setting up the relationship between our components now looks like this:
+
+Run the code and when you click on the link you’ll be able to see the string change its data.
+Conclusion
+
+We’ve covered the basic theory behind the MVC pattern and have produced a very basic MVC application, but we still have a long way to go before we get into any nitty-gritty functionality.
+
+Next up in the series we’ll cover some of the choices you face when trying to create a true MVC application on the web in PHP. Stay tuned!
+
+\section{Библиотека GTK+}
+\label{sec:gtk}
+
+GTK+ is a widget toolkit. Each user interface created by GTK+ consists of widgets. This is implemented in C using GObject, an object-oriented framework for C. Widgets are organized in a hierachy. The window widget is the main container. The user interface is then built by adding buttons, drop-down menus, input fields, and other widgets to the window. If you are creating complex user interfaces it is recommended to use GtkBuilder and its GTK-specific markup description language, instead of assembling the interface manually. You can also use a visual user interface editor, like Glade.
+
+GTK+ is event-driven. The toolkit listens for events such as a click on a button, and passes the event to your application.
+
+This chapter contains some tutorial information to get you started with GTK+ programming. It assumes that you have GTK+, its dependencies and a C compiler installed and ready to use. If you need to build GTK+ itself first, refer to the Compiling the GTK+ libraries section in this reference.
+
+In a GTK+ application, the purpose of the main() function is to create a GtkApplication object and run it. In this example a GtkApplication pointer named app is called and then initialized using gtk\_application\_new().
+
+When creating a GtkApplication you need to pick an application identifier (a name) and input to gtk\_application\_new() as parameter. For this example org.gtk.example is used but for choosing an identifier for your application see this guide. Lastly gtk\_application\_new() takes a GApplicationFlags as input for your application, if your application would have special needs.
+
+Next the activate signal is connected to the activate() function above the main() functions. The activate signal will be sent when your application is launched with g\_application\_run() on the line below. The gtk\_application\_run() also takes as arguments the pointers to the command line arguments counter and string array; this allows GTK+ to parse specific command line arguments that control the behavior of GTK+ itself. The parsed arguments will be removed from the array, leaving the unrecognized ones for your application to parse.
+
+Within g\_application\_run the activate() signal is sent and we then proceed into the activate() function of the application. Inside the activate() function we want to construct our GTK window, so that a window is shown when the application is launched. The call to gtk\_application\_window\_new() will create a new GtkWindow and store it inside the window pointer. The window will have a frame, a title bar, and window controls depending on the platform.
+
+A window title is set using gtk\_window\_set\_title(). This function takes a GtkWindow* pointer and a string as input. As our window pointer is a GtkWidget pointer, we need to cast it to GtkWindow*. But instead of casting window via (GtkWindow*), window can be cast using the macro GTK\_WINDOW(). GTK\_WINDOW() will check if the pointer is an instance of the GtkWindow class, before casting, and emit a warning if the check fails. More information about this convention can be found here.
+
+Finally the window size is set using gtk\_window\_set\_default\_size and the window is then shown by GTK via gtk\_widget\_show\_all().
+
+When you exit the window, by for example pressing the X, the g\_application\_run() in the main loop returns with a number which is saved inside an integer named ``status''. Afterwards, the GtkApplication object is freed from memory with g\_object\_unref(). Finally the status integer is returned and the GTK application exits.
+
+While the program is running, GTK+ is receiving events. These are typically input events caused by the user interacting with your program, but also things like messages from the window manager or other applications. GTK+ processes these and as a result, signals may be emitted on your widgets. Connecting handlers for these signals is how you normally make your program do something in response to user input.
+
+The following example is slightly more complex, and tries to showcase some of the capabilities of GTK+.
+
+In the long tradition of programming languages and libraries, it is called Hello, World.
+
+As seen above, example-1.c builds further upon example-0.c by adding a button to our window, with the label ``Hello World''. Two new GtkWidget pointers are declared to accomplish this, button and button\_box. The button\_box variable is created to store a GtkButtonBox which is GTK+'s way of controlling the size and layout of buttons. The GtkButtonBox is created and assigned to gtk\_button\_box\_new() which takes a GtkOrientation enum as parameter. The buttons which this box will contain can either be stored horizontally or vertically but this does not matter in this particular case as we are dealing with only one button. After initializing button\_box with horizontal orientation, the code adds the button\_box widget to the window widget using gtk\_container\_add().
+
+Next the button variable is initialized in similar manner. gtk\_button\_new\_with\_label() is called which returns a GtkButton to be stored inside button. Afterwards button is added to our button\_box. Using g\_signal\_connect the button is connected to a function in our app called print\_hello(), so that when the button is clicked, GTK will call this function. As the print\_hello() function does not use any data as input, NULL is passed to it. print\_hello() calls g\_print() with the string ``Hello World'' which will print Hello World in a terminal if the GTK application was started from one.
+
+After connecting print\_hello(), another signal is connected to the ``clicked'' state of the button using g\_signal\_connect\_swapped(). This functions is similar to a g\_signal\_connect() with the difference lying in how the callback function is treated. g\_signal\_connect\_swapped() allow you to specify what the callback function should take as parameter by letting you pass it as data. In this case the function being called back is gtk\_widget\_destroy() and the window pointer is passed to it. This has the effect that when the button is clicked, the whole GTK window is destroyed. In contrast if a normal g\_signal\_connect() were used to connect the ``clicked'' signal with gtk\_widget\_destroy(), then the button itself would have been destroyed, not the window. More information about creating buttons can be found here.
+
+The rest of the code in example-1.c is identical to example-0.c. Next section will elaborate further on how to add several GtkWidgets to your GTK application.
+
+\subsection{Дизайнер интерфесов Glade}
+\label{sec:glade}
+
+Мы не будем далее вдаваться в подробности функционирования элементов управления библиотеки, а воспользуемся дизайнером интерфейсов Glade (лезвие).
+
+Glade is a RAD tool to enable quick and easy development of user interfaces for the GTK+ toolkit and the GNOME desktop environment.
+
+The user interfaces designed in Glade are saved as XML, and by using the GtkBuilder GTK+ object these can be loaded by applications dynamically as needed.
+
+By using GtkBuilder, Glade XML files can be used in numerous programming languages including C, C++, C\#, Vala, Java, Perl, Python,and others.
+
+OK, since it looks like you gave me a chance to show how I usually work, let's start.
+
+Today's work will be separated into two sections:
+
+    Creating ``blueprint'' of our application's GUI based on requirements.
+    Writing down widget tree, based on blueprint from previous section.
+
+Now, what are requirements for our application. Obviously, it needs to be able to display data in numeric and graphic form. We also want to be able to add new, delete, rearrange and modify points. We also want to be able to display point markers, connecting lines or both on the chart. And this is about it for initial requirements. We'll leave some space for future expansion in our plans, just in case if we decide to add anything to it later.
+
+Now comes the fun part - drawing interface. I prefer to do this on paper using pencil, but feel free to experiment. For sample project, I came up with this design:
+
+Mock-up of interface
+
+Dark gray rectangles represent scroll bars. What do you think? Do I suck as interface designer or do I really suck as interface designer?;)
+
+Now for the last thing we need to do today: writing down widget tree. In GTK+, everything starts with top-level GtkWindow, which will serve as a root of our widget tree.
+
+Our main window will be split into four vertical sections: one for menu bar, one for tool bar, one for central part where all the action will happen and last one for status bar. Since our main window (GtkWindow) can hold only one child widget, we need GtkVBox in which we will pack, from bottom to top: GtkStatusbar, widget for central part, GtkToolbar and GtkMenuBar. Why did I say that we'll be packing from bottom? I'll explain this in next post, when we'll be playing with Glade3.
+
+Central part will need to be further divided into horizontal sections: one for data table, one for point controls and one for display area. So this will require GtkHBox. What widgets will we need inside it? For data table we'll use GtkTreeView, which is packed inside GtkScrolledWindow to enable scrolling. For point controls we'll need GtkVButtonBox that will house our buttons.
+
+Now for the display area. We again have two parts: upper part that will actually display chart; and bottom part that will hold check buttons. So we'll need another GtkVBox to hold the whole section. Bottom part will be represented by GtkHButtonBox with GtkToggleButtons, while upper part deserves another paragraph;).
+
+Why another paragraph? Because we'll need to add quite a few widgets in order to get desired layout. As you can see on my drawing, I want to have graph area centered in display part. In order to be able to add zoom to chart area, we also need some kind of scrolling widget. And how to assemble all this together? First we'll add GtkScrolledWindow to GtkVBox from previous paragraph. To make contents scrollable, we need to pack GtkViewport inside GtkScrolledWindow. Inside GtkViewport we'll add GtkAlignment, which will take care of centering the chart area. Inside GtkAlignment we'll add GtkFrame, which will add a shadow to chart area. Finally, we add GtkDrawing area inside GtkFrame. And we're done.
+
+There is just one thing I would like to explain today. When adding GtkTreeView to GtkScrolledWindow I haven't used GtkViewport as an adapter widget, while adding GtkAlignment did require one. Why? When it comes to GtkScrolledWindow, there are two kinds of widgets: the ones that support scrolling natively and the ones that don't. GtkTreeView, GtkTextView, GtkIconView and GtkViewport do support scrolling and can be added into GtkScrolledWindow directly. All other widgets need GtkViewport as an adapter.
+
+I hope this starting lesson wasn't too tough and you'll join me next time when we'll fire up Glade3 and do some property mangling.
+
+\subsection{Конструирование интерфейса}
+\label{sec:gladeint}
+
+In this part of tutorial, we'll create application's GUI using Glade3 according to our blueprint and widget tree. To check how our GUI looks like, we'll also write a minimalistic application.
+
+I'll be using Glade3-3.6.7 in this tutorial, but any version from 3.6 series will do. Our project will be saved as a GtkBuilder project and we'll use GtkBuilder to create our interface at runtime. Glade3-3.4.5 cannot be used when following this tutorial, since we'll use some new features of Glade3 that were introduced in 3.6 series.
+
+Contents
+
+    Glade3 tutorial (1) - Introduction
+    Glade3 tutorial (2) - Constructing interface
+    Glade3 tutorial (3) - Size negotiation
+    Glade3 tutorial (4) - GtkTreeView data backend
+    Glade3 tutorial (5) - Modifying widget tree
+    Glade3 tutorial (6) - Signals
+
+Constructing interface
+
+I tried to document each step in GUI creation with screenshot and instructions. Video of the actual process can be found on ScreenToaster site.
+
+When you start Glade3 without opening project, you're greeted by two windows: main application window that we'll be using to create interface and preferences dialog that lets you set some project settings.
+
+You can see from this screen that we'll be using GtkBuilder project format with object names being unique across the whole project. We won't be using any images in this project, so resource location is not important to us. Lastly, this project will be compatible with GTK+ >= 2.14, which should make it usable on most distributions out there. You can check your project for any incompatibilities from this dialog too, but since we're starting new poject, this is not needed. Last thing is to click Close and we're done with initial setup.
+
+Now it's time to place initial toplevel window into project. Just click ``Window'' icon in ``Toplevels'' category and you should see something like this:
+
+ Now we'll set window title to ``Charter'' and default size to 600 x 400 px.
+
+ Now we need to switch to ``Common'' tab in properties section and set ``Border width'' to 6 px.
+
+Last thing we need to do with main window is to connect gtk\_main\_quit function to ``destroy'' signal. This will close our application when we'll click on close button. I'll talk more about signals in one of the following posts, so no more details will be given here.
+
+With our main window finished, we need to add GtkVBox to it. In previous post, we planed to add four widgets inside this box, but since menu bar and tool bar will be created using GtkUIManager and manually inserted from code, we only need two. So when we're asked about number of elements, we enter 2.
+
+Now we'll add status bar to application. Click status bar icon and insert it into bottom of the box. Your GUI should look something like this:
+
+Now we need to make sure that status bar is packed from bottom to top. Why is this important? If we would to pack status bar from top to bottom, it would be impossible to add menu and tool bar at the top of the application. How to ensure that status bar is packed from bottom to top? Select ``Packing tab'' and select ``End'' as pack type and set ``Position'' to 0. What does this do? It instructs Glade to pack status bar as first element from bottom to top.
+
+Now run this code and be amazed;). Not too bad, but nothing special either. Try resizing window to see how compartments behave when resized. Do you like it? I don't either, so join me next time when we'll be dealing with space alocation/requisition in detail.
+
+And we're done. If you need more detailed process of clicking/changing properties, head to ScreenToaster site, where you can watch video of the whole thing. Hope you'll find it useful.
+
+Finished glade file can be obtained from here: tut.glade.
+
+\section{Разработка контроллера}
+\label{sec:gtkcontroller}
+
+Контроллер по своей сути является мультиадаптером компонент модели (Model) и интерфейса (View), причем адаптером, который ничего не делает, кроме обеспечения взаимодействия модели и интерфейса.  То есть контроллер~-- это обработчик (handler) и не более того.  Запрограммируем его в соответствии с этим.
+
 
 \chapter{Пример приложения%
   \label{id49}%
@@ -3396,10 +3658,44 @@ class~MemberODbOperation(object):\\
   \label{zodb}%
 }
 
-
+\newpage{}
 \section{Заключение%
   \label{id53}%
 }
+
+\clearpage
+\chapter{Методические указания к выполнению лабораторных работ}
+\label{cha:labs}
+
+Чтобы знания, полученные в предыдущих частях учебного пособия, создали почву для формирования навыков использования компонентной архитектуры необходимо выполнить ряд лабораторных работ, которые представлены в разделах данной главы.  Задания на лабораторные работы сформированы таким образом, чтобы следующая лабораторная работа дополняла материал предыдущей.  Это позволяет смотреть на процесс обучения как на маленький проект, состоящий из четырех этапов: разработки компоненты, моделирующей предметную некоторую область или известную структуру данных; создание адаптера интерфейса компоненты из первой лабораторной работы к одной из компонент, представленных в другом варианте задания; разработка оконно интерфейса пользователя, позволяющая вносить изменения в данные компоненты через ее интерфейс; реализация распределенной версии приложения при помощи прокси"=адаптера.
+
+\section{Разработка и тестирование компоненты}
+\label{sec:labcomp}
+\newpage
+
+\paragraph{Варианты задания}
+\newpage
+
+\section{Реализация адаптера интерфейса}
+\label{sec:labadapter}
+\newpage
+
+\paragraph{Варианты задания}
+\newpage
+
+\section{Создание интерфейса пользователя}
+\label{sec:labinterface}
+
+\newpage
+\paragraph{Варианты задания}
+\newpage
+
+\section{Моделирование распределенного приложения}
+\label{sec:labmodel}
+\newpage
+
+\paragraph{Варианты задания}
+\newpage
 
 
 \chapter{Справочник%
@@ -6436,6 +6732,7 @@ ISBN~978-5-9624-0938-2
 664074, г.\,{}Иркутск, ул. Лермонтова, 83 \label{lastpage}
 \end{center}
 \end{document}
+
 
 %%% Local Variables:
 %%% mode: latex
