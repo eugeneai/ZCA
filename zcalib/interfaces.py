@@ -1,21 +1,23 @@
 from zope.interface import Interface
 from zope.interface import Attribute
 
+class IModel(Interface):
+    pass
 
-class IBook(Interface):
+class IBook(IModel):
 
     barcode = Attribute("Barcode")
     author = Attribute("Author of book")
     title = Attribute("Title of book")
 
 
-class IMember(Interface):
+class IMember(IModel):
 
     number = Attribute("ID number")
     name = Attribute("Name of member")
 
 
-class ICirculation(Interface):
+class ICirculation(IModel):
 
     book = Attribute("A book")
     member = Attribute("A member")
@@ -64,3 +66,12 @@ class IDbOperation(Interface):
 
     def delete():
         pass
+
+class IView(Interface):
+    pass
+    # FIXME add methods
+
+class IController(Interface):
+
+    model = Attribute("A Model")
+    view = Attribute("A View")

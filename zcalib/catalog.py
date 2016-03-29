@@ -1,8 +1,8 @@
-from zope.interface import implements
+#from zope.interface import implementer
 from zope.component import getUtility
-from zope.component import adapts
+#from zope.component import adapts
 
-from components import Book
+from models import Book
 
 from interfaces import IRelationalDatabase
 from interfaces import IObjectDatabase
@@ -10,10 +10,9 @@ from interfaces import IBook
 from interfaces import IDbOperation
 
 
+#@implementer(IDbOperation)
+#@adapter(IBook)
 class BookRDbOperation(object):
-
-    implements(IDbOperation)
-    adapts(IBook)
 
     def __init__(self, book):
         self.book = book
@@ -99,8 +98,8 @@ class BookRDbOperation(object):
 
 class BookODbOperation(object):
 
-    implements(IDbOperation)
-    adapts(IBook)
+#    implements(IDbOperation)
+#    adapts(IBook)
 
     def __init__(self, book):
         self.book = book

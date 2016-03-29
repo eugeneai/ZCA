@@ -1,5 +1,6 @@
 import sys
 from zope.component import getGlobalSiteManager
+from zope.configuration.xmlconfig import xmlconfig
 
 from interfaces import IMember
 from interfaces import IBook
@@ -67,5 +68,7 @@ def initialize():
     use_rdb = check_use_relational_db()
     if use_rdb:
         initialize_rdb()
+        xmlconfig(open("rdbconfig.zcml"))
     else:
         initialize_odb()
+        xmlconfig(open("odbconfig.zcml"))

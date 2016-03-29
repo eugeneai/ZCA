@@ -1,8 +1,8 @@
-from zope.interface import implements
+#from zope.interface import implements
 from zope.component import getUtility
-from zope.component import adapts
+#from zope.component import adapts
 
-from components import Circulation
+from models import Circulation
 
 from interfaces import IRelationalDatabase
 from interfaces import IObjectDatabase
@@ -12,8 +12,8 @@ from interfaces import IDbOperation
 
 class CirculationRDbOperation(object):
 
-    implements(IDbOperation)
-    adapts(ICirculation)
+#    implements(IDbOperation)
+#    adapts(ICirculation)
 
     def __init__(self, circulation):
         self.circulation = circulation
@@ -80,8 +80,8 @@ class CirculationRDbOperation(object):
 
 class CirculationODbOperation(object):
 
-    implements(IDbOperation)
-    adapts(ICirculation)
+#    implements(IDbOperation)
+#    adapts(ICirculation)
 
     def __init__(self, circulation):
         self.circulation = circulation

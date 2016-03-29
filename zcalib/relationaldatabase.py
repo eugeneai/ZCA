@@ -4,13 +4,13 @@ try:
 except ImportError:
     from pysqlite2 import dbapi2 as sqlite3
 
-from zope.interface import implements
+from zope.interface import implementer
 
 from interfaces import IRelationalDatabase
 
-class RelationalDatabase(object):
 
-    implements(IRelationalDatabase)
+@implementer(IRelationalDatabase)
+class RelationalDatabase(object):
 
     def __init__(self):
         curdir = os.path.abspath(os.path.dirname(__file__))

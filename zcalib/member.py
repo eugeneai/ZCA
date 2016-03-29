@@ -1,8 +1,8 @@
-from zope.interface import implements
+#from zope.interface import implements
 from zope.component import getUtility
-from zope.component import adapts
+#from zope.component import adapts
 
-from components import Member
+from models import Member
 
 from interfaces import IRelationalDatabase
 from interfaces import IObjectDatabase
@@ -12,8 +12,8 @@ from interfaces import IDbOperation
 
 class MemberRDbOperation(object):
 
-    implements(IDbOperation)
-    adapts(IMember)
+#    implements(IDbOperation)
+#    adapts(IMember)
 
     def __init__(self, member):
         self.member = member
@@ -67,11 +67,11 @@ class MemberRDbOperation(object):
     def update(self):
         db = getUtility(IRelationalDatabase)
         cr = db.cursor()
-        number = self.member.number 
+        number = self.member.number
         name = self.member.name
         id = self.member.id
         cr.execute("""UPDATE members
-                        SET 
+                        SET
                            number = ?,
                            name = ?
                       WHERE id = ?""",
@@ -92,8 +92,8 @@ class MemberRDbOperation(object):
 
 class MemberODbOperation(object):
 
-    implements(IDbOperation)
-    adapts(IMember)
+#    implements(IDbOperation)
+#    adapts(IMember)
 
     def __init__(self, member):
         self.member = member

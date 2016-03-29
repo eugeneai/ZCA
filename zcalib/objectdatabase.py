@@ -4,13 +4,12 @@ import transaction
 from BTrees.OOBTree import OOBTree
 from BTrees.IOBTree import IOBTree
 
-from zope.interface import implements
+from zope.interface import implementer
 
 from interfaces import IObjectDatabase
 
+@implementer(IObjectDatabase)
 class ObjectDatabase(object):
-
-    implements(IObjectDatabase)
 
     def __init__(self):
         curdir = os.path.abspath(os.path.dirname(__file__))

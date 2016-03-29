@@ -1,0 +1,6 @@
+<?xml version="1.1" encoding="utf-8"?>
+<configure xmlns='http://namespaces.zope.org/zope'
+           i18n_domain="zope">
+<include file="common.zcml" />
+
+</configure>

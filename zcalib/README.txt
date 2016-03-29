@@ -3,7 +3,8 @@ ZCA based Library Management System
 
 Note: This is a demo application, not for production use.
 
-To run this application you will be required PyGTK, PySQLite and ZODB.
+To run this application you will be required Python modules of GTK-3.0, 
+SQLite and ZODB.
 
 To run:
 

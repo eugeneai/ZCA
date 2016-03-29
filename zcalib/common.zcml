@@ -1,0 +1,33 @@
+<?xml version="1.1" encoding="utf-8"?>
+<configure xmlns='http://namespaces.zope.org/zope'
+           i18n_domain="zope">
+<include package="zope.component" file="meta.zcml" />
+
+<adapter
+    factory="vc.MainWindowController"
+    for="interfaces.IModel
+         interfaces.IView"
+    name="maincontroller"
+    />
+
+<utility
+    factory="vc.MainWindow"
+    name="mainview"
+    />
+
+<utility
+    factory="vc.CirculationWindow"
+    name="circulationview"
+    />
+
+<utility
+    factory="vc.MemberWindow"
+    name="memberview"
+    />
+
+<utility
+    factory="models.Application"
+    name="application"
+    />
+
+</configure>

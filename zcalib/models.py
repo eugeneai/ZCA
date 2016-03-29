@@ -1,27 +1,29 @@
-from zope.interface import implements
+from zope.interface import implementer
 
+from interfaces import IModel
 from interfaces import IBook
 from interfaces import IMember
 from interfaces import ICirculation
 
+@implementer(IBook)
 class Book(object):
-
-    implements(IBook)
 
     barcode = ""
     title = ""
     author = ""
 
+@implementer(IMember)
 class Member(object):
-
-    implements(IMember)
 
     number = ""
     name = ""
 
+@implementer(ICirculation)
 class Circulation(object):
-
-    implements(ICirculation)
 
     book = Book()
     member = Member()
+
+@implementer(IModel)
+class Application(object):
+    pass
