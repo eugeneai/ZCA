@@ -5,8 +5,3 @@
 *.pdf
 *.tex
 *.toc
-.bzr*
-*.fdb_latexmk
-*#*#
-zca.html
-zca.pdf
