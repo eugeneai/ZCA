@@ -10,6 +10,8 @@
 *#*#
 _minted*/
 auto/
+zca.html
+zca.pdf
 *.fls
 *.syntex.gz
 syntex*
