@@ -7,53 +7,6 @@ from interfaces import IBook
 from interfaces import ICirculation
 from interfaces import IDbOperation
 
-
-def initialize_rdb():
-    from interfaces import IRelationalDatabase
-    from relationaldatabase import RelationalDatabase
-    from member import MemberRDbOperation
-    from catalog import BookRDbOperation
-    from circulation import CirculationRDbOperation
-
-    gsm = getGlobalSiteManager()
-    db = RelationalDatabase()
-    gsm.registerUtility(db, IRelationalDatabase)
-
-    gsm.registerAdapter(MemberRDbOperation,
-                        (IMember,),
-                        IDbOperation)
-
-    gsm.registerAdapter(BookRDbOperation,
-                        (IBook,),
-                        IDbOperation)
-
-    gsm.registerAdapter(CirculationRDbOperation,
-                        (ICirculation,),
-                        IDbOperation)
-
-def initialize_odb():
-    from interfaces import IObjectDatabase
-    from objectdatabase import ObjectDatabase
-    from member import MemberODbOperation
-    from catalog import BookODbOperation
-    from circulation import CirculationODbOperation
-
-    gsm = getGlobalSiteManager()
-    db = ObjectDatabase()
-    gsm.registerUtility(db, IObjectDatabase)
-
-    gsm.registerAdapter(MemberODbOperation,
-                        (IMember,),
-                        IDbOperation)
-
-    gsm.registerAdapter(BookODbOperation,
-                        (IBook,),
-                        IDbOperation)
-
-    gsm.registerAdapter(CirculationODbOperation,
-                        (ICirculation,),
-                        IDbOperation)
-
 def check_use_relational_db():
     use_rdb = False
     try:
@@ -67,8 +20,8 @@ def check_use_relational_db():
 def initialize():
     use_rdb = check_use_relational_db()
     if use_rdb:
-        initialize_rdb()
-        xmlconfig(open("rdbconfig.zcml"))
+        xml="rdbconfig.zcml"
     else:
-        initialize_odb()
-        xmlconfig(open("odbconfig.zcml"))
+        xml="odbconfig.zcml"
+    print ("Using config: {}.".format(xml))
+    xmlconfig(open(xml))

@@ -3,4 +3,27 @@
            i18n_domain="zope">
 <include file="common.zcml" />
 
+<utility
+    factory="relationaldatabase.RelationalDatabase"
+    provides="interfaces.IRelationalDatabase"
+    />
+
+<adapter
+    factory="member.MemberRDbOperation"
+    for="interfaces.IMember"
+    provides="interfaces.IDbOperation"
+    />
+
+<adapter
+    factory="catalog.BookRDbOperation"
+    for="interfaces.IBook"
+    provides="interfaces.IDbOperation"
+    />
+
+<adapter
+    factory="circulation.CirculationRDbOperation"
+    for="interfaces.ICirculation"
+    provides="interfaces.IDbOperation"
+    />
+
 </configure>

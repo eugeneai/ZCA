@@ -1,5 +1,6 @@
 *.tmp
 OData.*
+RData.*
 
 python3/
 __pycache__/

@@ -3,4 +3,28 @@
            i18n_domain="zope">
 <include file="common.zcml" />
 
+
+<utility
+    factory="objectdatabase.ObjectDatabase"
+    provides="interfaces.IObjectDatabase"
+    />
+
+<adapter
+    factory="member.MemberODbOperation"
+    for="interfaces.IMember"
+    provides="interfaces.IDbOperation"
+    />
+
+<adapter
+    factory="catalog.BookODbOperation"
+    for="interfaces.IBook"
+    provides="interfaces.IDbOperation"
+    />
+
+<adapter
+    factory="circulation.CirculationODbOperation"
+    for="interfaces.ICirculation"
+    provides="interfaces.IDbOperation"
+    />
+
 </configure>
