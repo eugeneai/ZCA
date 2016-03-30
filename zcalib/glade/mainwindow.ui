@@ -8,13 +8,79 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">ZCA Library Management System</property>
     <child>
-      <object class="GtkVBox" id="vbox1">
+      <object class="GtkBox" id="box1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <child>
-          <object class="GtkMenuBar" id="menubar1">
+          <object class="GtkMenuBar" id="menubar">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <child>
+              <object class="GtkMenuItem" id="admin">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="tooltip_text" translatable="yes">Operation over the book store content and members</property>
+                <property name="label" translatable="yes">_Admin</property>
+                <property name="use_underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="menu1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="circulation">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="tooltip_text" translatable="yes">Manage a book circulation</property>
+                        <property name="label" translatable="yes">_Circulation</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_circulation_activate" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="catalog">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="tooltip_text" translatable="yes">Manage book catalog content</property>
+                        <property name="label" translatable="yes">Ca_talog</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_catalog_activate" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="member">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="tooltip_text" translatable="yes">Manage member list</property>
+                        <property name="label" translatable="yes">_Member</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_member_activate" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="quit">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="tooltip_text" translatable="yes">Quit the application</property>
+                        <property name="label" translatable="yes">_Quit</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_quit_activate" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="about">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="tooltip_text" translatable="yes">Show some useful information about this application.</property>
+                <property name="label" translatable="yes">Ab_out</property>
+                <property name="use_underline">True</property>
+                <signal name="activate" handler="on_about_activate" swapped="no"/>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -23,13 +89,24 @@
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkAlignment" id="alignment1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="left_padding">12</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
         </child>
         <child>
           <object class="GtkStatusbar" id="statusbar">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="spacing">2</property>
           </object>
           <packing>
             <property name="expand">False</property>

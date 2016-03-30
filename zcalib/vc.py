@@ -270,5 +270,8 @@ class MainWindowController(Controller):
     def on_about_activate(self, *args):
         pass
 
+    def on_quit_activate(self, *args):
+        Gtk.main_quit()
+
     def run(self):
         self.show()
