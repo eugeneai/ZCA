@@ -2831,6 +2831,148 @@ class MemberODbOperation(object):
   \label{zodb}%
 }
 
+\chapter{Using the Zope Component Architecture in Pyramid}
+
+Under the hood, Pyramid uses a Zope Component Architecture component registry as its application registry. The Zope Component Architecture is referred to colloquially as the "ZCA."
+
+The zope.component API used to access data in a traditional Zope application can be opaque. For example, here is a typical "unnamed utility" lookup using the zope.component.getUtility() global API as it might appear in a traditional Zope application:
+
+1
+2
+3
+
+
+
+from pyramid.interfaces import ISettings
+from zope.component import getUtility
+settings = getUtility(ISettings)
+
+After this code runs, settings will be a Python dictionary. But it's unlikely that any "civilian" will be able to figure this out just by reading the code casually. When the zope.component.getUtility API is used by a developer, the conceptual load on a casual reader of code is high.
+
+While the ZCA is an excellent tool with which to build a framework such as Pyramid, it is not always the best tool with which to build an application due to the opacity of the zope.component APIs. Accordingly, Pyramid tends to hide the presence of the ZCA from application developers. You needn't understand the ZCA to create a Pyramid application; its use is effectively only a framework implementation detail.
+
+However, developers who are already used to writing Zope applications often still wish to use the ZCA while building a Pyramid application. Pyramid makes this possible.
+Using the ZCA global API in a Pyramid application
+
+Zope uses a single ZCA registry—the "global" ZCA registry—for all Zope applications that run in the same Python process, effectively making it impossible to run more than one Zope application in a single process.
+
+However, for ease of deployment, it's often useful to be able to run more than a single application per process. For example, use of a PasteDeploy "composite" allows you to run separate individual WSGI applications in the same process, each answering requests for some URL prefix. This makes it possible to run, for example, a TurboGears application at /turbogears and a Pyramid application at /pyramid, both served up using the same WSGI server within a single Python process.
+
+Most production Zope applications are relatively large, making it impractical due to memory constraints to run more than one Zope application per Python process. However, a Pyramid application may be very small and consume very little memory, so it's a reasonable goal to be able to run more than one Pyramid application per process.
+
+In order to make it possible to run more than one Pyramid application in a single process, Pyramid defaults to using a separate ZCA registry per application.
+
+While this services a reasonable goal, it causes some issues when trying to use patterns which you might use to build a typical Zope application to build a Pyramid application. Without special help, ZCA "global" APIs such as zope.component.getUtility() and zope.component.getSiteManager() will use the ZCA "global" registry. Therefore, these APIs will appear to fail when used in a Pyramid application, because they'll be consulting the ZCA global registry rather than the component registry associated with your Pyramid application.
+
+There are three ways to fix this: by disusing the ZCA global API entirely, by using pyramid.config.Configurator.hook_zca() or by passing the ZCA global registry to the Configurator constructor at startup time. We'll describe all three methods in this section.
+Disusing the global ZCA API
+
+ZCA "global" API functions such as zope.component.getSiteManager, zope.component.getUtility, zope.component.getAdapter(), and zope.component.getMultiAdapter() aren't strictly necessary. Every component registry has a method API that offers the same functionality; it can be used instead. For example, presuming the registry value below is a Zope Component Architecture component registry, the following bit of code is equivalent to zope.component.getUtility(IFoo):
+
+registry.getUtility(IFoo)
+
+The full method API is documented in the zope.component package, but it largely mirrors the "global" API almost exactly.
+
+If you are willing to disuse the "global" ZCA APIs and use the method interface of a registry instead, you need only know how to obtain the Pyramid component registry.
+
+There are two ways of doing so:
+
+    use the pyramid.threadlocal.get_current_registry() function within Pyramid view or resource code. This will always return the "current" Pyramid application registry.
+    use the attribute of the request object named registry in your Pyramid view code, e.g., request.registry. This is the ZCA component registry related to the running Pyramid application.
+
+See Thread Locals for more information about pyramid.threadlocal.get_current_registry().
+Enabling the ZCA global API by using hook_zca
+
+Consider the following bit of idiomatic Pyramid startup code:
+
+1
+2
+3
+4
+5
+6
+
+
+
+from pyramid.config import Configurator
+
+def app(global_settings, **settings):
+    config = Configurator(settings=settings)
+    config.include('some.other.package')
+    return config.make_wsgi_app()
+
+When the app function above is run, a Configurator is constructed. When the configurator is created, it creates a new application registry (a ZCA component registry). A new registry is constructed whenever the registry argument is omitted, when a Configurator constructor is called, or when a registry argument with a value of None is passed to a Configurator constructor.
+
+During a request, the application registry created by the Configurator is "made current". This means calls to get_current_registry() in the thread handling the request will return the component registry associated with the application.
+
+As a result, application developers can use get_current_registry to get the registry and thus get access to utilities and such, as per Disusing the global ZCA API. But they still cannot use the global ZCA API. Without special treatment, the ZCA global APIs will always return the global ZCA registry (the one in zope.component.globalregistry.base).
+
+To "fix" this and make the ZCA global APIs use the "current" Pyramid registry, you need to call hook_zca() within your setup code. For example:
+
+1
+2
+3
+4
+5
+6
+7
+
+
+
+from pyramid.config import Configurator
+
+def app(global_settings, **settings):
+    config = Configurator(settings=settings)
+    config.hook_zca()
+    config.include('some.other.application')
+    return config.make_wsgi_app()
+
+We've added a line to our original startup code, line number 5, which calls config.hook_zca(). The effect of this line under the hood is that an analogue of the following code is executed:
+
+1
+2
+3
+
+
+
+from zope.component import getSiteManager
+from pyramid.threadlocal import get_current_registry
+getSiteManager.sethook(get_current_registry)
+
+This causes the ZCA global API to start using the Pyramid application registry in threads which are running a Pyramid request.
+
+Calling hook_zca is usually sufficient to "fix" the problem of being able to use the global ZCA API within a Pyramid application. However, it also means that a Zope application that is running in the same process may start using the Pyramid global registry instead of the Zope global registry, effectively inverting the original problem. In such a case, follow the steps in the next section, Enabling the ZCA global API by using the ZCA global registry.
+Enabling the ZCA global API by using the ZCA global registry
+
+You can tell your Pyramid application to use the ZCA global registry at startup time instead of constructing a new one:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+
+from zope.component import getGlobalSiteManager
+from pyramid.config import Configurator
+
+def app(global_settings, **settings):
+    globalreg = getGlobalSiteManager()
+    config = Configurator(registry=globalreg)
+    config.setup_registry(settings=settings)
+    config.include('some.other.application')
+    return config.make_wsgi_app()
+
+Lines 5, 6, and 7 above are the interesting ones. Line 5 retrieves the global ZCA component registry. Line 6 creates a Configurator, passing the global ZCA registry into its constructor as the registry argument. Line 7 "sets up" the global registry with Pyramid-specific registrations; this is code that is normally executed when a registry is constructed rather than created, but we must call it "by hand" when we pass an explicit registry.
+
+At this point, Pyramid will use the ZCA global registry rather than creating a new application-specific registry. Since by default the ZCA global API will use this registry, things will work as you might expect in a Zope app when you use the global ZCA API.
+
+
 \newpage{}
 \section{Заключение%
   \label{id53}%
@@ -5710,5 +5852,5 @@ ISBN~978-5-XXXXX-XXXX-X
 %%% mode: TeX-mode
 %%% TeX-command-extra-options: "-shell-escape"
 %%% TeX-engine: luatex
-%%% TeX-master: "zca-hb-ru-proto"
+%%% TeX-master: t
 %%% End:
