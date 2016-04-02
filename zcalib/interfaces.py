@@ -22,6 +22,10 @@ class ICirculation(IModel):
     book = Attribute("A book")
     member = Attribute("A member")
 
+class IItemList(Interface):
+    """Defines model as an item list
+    fillable on-demand.
+    """
 
 class IApplication(IModel):
 

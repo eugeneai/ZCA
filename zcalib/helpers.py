@@ -86,6 +86,6 @@ class Controller(object):
         return True
 
 def view_model(model, name=''):
-    view = getAdapter(model,IView)
+    view = getAdapter(model,IView, name=name) # For simplicity suppose the same names for Views and Controllers
     controller = getMultiAdapter((model, view), IController, name=name)
     return controller

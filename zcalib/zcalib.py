@@ -10,7 +10,7 @@ from helpers import view_model
 
 def main():
     application = getUtility(IApplication, name="application")
-    maincontroller=view_model(application)
+    maincontroller = view_model(application)
     maincontroller.run()
     Gtk.main()
 

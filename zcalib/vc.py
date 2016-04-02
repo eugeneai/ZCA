@@ -142,6 +142,9 @@ class MemberWindowController(Controller):
         memberdboperation = getAdapter(member, IDbOperation)
         memberdboperation.delete()
 
+    def on_close_clicked(self, *args):
+        self.on_delete_event()
+
 class CatalogWindow(DesignedView):
     objects=[
         'catalogwindow',
@@ -254,24 +257,20 @@ class MainWindowController(Controller):
     def on_delete_event(self, *args):
         Gtk.main_quit()
 
-    def view_model(self, interface, name=''):
-        model=getUtility(interface, name=name)
-        return view_model(model)
-
     def on_circulation_activate(self, *args):
-        self.view_model(ICirculation).show()
+        view_model(self.model.circulations, "circulations").show()
 
     def on_member_activate(self, *args):
-        self.view_model(IMember).show()
+        view_model(self.model.members, "members").show()
 
     def on_catalog_activate(self, *args):
-        self.view_model(IBook).show()
+        view_model(self.model.catalog, "catalog").show()
 
     def on_about_activate(self, *args):
         pass
 
     def on_quit_activate(self, *args):
-        Gtk.main_quit()
+        self.on_delete_event()
 
     def run(self):
         self.show()

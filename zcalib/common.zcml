@@ -11,20 +11,23 @@
 
 <adapter
     factory="vc.CirculationWindowController"
-    for="interfaces.ICirculation
+    for="interfaces.IItemList
          interfaces.IView"
+    name="circulations"
     />
 
 <adapter
     factory="vc.MemberWindowController"
-    for="interfaces.IMember
+    for="interfaces.IItemList
          interfaces.IView"
+    name="members"
     />
 
 <adapter
     factory="vc.CatalogWindowController"
-    for="interfaces.IBook
+    for="interfaces.IItemList
          interfaces.IView"
+    name="catalog"
     />
 
 <utility
@@ -47,6 +50,7 @@
     name="application"
     />
 
+<!--
 <utility
     factory="models.Book"
     />
@@ -58,6 +62,7 @@
 <utility
     factory="models.Circulation"
     />
+-->
 
 <adapter
     factory="vc.MainWindow"
@@ -66,17 +71,20 @@
 
 <adapter
     factory="vc.CirculationWindow"
-    for="interfaces.ICirculation"
+    for="interfaces.IItemList"
+    name="circulations"
     />
 
 <adapter
     factory="vc.MemberWindow"
-    for="interfaces.IMember"
+    for="interfaces.IItemList"
+    name="members"
     />
 
 <adapter
     factory="vc.CatalogWindow"
-    for="interfaces.IBook"
+    for="interfaces.IItemList"
+    name="catalog"
     />
 
 </configure>
