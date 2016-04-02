@@ -2,6 +2,34 @@
 <!-- Generated with glade 3.19.0 -->
 <interface>
   <requires lib="gtk+" version="3.16"/>
+  <object class="GtkAction" id="a_catalog">
+    <property name="label" translatable="yes">Ca_talog</property>
+    <property name="short_label" translatable="yes">Catalog</property>
+    <property name="tooltip" translatable="yes">Manage book catalog</property>
+    <property name="stock_id">gtk-index</property>
+    <signal name="activate" handler="on_catalog_activate" swapped="no"/>
+  </object>
+  <object class="GtkAction" id="a_circulations">
+    <property name="label" translatable="yes">_Circulations</property>
+    <property name="short_label" translatable="yes">Circulations</property>
+    <property name="tooltip" translatable="yes">Issue a book to a member</property>
+    <property name="stock_id">gtk-yes</property>
+    <signal name="activate" handler="on_circulations_activate" swapped="no"/>
+  </object>
+  <object class="GtkAction" id="a_members">
+    <property name="label" translatable="yes">_Members</property>
+    <property name="short_label" translatable="yes">Members</property>
+    <property name="tooltip" translatable="yes">Manage list of members</property>
+    <property name="stock_id">gtk-execute</property>
+    <signal name="activate" handler="on_members_activate" swapped="no"/>
+  </object>
+  <object class="GtkAction" id="a_quit">
+    <property name="label" translatable="yes">_Quit</property>
+    <property name="short_label" translatable="yes">Quit</property>
+    <property name="tooltip" translatable="yes">Quit application</property>
+    <property name="stock_id">gtk-quit</property>
+    <signal name="activate" handler="on_quit_activate" swapped="no"/>
+  </object>
   <object class="GtkWindow" id="mainwindow">
     <property name="width_request">300</property>
     <property name="height_request">200</property>
@@ -28,43 +56,47 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkMenuItem" id="circulation">
+                      <object class="GtkMenuItem" id="circulations">
+                        <property name="use_action_appearance">True</property>
+                        <property name="related_action">a_circulations</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Manage a book circulation</property>
-                        <property name="label" translatable="yes">_Circulation</property>
+                        <property name="label" translatable="yes">_Circulations</property>
                         <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_circulation_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="catalog">
+                        <property name="use_action_appearance">True</property>
+                        <property name="related_action">a_catalog</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Manage book catalog content</property>
                         <property name="label" translatable="yes">Ca_talog</property>
                         <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_catalog_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="member">
+                      <object class="GtkMenuItem" id="members">
+                        <property name="use_action_appearance">True</property>
+                        <property name="related_action">a_members</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Manage member list</property>
-                        <property name="label" translatable="yes">_Member</property>
+                        <property name="label" translatable="yes">_Members</property>
                         <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_member_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="quit">
+                        <property name="use_action_appearance">True</property>
+                        <property name="related_action">a_quit</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Quit the application</property>
                         <property name="label" translatable="yes">_Quit</property>
                         <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_quit_activate" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -89,18 +121,188 @@
           </packing>
         </child>
         <child>
-          <object class="GtkAlignment" id="alignment1">
+          <object class="GtkBox" id="box2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="left_padding">12</property>
+            <property name="orientation">vertical</property>
             <child>
-              <placeholder/>
+              <object class="GtkToolbar" id="toolbar1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkToolButton" id="toolbutton1">
+                    <property name="use_action_appearance">True</property>
+                    <property name="related_action">a_circulations</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">toolbutton1</property>
+                    <property name="use_underline">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="toolbutton2">
+                    <property name="use_action_appearance">True</property>
+                    <property name="related_action">a_catalog</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">toolbutton2</property>
+                    <property name="use_underline">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="toolbutton3">
+                    <property name="use_action_appearance">True</property>
+                    <property name="related_action">a_members</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">toolbutton3</property>
+                    <property name="use_underline">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSeparatorToolItem" id="toolbutton4">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="toolbutton5">
+                    <property name="use_action_appearance">True</property>
+                    <property name="related_action">a_quit</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">toolbutton4</property>
+                    <property name="use_underline">True</property>
+                    <property name="stock_id">gtk-quit</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButtonBox" id="buttonbox1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="layout_style">spread</property>
+                <child>
+                  <object class="GtkButton" id="button1">
+                    <property name="label" translatable="yes">Circulation</property>
+                    <property name="use_action_appearance">True</property>
+                    <property name="related_action">a_circulations</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button2">
+                    <property name="label" translatable="yes">button</property>
+                    <property name="use_action_appearance">True</property>
+                    <property name="related_action">a_catalog</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button3">
+                    <property name="label" translatable="yes">button</property>
+                    <property name="use_action_appearance">True</property>
+                    <property name="related_action">a_members</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="quit_button">
+                    <property name="label">gtk-quit</property>
+                    <property name="use_action_appearance">True</property>
+                    <property name="related_action">a_quit</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
             </child>
           </object>
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label2">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -111,7 +313,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>

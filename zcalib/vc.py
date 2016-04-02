@@ -22,7 +22,7 @@ class CirculationWindow(DesignedView):
 
 class CirculationWindowController(Controller):
 
-    def on_issue_clicked(self, *args):
+    def on_issue_button_clicked(self, *args):
         member_number = self.ui.issue_member.get_text()
         book_barcode = self.ui.issue_book.get_text()
         self.book_issue(member_number, book_barcode)
@@ -44,7 +44,7 @@ class CirculationWindowController(Controller):
         circulationdboperation = getAdapter(circulation, IDbOperation)
         circulationdboperation.add()
 
-    def on_return_clicked(self, *args):
+    def on_return_button_clicked(self, *args):
         book_barcode = self.ui.return_book.get_text()
         self.book_return(book_barcode)
 
@@ -58,6 +58,9 @@ class CirculationWindowController(Controller):
         circulation.book = book
         circulationdboperation = getAdapter(circulation, IDbOperation)
         circulationdboperation.delete()
+
+    def on_close_button_clicked(self, *args):
+        self.on_delete_event()
 
 class MemberWindow(DesignedView):
     objects=[
@@ -257,10 +260,10 @@ class MainWindowController(Controller):
     def on_delete_event(self, *args):
         Gtk.main_quit()
 
-    def on_circulation_activate(self, *args):
+    def on_circulations_activate(self, *args):
         view_model(self.model.circulations, "circulations").show()
 
-    def on_member_activate(self, *args):
+    def on_members_activate(self, *args):
         view_model(self.model.members, "members").show()
 
     def on_catalog_activate(self, *args):
