@@ -5,9 +5,26 @@
 
 <adapter
     factory="vc.MainWindowController"
-    for="interfaces.IModel
+    for="interfaces.IApplication
          interfaces.IView"
-    name="maincontroller"
+    />
+
+<adapter
+    factory="vc.CirculationWindowController"
+    for="interfaces.ICirculation
+         interfaces.IView"
+    />
+
+<adapter
+    factory="vc.MemberWindowController"
+    for="interfaces.IMember
+         interfaces.IView"
+    />
+
+<adapter
+    factory="vc.CatalogWindowController"
+    for="interfaces.IBook
+         interfaces.IView"
     />
 
 <utility
@@ -28,6 +45,38 @@
 <utility
     factory="models.Application"
     name="application"
+    />
+
+<utility
+    factory="models.Book"
+    />
+
+<utility
+    factory="models.Member"
+    />
+
+<utility
+    factory="models.Circulation"
+    />
+
+<adapter
+    factory="vc.MainWindow"
+    for="interfaces.IApplication"
+    />
+
+<adapter
+    factory="vc.CirculationWindow"
+    for="interfaces.ICirculation"
+    />
+
+<adapter
+    factory="vc.MemberWindow"
+    for="interfaces.IMember"
+    />
+
+<adapter
+    factory="vc.CatalogWindow"
+    for="interfaces.IBook"
     />
 
 </configure>

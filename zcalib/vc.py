@@ -3,14 +3,14 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
-from zope.component import getAdapter
+from zope.component import getAdapter, getUtility
 
 from models import Member
 from models import Book
 from models import Circulation
-from interfaces import IDbOperation
+from interfaces import *
 
-from helpers import DesignedView, Controller
+from helpers import DesignedView, Controller, view_model
 
 class CirculationWindow(DesignedView):
     objects=[
@@ -58,9 +58,6 @@ class CirculationWindowController(Controller):
         circulation.book = book
         circulationdboperation = getAdapter(circulation, IDbOperation)
         circulationdboperation.delete()
-
-
-#circulationwindow = CirculationWindow()
 
 class MemberWindow(DesignedView):
     objects=[
@@ -144,8 +141,6 @@ class MemberWindowController(Controller):
     def delete(self, member):
         memberdboperation = getAdapter(member, IDbOperation)
         memberdboperation.delete()
-
-# memberwindow = MemberWindow()
 
 class CatalogWindow(DesignedView):
     objects=[
@@ -246,7 +241,8 @@ class CatalogWindowController(Controller):
         bookdboperation = getAdapter(book, IDbOperation)
         bookdboperation.delete()
 
-#catalogwindow = CatalogWindow()
+    def on_close_clicked(self, *args):
+        self.on_delete_event()
 
 class MainWindow(DesignedView):
     objects = [
@@ -258,14 +254,18 @@ class MainWindowController(Controller):
     def on_delete_event(self, *args):
         Gtk.main_quit()
 
+    def view_model(self, interface, name=''):
+        model=getUtility(interface, name=name)
+        return view_model(model)
+
     def on_circulation_activate(self, *args):
-        circulationwindow.show()
+        self.view_model(ICirculation).show()
 
     def on_member_activate(self, *args):
-        memberwindow.show()
+        self.view_model(IMember).show()
 
     def on_catalog_activate(self, *args):
-        catalogwindow.show()
+        self.view_model(IBook).show()
 
     def on_about_activate(self, *args):
         pass

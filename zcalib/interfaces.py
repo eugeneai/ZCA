@@ -23,6 +23,10 @@ class ICirculation(IModel):
     member = Attribute("A member")
 
 
+class IApplication(IModel):
+
+    """A marker interface"""
+
 class IRelationalDatabase(Interface):
 
     def commit():

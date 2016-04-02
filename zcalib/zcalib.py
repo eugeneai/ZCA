@@ -4,13 +4,13 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 import registry
-from zope.component import getUtility, getMultiAdapter
-from interfaces import IModel, IView, IController
+from zope.component import getUtility
+from interfaces import IModel, IView, IController, IApplication
+from helpers import view_model
 
 def main():
-    application = getUtility(IModel, name="application")
-    mainview = getUtility(IView, name="mainview")
-    maincontroller = getMultiAdapter((application, mainview), IController, name="maincontroller")
+    application = getUtility(IApplication, name="application")
+    maincontroller=view_model(application)
     maincontroller.run()
     Gtk.main()
 
@@ -21,3 +21,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         import sys
         sys.exit(1)
+    quit()

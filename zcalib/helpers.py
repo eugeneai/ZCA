@@ -7,6 +7,7 @@ from gi.repository import Gtk
 """
 from interfaces import IView, IController
 from zope.interface import implementer
+from zope.component import getAdapter, getMultiAdapter
 
 UI_DIR='glade'
 
@@ -24,7 +25,8 @@ class UIHelper(object):
 @implementer(IView)
 class View(object):
     """A View."""
-    def __init__(self):
+    def __init__(self, model = None):
+        self.model = model
         self.ui=UIHelper()
 
 class DesignedView(View):
@@ -32,8 +34,8 @@ class DesignedView(View):
     objects=None
     filename=None
     extention=".ui"
-    def __init__(self, filename=None, objects=None):
-        super(DesignedView,self).__init__()
+    def __init__(self, model = None, filename=None, objects=None):
+        super(DesignedView,self).__init__(model=model)
         builder=Gtk.Builder()
         if filename == None:
             filename = self.__class__.filename
@@ -77,5 +79,13 @@ class Controller(object):
         self.main_widget.hide()
 
     def on_delete_event(self, *args):
-        self.hide()
+        if self.model == None:
+            self.hide() # The single-window mode, when self.model==None
+        else:
+            self.main_widget.destroy()
         return True
+
+def view_model(model, name=''):
+    view = getAdapter(model,IView)
+    controller = getMultiAdapter((model, view), IController, name=name)
+    return controller

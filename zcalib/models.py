@@ -1,9 +1,9 @@
 from zope.interface import implementer
 
-from interfaces import IModel
 from interfaces import IBook
 from interfaces import IMember
 from interfaces import ICirculation
+from interfaces import IApplication
 
 @implementer(IBook)
 class Book(object):
@@ -24,6 +24,6 @@ class Circulation(object):
     book = Book()
     member = Member()
 
-@implementer(IModel)
+@implementer(IApplication)
 class Application(object):
     pass
