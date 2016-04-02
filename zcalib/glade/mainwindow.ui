@@ -221,12 +221,12 @@
                 <property name="layout_style">spread</property>
                 <child>
                   <object class="GtkButton" id="button1">
-                    <property name="label" translatable="yes">Circulation</property>
                     <property name="use_action_appearance">True</property>
                     <property name="related_action">a_circulations</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -236,12 +236,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button2">
-                    <property name="label" translatable="yes">button</property>
                     <property name="use_action_appearance">True</property>
                     <property name="related_action">a_catalog</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -251,12 +251,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button3">
-                    <property name="label" translatable="yes">button</property>
                     <property name="use_action_appearance">True</property>
                     <property name="related_action">a_members</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
