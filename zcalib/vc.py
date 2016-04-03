@@ -68,7 +68,7 @@ class MemberWindow(DesignedView):
         'number',
         'name',
         'treeview',
-        'list_store'
+        #'list_store'
     ]
 
     def initialize(self):
@@ -253,6 +253,8 @@ class CatalogWindowController(Controller):
 class MainWindow(DesignedView):
     objects = [
         'mainwindow',
+        'circulations',
+        'circulations_view',
         ]
 
 class MainWindowController(Controller):
@@ -275,5 +277,26 @@ class MainWindowController(Controller):
     def on_quit_activate(self, *args):
         self.on_delete_event()
 
+    def on_add_clicked(self, *args):
+        print ("Add")
+
+    def on_delete_clicked(self, *args):
+        print ("Delete")
+
     def run(self):
         self.show()
+
+    def initialize(self):
+        self.initialize_list()
+
+    def initialize_list(self):
+        cs=Gtk.ListStore(object, int, str, str)
+        self.circulations=self.ui.circulations=cs
+        self.ui.circulations_view.set_model(cs)
+        cs.clear()
+        for i in range(100):
+            cs.append((Circulation(),i+1,"John Doe","Alice in Wonderland"))
+
+if __name__ == '__main__':
+    import zcalib
+    zcalib.run()

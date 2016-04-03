@@ -51,8 +51,10 @@ class DesignedView(View):
             raise ValueError("no object names supplied")
         for object_name in objects:
             obj=builder.get_object(object_name)
+            if obj == None:
+                raise KeyError("could not find obect named '{}'".format(object_name))
             self.ui.objects.append(obj)
-            setattr(self.ui, object_name, object)
+            setattr(self.ui, object_name, obj)
 
 @implementer(IController)
 class Controller(object):

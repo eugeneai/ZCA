@@ -14,7 +14,7 @@ def main():
     maincontroller.run()
     Gtk.main()
 
-if __name__ == '__main__':
+def run():
     registry.initialize()
     try:
         main()
@@ -22,3 +22,8 @@ if __name__ == '__main__':
         import sys
         sys.exit(1)
     quit()
+
+
+if __name__ == '__main__':
+    import zcalib
+    zcalib.run()
