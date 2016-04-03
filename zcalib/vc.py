@@ -278,10 +278,17 @@ class MainWindowController(Controller):
         self.on_delete_event()
 
     def on_add_clicked(self, *args):
-        print ("Add")
+        self.on_circulations_activate()
+        self.ui.circulations.append((Circulation(), 1000, "Nikolas Nepeyvoda", "Programming Basics"))
 
     def on_delete_clicked(self, *args):
-        print ("Delete")
+        treeselection = self.ui.circulations_view.get_selection()
+        model, iter = treeselection.get_selected()
+        if not iter:
+            return
+        circulation = self.ui.circulations.get_value(iter, 0)
+        #self.delete(book)
+        self.ui.circulations.remove(iter)
 
     def run(self):
         self.show()
