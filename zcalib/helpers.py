@@ -91,6 +91,15 @@ class Controller(object):
             self.main_widget.destroy()
         return True
 
+    def get_selection(self, selection, column=0):
+        _,rows=selection.get_selected_rows()
+        view=selection.get_tree_view()
+        model=view.get_model()
+        for row in rows:
+            iter=model.get_iter(row)
+            yield model.get_value(iter,column)
+
+
 def view_model(model, name=''):
     view = getAdapter(model,IView, name=name) # For simplicity suppose the same names for Views and Controllers
     controller = getMultiAdapter((model, view), IController, name=name)

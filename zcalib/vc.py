@@ -21,7 +21,9 @@ class CirculationWindow(DesignedView):
         'catalog_view',
         'member_view',
         'catalog_selection',
-        'member_selection'
+        'member_selection',
+        'catalog',
+        'members'
     ]
 
 class CirculationWindowController(Controller):
@@ -32,15 +34,15 @@ class CirculationWindowController(Controller):
 
     def initialize_lists(self):
         cm=Gtk.ListStore(object, str, str, str)
-        self.ui.catalog_model=cm
+        self.ui.catalog=cm
         self.ui.catalog_view.set_model(cm)
 
-        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
-        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
-        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
+        cm.append((Book(), "J.R.R.Tolkien", "0Brotherhood of the ring", "123-54654"))
+        cm.append((Book(), "J.R.R.Tolkien", "1Brotherhood of the ring", "123-54654"))
+        cm.append((Book(), "J.R.R.Tolkien", "2Brotherhood of the ring", "123-54654"))
 
         mm=Gtk.ListStore(object, int, str)
-        self.ui.member_model=mm
+        self.ui.member=mm
         self.ui.member_view.set_model(mm)
         mm.append((Member(), 123, "Jim Carry"))
         mm.append((Member(), 124, "Ann Carry"))
@@ -96,10 +98,14 @@ class CirculationWindowController(Controller):
         self.check_selection()
 
     def check_selection(self):
-        cs=self.ui.catalog_selection.get_selected_rows()
-        ms=self.ui.member_selection.get_selected_rows()
-        print (cs)
+        cs=list(self.get_selection(self.ui.catalog_selection))
+        ms=list(self.get_selection(self.ui.member_selection))
         self.ui.a_apply.set_sensitive(cs and ms)
+        self.catalog_selection=cs
+        self.member_selection=ms
+
+    def retval(self):
+        return self.member_selection, self.catalog_selection
 
 class MemberWindow(DesignedView):
     objects=[
