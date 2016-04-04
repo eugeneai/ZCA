@@ -17,10 +17,34 @@ class CirculationWindow(DesignedView):
         'circulation_dialog',
         'issue_member',
         'issue_book',
-        'return_book',
+        'a_apply',
+        'catalog_view',
+        'member_view',
+        'catalog_selection',
+        'member_selection'
     ]
 
 class CirculationWindowController(Controller):
+
+    def initialize(self):
+        self.initialize_lists()
+        self.check_selection()
+
+    def initialize_lists(self):
+        cm=Gtk.ListStore(object, str, str, str)
+        self.ui.catalog_model=cm
+        self.ui.catalog_view.set_model(cm)
+
+        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
+        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
+        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
+
+        mm=Gtk.ListStore(object, int, str)
+        self.ui.member_model=mm
+        self.ui.member_view.set_model(mm)
+        mm.append((Member(), 123, "Jim Carry"))
+        mm.append((Member(), 124, "Ann Carry"))
+        mm.append((Member(), 125, "Jim Fox"))
 
     def on_issue_button_clicked(self, *args):
         member_number = self.ui.issue_member.get_text()
@@ -44,7 +68,7 @@ class CirculationWindowController(Controller):
         circulationdboperation = getAdapter(circulation, IDbOperation)
         circulationdboperation.add()
 
-    def on_return_button_clicked(self, *args):
+    def on_return_activate(self, *args):
         book_barcode = self.ui.return_book.get_text()
         self.book_return(book_barcode)
 
@@ -59,8 +83,23 @@ class CirculationWindowController(Controller):
         circulationdboperation = getAdapter(circulation, IDbOperation)
         circulationdboperation.delete()
 
-    def on_close_button_clicked(self, *args):
+    def on_close_activate(self, *args):
         self.on_delete_event()
+
+    def on_apply_activate(self, *args):
+        self.on_delete_event()
+
+    def on_member_selection_changed(self, *args):
+        self.check_selection()
+
+    def on_catalog_selection_changed(self, *args):
+        self.check_selection()
+
+    def check_selection(self):
+        cs=self.ui.catalog_selection.get_selected_rows()
+        ms=self.ui.member_selection.get_selected_rows()
+        print (cs)
+        self.ui.a_apply.set_sensitive(cs and ms)
 
 class MemberWindow(DesignedView):
     objects=[
@@ -246,9 +285,6 @@ class CatalogWindowController(Controller):
     def delete(self, book):
         bookdboperation = getAdapter(book, IDbOperation)
         bookdboperation.delete()
-
-    def on_close_clicked(self, *args):
-        self.on_delete_event()
 
 class MainWindow(DesignedView):
     objects = [
