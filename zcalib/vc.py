@@ -14,7 +14,7 @@ from helpers import DesignedView, Controller, view_model
 
 class CirculationWindow(DesignedView):
     objects=[
-        'circulationwindow',
+        'circulation_dialog',
         'issue_member',
         'issue_book',
         'return_book',
@@ -263,7 +263,7 @@ class MainWindowController(Controller):
         Gtk.main_quit()
 
     def on_circulations_activate(self, *args):
-        view_model(self.model.circulations, "circulations").show()
+        return view_model(self.model.circulations, "circulations").run()
 
     def on_members_activate(self, *args):
         view_model(self.model.members, "members").show()

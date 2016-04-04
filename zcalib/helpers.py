@@ -77,6 +77,10 @@ class Controller(object):
     def show(self):
         self.show_all()
 
+    def run(self):
+        self.main_widget.set_modal(True)
+        self.show()
+
     def hide(self):
         self.main_widget.hide()
 
