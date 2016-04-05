@@ -338,6 +338,8 @@ class MainWindow(DesignedView):
     objects = [
         'mainwindow',
         'circulations_view',
+        'delete',
+        'about_dialog'
         ]
 
 class MainWindowController(Controller):
@@ -348,23 +350,32 @@ class MainWindowController(Controller):
     def on_circulations_activate(self, *args):
         m=view_model(self.model.circulations, "circulations")
         resp=m.run()
-        print("Resp:",resp, m.member_selection, m.catalog_selection)
+        if resp>0:
+            self.bind_circulations(m.member_selection, m.catalog_selection)
 
-    def on_members_activate(self, *args):
-        view_model(self.model.members, "members").show()
+    def bind_circulations(self, members, books):
+        for member in members:
+            for book in books:
+                circ=Circulation()
+                circ.book=book
+                circ.member=member
+                self.new_circulation(circ)
 
-    def on_catalog_activate(self, *args):
-        view_model(self.model.catalog, "catalog").show()
+    def new_circulation(self, circ):
+        self.ui.circulations.append((circ, circ.member.name, circ.book.title))
 
     def on_about_activate(self, *args):
-        pass
+        ad=self.ui.about_dialog
+        ad.set_modal(True)
+        ad.show_all()
+        ad.run()
+        ad.hide()
 
     def on_quit_activate(self, *args):
         self.on_delete_event()
 
     def on_add_clicked(self, *args):
         self.on_circulations_activate()
-        self.ui.circulations.append((Circulation(), 1000, "Nikolas Nepeyvoda", "Programming Basics"))
 
     def on_delete_clicked(self, *args):
         treeselection = self.ui.circulations_view.get_selection()
@@ -380,14 +391,19 @@ class MainWindowController(Controller):
 
     def initialize(self):
         self.initialize_list()
+        self.check_selection()
 
     def initialize_list(self):
-        cs=Gtk.ListStore(object, int, str, str)
+        cs=Gtk.ListStore(object, str, str)
         self.circulations=self.ui.circulations=cs
         self.ui.circulations_view.set_model(cs)
         cs.clear()
-        for i in range(100):
-            cs.append((Circulation(),i+1,"John Doe","Alice in Wonderland"))
+        for i in range(10):
+            cs.append((Circulation(),"John Doe","Alice in Wonderland"))
+
+    def check_selection(self):
+        s=self.get_selection(self.ui.circulations)
+        self.ui.delete.set_sensitive(s)
 
 if __name__ == '__main__':
     import zcalib
