@@ -305,7 +305,9 @@ class MainWindowController(Controller):
         Gtk.main_quit()
 
     def on_circulations_activate(self, *args):
-        return view_model(self.model.circulations, "circulations").run()
+        print ("Circ+")
+        print (view_model(self.model.circulations, "circulations").run())
+        print ("Circ-")
 
     def on_members_activate(self, *args):
         view_model(self.model.members, "members").show()
