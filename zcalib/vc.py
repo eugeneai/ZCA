@@ -38,9 +38,9 @@ class CirculationWindowController(Controller):
         self.ui.catalog=cm
         self.ui.catalog_view.set_model(cm)
 
-        cm.append((Book(), "J.R.R.Tolkien", "0Brotherhood of the ring", "123-54654"))
-        cm.append((Book(), "J.R.R.Tolkien", "1Brotherhood of the ring", "123-54654"))
-        cm.append((Book(), "J.R.R.Tolkien", "2Brotherhood of the ring", "123-54654"))
+        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
+        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
+        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
 
         mm=Gtk.ListStore(object, int, str)
         self.ui.member=mm
