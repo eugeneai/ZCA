@@ -23,7 +23,8 @@ class CirculationWindow(DesignedView):
         'catalog_selection',
         'member_selection',
         'catalog',
-        'members'
+        'members',
+        'select_button'
     ]
 
 class CirculationWindowController(Controller):
@@ -86,10 +87,10 @@ class CirculationWindowController(Controller):
         circulationdboperation.delete()
 
     def on_close_activate(self, *args):
-        self.on_delete_event()
+        self.response(0)
 
     def on_apply_activate(self, *args):
-        self.on_delete_event()
+        self.response(1)
 
     def on_member_selection_changed(self, *args):
         self.check_selection()
@@ -305,7 +306,9 @@ class MainWindowController(Controller):
         Gtk.main_quit()
 
     def on_circulations_activate(self, *args):
-        return view_model(self.model.circulations, "circulations").run()
+        m=view_model(self.model.circulations, "circulations")
+        resp=m.run()
+        print("Resp:",resp, m.member_selection, m.catalog_selection)
 
     def on_members_activate(self, *args):
         view_model(self.model.members, "members").show()

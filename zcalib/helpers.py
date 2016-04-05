@@ -80,6 +80,11 @@ class Controller(object):
     def run(self):
         self.main_widget.set_modal(True)
         self.show()
+        return self.main_widget.run()
+
+    def response(self, id):
+        self.main_widget.response(id)
+        self.on_delete_event()
 
     def hide(self):
         self.main_widget.hide()

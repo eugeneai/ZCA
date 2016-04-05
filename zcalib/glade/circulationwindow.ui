@@ -75,6 +75,8 @@
   </object>
   <object class="GtkDialog" id="circulation_dialog">
     <property name="can_focus">False</property>
+    <property name="modal">True</property>
+    <property name="icon_name">accessories-dictionary</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
