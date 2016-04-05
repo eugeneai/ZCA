@@ -15,8 +15,11 @@ from helpers import DesignedView, Controller, view_model
 class CirculationWindow(DesignedView):
     objects=[
         'circulation_dialog',
-        'issue_member',
-        'issue_book',
+        'member_number',
+        'member_name',
+        'book_title',
+        'book_author',
+        'book_barcode',
         'a_apply',
         'catalog_view',
         'member_view',
@@ -24,7 +27,11 @@ class CirculationWindow(DesignedView):
         'member_selection',
         'catalog',
         'members',
-        'select_button'
+        'select_button',
+        'add_member',
+        'delete_member',
+        'add_book',
+        'delete_book'
     ]
 
 class CirculationWindowController(Controller):
@@ -101,9 +108,45 @@ class CirculationWindowController(Controller):
     def check_selection(self):
         cs=list(self.get_selection(self.ui.catalog_selection))
         ms=list(self.get_selection(self.ui.member_selection))
+
         self.ui.a_apply.set_sensitive(cs and ms)
+        self.ui.delete_member.set_sensitive(ms)
+        self.ui.delete_book.set_sensitive(cs)
+
+        self.ui.add_member.set_sensitive(self.check_member_data())
+        self.ui.add_book.set_sensitive(self.check_book_data())
+
         self.catalog_selection=cs
         self.member_selection=ms
+
+    def check_book_data(self):
+        ui=self.ui
+        entries=[ui.book_title, ui.book_author, ui.book_barcode]
+        return self.check_entries(entries)
+
+    def check_member_data(self):
+        ui=self.ui
+        entries=[ui.member_name, ui.member_number]
+        return self.check_entries(entries)
+
+    def check_entries(self, entries):
+        for w in entries:
+            text=w.get_text().strip()
+            if not text:
+                return False
+        return True
+
+    def on_entry_text_changed(self, *args):
+        self.check_selection()
+
+    def on_add_book_clicked(self, *args):
+        pass
+    def on_delete_book_clicked(self, *args):
+        pass
+    def on_add_member_clicked(self, *args):
+        pass
+    def on_delete_member_clicked(self, *args):
+        pass
 
     def retval(self):
         return self.member_selection, self.catalog_selection
