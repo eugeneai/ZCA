@@ -25,8 +25,6 @@ class CirculationWindow(DesignedView):
         'member_view',
         'catalog_selection',
         'member_selection',
-        'catalog',
-        'members',
         'select_button',
         'add_member',
         'delete_member',
@@ -339,7 +337,6 @@ class CatalogWindowController(Controller):
 class MainWindow(DesignedView):
     objects = [
         'mainwindow',
-        'circulations',
         'circulations_view',
         ]
 

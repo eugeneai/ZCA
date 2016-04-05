@@ -16,63 +16,6 @@
     <property name="stock_id">gtk-close</property>
     <signal name="activate" handler="on_close_activate" swapped="no"/>
   </object>
-  <object class="GtkAction" id="a_return">
-    <property name="label" translatable="yes">Close dialog</property>
-    <property name="short_label" translatable="yes">Close</property>
-    <property name="tooltip" translatable="yes">Close the dialog and return to application.</property>
-    <property name="stock_id">gtk-redo</property>
-    <signal name="activate" handler="on_return_activate" swapped="no"/>
-  </object>
-  <object class="GtkListStore" id="catalog">
-    <columns>
-      <!-- column-name book -->
-      <column type="GObject"/>
-      <!-- column-name author -->
-      <column type="gchararray"/>
-      <!-- column-name title -->
-      <column type="gchararray"/>
-      <!-- column-name barcode -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0"/>
-        <col id="1" translatable="yes">Brotherhood of the rings</col>
-        <col id="2" translatable="yes">J.R.R.Tolkin
-</col>
-        <col id="3" translatable="yes">112334234-234</col>
-      </row>
-      <row>
-        <col id="0"/>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-      </row>
-      <row>
-        <col id="0"/>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="members">
-    <columns>
-      <!-- column-name member -->
-      <column type="GObject"/>
-      <!-- column-name number -->
-      <column type="gint"/>
-      <!-- column-name name -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0"/>
-        <col id="1">0</col>
-        <col id="2" translatable="yes"/>
-      </row>
-    </data>
-  </object>
   <object class="GtkDialog" id="circulation_dialog">
     <property name="width_request">600</property>
     <property name="height_request">500</property>
@@ -262,7 +205,6 @@
                               <object class="GtkTreeView" id="member_view">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="model">members</property>
                                 <child internal-child="selection">
                                   <object class="GtkTreeSelection" id="member_selection">
                                     <signal name="changed" handler="on_member_selection_changed" swapped="no"/>
@@ -511,7 +453,6 @@
                               <object class="GtkTreeView" id="catalog_view">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="model">catalog</property>
                                 <child internal-child="selection">
                                   <object class="GtkTreeSelection" id="catalog_selection">
                                     <property name="mode">multiple</property>
@@ -597,5 +538,12 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkAction" id="a_return">
+    <property name="label" translatable="yes">Close dialog</property>
+    <property name="short_label" translatable="yes">Close</property>
+    <property name="tooltip" translatable="yes">Close the dialog and return to application.</property>
+    <property name="stock_id">gtk-redo</property>
+    <signal name="activate" handler="on_return_activate" swapped="no"/>
   </object>
 </interface>
