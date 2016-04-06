@@ -42,17 +42,29 @@ class CirculationWindowController(Controller):
         cm=Gtk.ListStore(object, str, str, str)
         self.ui.catalog=cm
         self.ui.catalog_view.set_model(cm)
-
-        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
-        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
-        cm.append((Book(), "J.R.R.Tolkien", "Brotherhood of the ring", "123-54654"))
+        for _ in range(3):
+            b=Book()
+            b.title="Brotherhood of the ring"
+            b.author="J.R.R.Tolkien"
+            b.barcode="123-1232"
+            self.append_book(b)
 
         mm=Gtk.ListStore(object, int, str)
-        self.ui.member=mm
+        self.ui.members=mm
         self.ui.member_view.set_model(mm)
-        mm.append((Member(), 123, "Jim Carry"))
-        mm.append((Member(), 124, "Ann Carry"))
-        mm.append((Member(), 125, "Jim Fox"))
+        for _ in range(3):
+            m=Member()
+            m.name="Jim Carry"
+            m.number=123
+            self.append_member(m)
+
+    def append_member(self, member):
+        m=self.ui.members
+        m.append((member, member.number, member.name))
+
+    def append_book(self, book):
+        m=self.ui.catalog
+        m.append((book, book.author, book.title, book.barcode))
 
     def on_issue_button_clicked(self, *args):
         member_number = self.ui.issue_member.get_text()
@@ -359,9 +371,9 @@ class MainWindowController(Controller):
                 circ=Circulation()
                 circ.book=book
                 circ.member=member
-                self.new_circulation(circ)
+                self.append_circulation(circ)
 
-    def new_circulation(self, circ):
+    def append_circulation(self, circ):
         self.ui.circulations.append((circ, circ.member.name, circ.book.title))
 
     def on_about_activate(self, *args):
