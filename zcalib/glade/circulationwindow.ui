@@ -9,13 +9,6 @@
     <property name="stock_id">gtk-apply</property>
     <signal name="activate" handler="on_apply_activate" swapped="no"/>
   </object>
-  <object class="GtkAction" id="a_close">
-    <property name="label" translatable="yes">Close dialog</property>
-    <property name="short_label" translatable="yes">Close</property>
-    <property name="tooltip" translatable="yes">Close the dialog and return to application.</property>
-    <property name="stock_id">gtk-close</property>
-    <signal name="activate" handler="on_close_activate" swapped="no"/>
-  </object>
   <object class="GtkDialog" id="circulation_dialog">
     <property name="width_request">600</property>
     <property name="height_request">500</property>
@@ -55,6 +48,21 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHeaderBar" id="header">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="title">Add ciculations</property>
+            <property name="subtitle">Choose a member and books</property>
+            <property name="show_close_button">True</property>
+            <property name="decoration_layout">menu:close</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -308,116 +316,77 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkBox" id="box5">
+                              <object class="GtkGrid" id="grid1">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="hexpand">True</property>
+                                <property name="row_spacing">3</property>
+                                <property name="column_spacing">2</property>
                                 <child>
-                                  <object class="GtkGrid" id="grid1">
+                                  <object class="GtkLabel" id="label3">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="hexpand">True</property>
-                                    <property name="row_spacing">3</property>
-                                    <property name="column_spacing">2</property>
-                                    <child>
-                                      <object class="GtkLabel" id="label3">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">Author</property>
-                                      </object>
-                                      <packing>
-                                        <property name="left_attach">0</property>
-                                        <property name="top_attach">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkLabel" id="label4">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">Title</property>
-                                      </object>
-                                      <packing>
-                                        <property name="left_attach">0</property>
-                                        <property name="top_attach">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkLabel" id="label5">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">Barcode</property>
-                                      </object>
-                                      <packing>
-                                        <property name="left_attach">0</property>
-                                        <property name="top_attach">2</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkEntry" id="book_author">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <signal name="changed" handler="on_entry_text_changed" swapped="no"/>
-                                      </object>
-                                      <packing>
-                                        <property name="left_attach">1</property>
-                                        <property name="top_attach">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkEntry" id="book_title">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <signal name="changed" handler="on_entry_text_changed" swapped="no"/>
-                                      </object>
-                                      <packing>
-                                        <property name="left_attach">1</property>
-                                        <property name="top_attach">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkEntry" id="book_barcode">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="hexpand">True</property>
-                                        <signal name="changed" handler="on_entry_text_changed" swapped="no"/>
-                                      </object>
-                                      <packing>
-                                        <property name="left_attach">1</property>
-                                        <property name="top_attach">2</property>
-                                      </packing>
-                                    </child>
+                                    <property name="label" translatable="yes">Author</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">0</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkToolbar" id="toolbar1">
+                                  <object class="GtkLabel" id="label4">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="valign">center</property>
-                                    <child>
-                                      <object class="GtkToolButton" id="toolbutton2">
-                                        <property name="use_action_appearance">True</property>
-                                        <property name="related_action">a_close</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">toolbutton1</property>
-                                        <property name="use_underline">True</property>
-                                        <property name="stock_id">gtk-close</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="homogeneous">True</property>
-                                      </packing>
-                                    </child>
+                                    <property name="label" translatable="yes">Title</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">1</property>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label5">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Barcode</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkEntry" id="book_author">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <signal name="changed" handler="on_entry_text_changed" swapped="no"/>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkEntry" id="book_title">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <signal name="changed" handler="on_entry_text_changed" swapped="no"/>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="top_attach">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkEntry" id="book_barcode">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="hexpand">True</property>
+                                    <signal name="changed" handler="on_entry_text_changed" swapped="no"/>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="top_attach">2</property>
                                   </packing>
                                 </child>
                               </object>
@@ -582,6 +551,13 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkAction" id="a_close">
+    <property name="label" translatable="yes">Close dialog</property>
+    <property name="short_label" translatable="yes">Close</property>
+    <property name="tooltip" translatable="yes">Close the dialog and return to application.</property>
+    <property name="stock_id">gtk-close</property>
+    <signal name="activate" handler="on_close_activate" swapped="no"/>
   </object>
   <object class="GtkAction" id="a_return">
     <property name="label" translatable="yes">Close dialog</property>
