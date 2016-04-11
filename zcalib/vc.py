@@ -376,18 +376,24 @@ class MainWindowController(Controller):
     def append_circulation(self, circ):
         self.ui.circulations.append((circ, circ.member.name, circ.book.title))
 
-    def on_about_activate(self, *args):
+    def on_menu_about_activate(self, *args):
         ad=self.ui.about_dialog
         ad.set_modal(True)
         ad.show_all()
         ad.run()
         ad.hide()
 
-    def on_quit_activate(self, *args):
+    on_menu_about_clicked=on_menu_about_activate
+
+    def on_menu_quit_activate(self, *args):
         self.on_delete_event()
+
+    on_menu_quit_clicked=on_menu_quit_activate
 
     def on_add_clicked(self, *args):
         self.on_circulations_activate()
+
+    on_menu_add_clicked=on_add_clicked
 
     def on_delete_clicked(self, *args):
         treeselection = self.ui.circulations_view.get_selection()
