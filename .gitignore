@@ -8,3 +8,13 @@
 .bzr*
 *.fdb_latexmk
 *#*#
+_minted*/
+auto/
+zca.html
+zca.pdf
+*.fls
+*.syntex.gz
+syntex*
+/zca-hb-ru-proto.synctex.gz
+*.thm
+/zca-hb-ru.synctex.gz
