@@ -51,8 +51,10 @@ class DesignedView(View):
             raise ValueError("no object names supplied")
         for object_name in objects:
             obj=builder.get_object(object_name)
+            if obj == None:
+                raise KeyError("could not find obect named '{}'".format(object_name))
             self.ui.objects.append(obj)
-            setattr(self.ui, object_name, object)
+            setattr(self.ui, object_name, obj)
 
 @implementer(IController)
 class Controller(object):
@@ -75,6 +77,15 @@ class Controller(object):
     def show(self):
         self.show_all()
 
+    def run(self):
+        self.main_widget.set_modal(True)
+        self.show()
+        return self.main_widget.run()
+
+    def response(self, id):
+        self.main_widget.response(id)
+        self.on_delete_event()
+
     def hide(self):
         self.main_widget.hide()
 
@@ -84,6 +95,15 @@ class Controller(object):
         else:
             self.main_widget.destroy()
         return True
+
+    def get_selection(self, selection, column=0):
+        _,rows=selection.get_selected_rows()
+        view=selection.get_tree_view()
+        model=view.get_model()
+        for row in rows:
+            iter=model.get_iter(row)
+            yield model.get_value(iter,column)
+
 
 def view_model(model, name=''):
     view = getAdapter(model,IView, name=name) # For simplicity suppose the same names for Views and Controllers
