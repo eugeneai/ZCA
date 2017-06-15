@@ -8,6 +8,7 @@ from zope.component import getUtility
 from interfaces import IModel, IView, IController, IApplication
 from helpers import view_model
 
+
 def main():
     application = getUtility(IApplication, name="application")
     maincontroller = view_model(application)
