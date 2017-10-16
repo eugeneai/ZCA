@@ -3,7 +3,9 @@ NAME=zca-hb-ru-proto
 # BIBROOT=$(PWD)/../..
 #	BIBINPUTS=$(BIBROOT) latexmk -pdfps -dvi- -ps- $(NAME)
 
-.PHONY: FORCE_MAKE clean view all emacs edit pics
+PAN_MATH=--mathjax
+
+.PHONY: FORCE_MAKE clean view all emacs edit html pics
 
 all: $(NAME).pdf
 #all: $(SNAME).pdf # If the cover is already issued
@@ -28,3 +30,9 @@ $(SNAME).pdf: $(NAME).pdf cover.jpg
 	pdfjoin -o $(NAME).pdf -- $(SNAME).pdf cover.jpg
 
 pics:
+
+html: $(NAME).html
+
+%.html: %.tex
+	pandoc -s -S -N --top-level-division=chapter --section-divs -t html5 $(PAN_MATH) $< -o $(shell basename -s .tex $<).html
+
